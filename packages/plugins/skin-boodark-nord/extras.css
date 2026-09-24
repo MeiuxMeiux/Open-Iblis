@@ -1,0 +1,12 @@
+/* SPDX-FileCopyrightText: 2026 Meiux Meiux LLC */
+/* SPDX-License-Identifier: MIT */
+
+/*
+ * Boodark — Nord extras. extras.css is loaded after the token block and may
+ * add rules, but must not redefine token values or reach internal class names
+ * (see docs/feature/skins.md "What skins must NOT do"). A faint cool frost
+ * glow behind the whole window — keyed off the skin's own data-skin selector.
+ */
+:root[data-skin='mx.iblis.skin.boodark-nord'] body {
+  background-image: radial-gradient(circle at 50% -10%, rgba(136, 192, 208, 0.07), transparent 62%);
+}

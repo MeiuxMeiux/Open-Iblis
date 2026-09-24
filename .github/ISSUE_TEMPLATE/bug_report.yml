@@ -1,0 +1,87 @@
+name: Bug report
+description: Something in Iblis does not work the way it should.
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Please search existing issues first.
+        Security problems do not belong here: follow SECURITY.md instead.
+  - type: input
+    id: version
+    attributes:
+      label: Iblis version
+      description: Settings, Updates shows the installed version.
+      placeholder: 0.2.0-alpha.51
+    validations:
+      required: true
+  - type: dropdown
+    id: build
+    attributes:
+      label: Build
+      description: Official installers come from the website and update themselves. Source builds are ones you built from this repository.
+      options:
+        - Official installer
+        - Source build
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows 11 24H2
+    validations:
+      required: true
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU and VRAM
+      description: Include the driver version if the problem involves generation or training.
+      placeholder: NVIDIA RTX 4060, 8 GB, driver 580.xx
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Create (generation)
+        - Training
+        - Styles
+        - Library and playback
+        - Plugins and catalog
+        - Skins and appearance
+        - Settings, updates, install
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you saw, including any error text.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open Create
+        2. ...
+    validations:
+      required: true
+  - type: input
+    id: diagnostics
+    attributes:
+      label: Diagnostics reference (optional)
+      description: In Settings, Diagnostics, choose a level other than Off and press Send diagnostics now. The short reference it shows lets the maintainers find your redacted log bundle. Diagnostics are off by default.
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Screenshots, log excerpts, or how often it happens. Remove anything personal first.

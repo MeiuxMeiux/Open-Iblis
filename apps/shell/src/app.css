@@ -1,0 +1,160 @@
+/* SPDX-FileCopyrightText: 2026 Meiux Meiux LLC */
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
+/*
+ * Shell base stylesheet. Two layers live here:
+ *
+ *  1. The SkinContract token set (the closed vocabulary from
+ *     packages/plugin-sdk/src/skin-contract.ts, expressed as the CSS custom
+ *     properties `tokenToCssVar` produces: color.bg.base -> --color-bg-base).
+ *     `:root` carries the DEFAULT skin (dark-3d). Alternate skins live in
+ *     skins.css and override only the color tokens under
+ *     `:root[data-skin="..."]`. Every component reads these — never a literal.
+ *
+ *  2. A small shell-CHROME layer (`--app-*`, `--titlebar-h`). These are not
+ *     skin tokens; they derive translucent window surfaces from the opaque
+ *     skin palette via color-mix so the Windows 11 Mica backdrop shows
+ *     through. Because they reference the contract vars, they re-theme for
+ *     free when a skin flips the palette.
+ *
+ * Keep the token list in sync with skin-contract.ts and docs/feature/skins.md.
+ */
+:root {
+  /* ---- color · surfaces ---- */
+  --color-bg-base: #020203;
+  --color-bg-elevated: #0a0a10;
+  --color-bg-subtle: #13131c;
+  --color-bg-inset: #000000;
+
+  /* ---- color · text ---- */
+  --color-text-primary: #ecedf2;
+  --color-text-secondary: #a4a6b3;
+  --color-text-muted: #5b5d6a;
+  --color-text-inverse: #0a0a10;
+
+  /* ---- color · borders ---- */
+  --color-border-subtle: #1a1c26;
+  --color-border-default: #262936;
+  --color-border-strong: #3a3e4f;
+
+  /* ---- color · accent + state ---- */
+  --color-accent: #e23535;
+  --color-state-danger: #e23535;
+  --color-state-warning: #d6a02a;
+  --color-state-success: #3aaf64;
+  --color-state-info: #3580ff;
+
+  /* ---- radii ---- */
+  --radius-none: 0;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-full: 9999px;
+
+  /* ---- shadows (physical, not glow) ---- */
+  --shadow-sm: 0 1px 0 rgba(255, 255, 255, 0.04), 0 1px 2px rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 1px 0 rgba(255, 255, 255, 0.05), 0 6px 18px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 1px 0 rgba(255, 255, 255, 0.06), 0 18px 40px rgba(0, 0, 0, 0.8);
+
+  /* ---- spacing ---- */
+  --space-0: 0;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-8: 48px;
+  --space-12: 96px;
+
+  /* ---- typography ---- */
+  --font-family-ui:
+    'Segoe UI', -apple-system, BlinkMacSystemFont, system-ui, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-mono: ui-monospace, 'JetBrains Mono', 'Cascadia Code', Menlo, monospace;
+  --font-family-display: var(--font-family-ui);
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-body: 16px;
+  --font-size-md: 18px;
+  --font-size-lg: 22px;
+  --font-size-xl: 32px;
+  --font-size-display: 56px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* ---- motion ---- */
+  --motion-duration-fast: 120ms;
+  --motion-duration-base: 200ms;
+  --motion-ease-standard: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  /* ---- waveform (themes off the palette; redefined here so any skin gets
+         a sensible default without restating these) ---- */
+  --wave-fg: var(--color-accent);
+  --wave-bg: var(--color-bg-subtle);
+  --wave-peak: var(--color-text-secondary);
+  --wave-playhead: var(--color-accent);
+
+  /* ---- shell chrome (NOT skin tokens) ---- */
+  --titlebar-h: 36px;
+  /* Translucent surfaces so the Win11 Mica backdrop shows through; derived
+     from the opaque palette so they re-theme with the active skin. */
+  --app-bg: color-mix(in srgb, var(--color-bg-base) 72%, transparent);
+  --app-surface: color-mix(in srgb, var(--color-bg-elevated) 66%, transparent);
+  --app-surface-hover: color-mix(in srgb, var(--color-bg-subtle) 72%, transparent);
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  /* Translucent so the Windows 11 Mica backdrop shows through. */
+  background: var(--app-bg);
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  overflow: hidden;
+}
+
+/* The app chrome is unselectable above for a native feel, but text the user
+   legitimately needs to copy — identifiers/code (e.g. a diagnostics ref),
+   preformatted output, and form fields — must stay selectable. Opt those back
+   in here, plus a `.selectable` helper for anything else (prefixed for the
+   Chromium renderer). */
+code,
+pre,
+kbd,
+samp,
+input,
+textarea,
+.selectable {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+  border-radius: var(--radius-full);
+}

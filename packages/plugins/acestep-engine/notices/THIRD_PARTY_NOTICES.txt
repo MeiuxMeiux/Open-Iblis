@@ -1,0 +1,123 @@
+Iblis ACE-Step engine pack third-party notices
+
+This notice index applies to the ACE-Step 1.5 engine bytes built from
+ServeurpersoCom/acestep.cpp commit
+9761469d95fc204b5468623c68a1a2203e50b1f9 and to the model artifacts from
+Serveurperso/ACE-Step-1.5-GGUF revision
+9b3707625776cc4cf775e9b12ab82f9fe48335ff.
+
+The license files named below retain their original terms. The SOURCE JSON
+files within this notices directory record immutable source URLs, revisions,
+and SHA-256 values for the verbatim text payloads.
+
+Native engine and GGML closure
+
+  acestep.cpp
+    License: MIT
+    Pin: 9761469d95fc204b5468623c68a1a2203e50b1f9
+    Text: licenses/acestep.cpp-MIT.txt
+
+  GGML
+    License: MIT
+    Pin: c044c6f03892f9d5e98213b05f8afea1f8b0d3c9
+    Text: licenses/ggml-MIT.txt
+    llama.cpp and whisper.cpp SHAs recorded in UPSTREAM.txt are source-sync
+    markers, not recursively linked dependencies. They carry the same GGML
+    license text at those markers.
+
+  YaRN-derived CPU/CUDA code
+    License: MIT
+    Pin: a18e54988639030e706f6ff9db224cf74e08a65a
+    Text: licenses/yarn-MIT.txt
+
+  cpp-httplib 0.44.0
+    License: MIT
+    Pin: 811dd0b6f2382f50f801f3cfdb5ba349d08bb575
+    Text: licenses/cpp-httplib-MIT.txt
+    Preserve the LICENSE copyright for yhirose and the incorporated vendored
+    header copyright for Yuji Hirose.
+
+  yyjson 0.12.0 content
+    License: MIT
+    Pin: de7abc1aede96d4a968a9e668524b1aad4df4258
+    Text: licenses/yyjson-MIT.txt
+
+  minimp3 content
+    License: CC0-1.0
+    Incorporated file blob: 3220ae1a85b858a95af5766155ada91304344465
+    Last upstream change pin: ca7c706001331a5a8e3182ce3b3ce3b243589154
+    Text: licenses/minimp3-CC0-1.0.txt
+    This is exact content provenance, not a claimed checkout pin.
+
+Embedded ace-server UI runtime
+
+  Svelte 5.55.2
+    License: MIT
+    Text: licenses/svelte-MIT.txt
+
+  Lucide 0.577.0, including Feather-derived artwork
+    Licenses: ISC and MIT
+    Text: licenses/lucide-ISC-and-Feather-MIT.txt
+
+  YAML 2.8.4
+    License: ISC
+    Text: licenses/yaml-ISC.txt
+
+  clsx 2.1.1
+    License: MIT
+    Text: licenses/clsx-MIT.txt
+
+  esm-env 1.2.2
+    License: MIT
+    Text: licenses/esm-env-MIT.txt
+
+Build-only Vite, Rollup, esbuild, TypeScript, and the Svelte compiler are not
+part of the distributed runtime. Disabled or unselected GGML backends are not
+listed as shipped components.
+
+Model artifacts
+
+  ACE-Step 1.5 model weights (2B turbo DiT, 1.7B LM, VAE) and the
+  ACE-Step 1.5 XL turbo DiT (4B, pack 0.1.5 bakeoff candidate)
+    License presented by upstream: MIT
+    Copyright: Copyright (c) 2026 ACEStep
+    Text: licenses/ACE-Step-1.5-MIT.txt
+    XL source: https://huggingface.co/ACE-Step/acestep-v15-xl-turbo at
+    d4a0b288b83ebb7e25a8c0b32c573c22e134e8ee (model card license: mit)
+
+  Qwen-derived 1.7B LM and Qwen3-Embedding-0.6B
+    License: Apache-2.0
+    Copyright: Copyright 2024 Alibaba Cloud
+    Text: licenses/Qwen-Apache-2.0.txt
+    Attribution and conversion boundary: MODEL_ATTRIBUTION.txt
+
+The immutable GGUF revision and signed SHA-256 values prove the distributed
+model bytes. They do not constitute a complete source-to-GGUF build
+attestation; MODEL_ATTRIBUTION.txt preserves that limitation.
+
+Windows runtime dependencies
+
+  NVIDIA CUDA 12.9.1
+    Distributed DLL families: cudart, cuBLAS, and cuBLASLt
+    Required pack notice before publication:
+      licenses/NVIDIA-CUDA-12.9.1-EULA.pdf
+    Authoritative SHA-256:
+      8dfb8f9da1d5d2face9bfd22213aef8b311bda6a8c734e64f1dce1843cf7e56b
+    The corrected Windows workflow checksum-gates this archived EULA and
+    records the actual DLL versions, hashes, and vendor signatures.
+
+  Microsoft Visual C++ runtime
+    Distributed DLLs: vcruntime140.dll, vcruntime140_1.dll, msvcp140.dll,
+    and concrt140.dll
+    Source: one unmodified Visual Studio 2022 VC Redist x64 CRT directory
+    Distribution remains subject to the applicable Visual Studio terms.
+
+OPEN RELEASE GATES
+
+The NVIDIA EULA PDF above is intentionally not present in this source notice
+folder yet; it must come from the checksum-gated Windows staging workflow or
+an independently verified copy. Before an engine pack is published, the
+signed manifest must install this index, every applicable text above, the
+model attribution, and the NVIDIA EULA. The project must also close the
+recorded Microsoft/NVIDIA downstream-terms and public per-DLL distribution
+questions. Merely collecting these files does not authorize publication.

@@ -1,0 +1,17 @@
+{
+  "id": "mx.iblis.training.acestep",
+  "name": "Training Fixture",
+  "version": "0.0.1",
+  "kind": "training",
+  "hostMinVersion": "0.0.0",
+  "capabilities": ["lora-training"],
+  "executable": {
+    "bin": "fixture-train.cjs",
+    "portArg": "--port",
+    "healthPath": "/health",
+    "healthTimeoutMs": 5000
+  },
+  "license": "GPL-3.0-or-later",
+  "author": { "name": "Meiux Meiux LLC" },
+  "assets": [{ "path": "fixture-train.cjs", "sha256": "", "bytes": 0, "sources": [] }]
+}

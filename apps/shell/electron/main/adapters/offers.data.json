@@ -1,0 +1,280 @@
+[
+  {
+    "id": "kawaii-future-bass-v1",
+    "name": "Kawaii Future Bass",
+    "maker": "NoyzeAI",
+    "description": "Glossy future-bass color with bright chords, soft leads, and buoyant drops.",
+    "tags": ["Future bass", "Bright", "Melodic"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/NoyzeAI/ACE-Step-v1.5-Kawaii_Future_Bass-LoRA",
+    "sourceRevision": "ff59d87469b4df3847b3a888b40d1b01b19956ee",
+    "claimedLicense": "Apache-2.0 (publisher claim)",
+    "terms": "The publisher marks this adapter Apache-2.0. Its model card does not establish the rights or provenance of its training data or every generated output.",
+    "claimedBaseModel": "ACE-Step 1.5",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "trigger": "future bass, bright melodic drop",
+    "defaultScale": 0.8,
+    "lane": "community",
+    "bytes": 176210656,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "ACE-Step-v1.5-Kawaii_Future_Bass-LoRA .safetensors",
+          "bytes": 176210656,
+          "sha256": "05e8eb81d7ff5231ea218be2b0794cfd22c827ac971be4adeb320dd4fca90cb2",
+          "url": "https://huggingface.co/NoyzeAI/ACE-Step-v1.5-Kawaii_Future_Bass-LoRA/resolve/ff59d87469b4df3847b3a888b40d1b01b19956ee/ACE-Step-v1.5-Kawaii_Future_Bass-LoRA%20.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "chinese-new-year-v1",
+    "name": "Chinese New Year",
+    "maker": "ACE-Step",
+    "description": "Official festive-style experiment for research and personal evaluation.",
+    "tags": ["Festive", "Traditional", "Experiment"],
+    "format": "peft",
+    "sourceUrl": "https://huggingface.co/ACE-Step/ACE-Step-v1.5-chinese-new-year-LoRA",
+    "sourceRevision": "cb829a12775740c830a6d49795f16913065dc492",
+    "claimedLicense": "CreativeML Open RAIL-M (publisher claim)",
+    "terms": "The publisher documents this as a research-style experimental adapter; review its terms before use.",
+    "claimedBaseModel": "ACE-Step 1.5 DiT",
+    "compatibility": "unverified",
+    "rights": "research-only",
+    "installable": true,
+    "lane": "community",
+    "bytes": 88131333,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "adapter_config.json",
+          "bytes": 1053,
+          "sha256": "4e1269ebbd1bce070633c6e78779e8e407fb3f187e46aa2d5f2ee30941efc2eb",
+          "url": "https://huggingface.co/ACE-Step/ACE-Step-v1.5-chinese-new-year-LoRA/resolve/cb829a12775740c830a6d49795f16913065dc492/adapter_config.json?download=true"
+        },
+        {
+          "path": "adapter_model.safetensors",
+          "bytes": 88130280,
+          "sha256": "78650245c79cbfda7169eae34eb2ccb5f5e639b31a99da0a153a5bbd74194b0d",
+          "url": "https://huggingface.co/ACE-Step/ACE-Step-v1.5-chinese-new-year-LoRA/resolve/cb829a12775740c830a6d49795f16913065dc492/adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "deathstep-v1",
+    "name": "DEATHSTEP",
+    "maker": "ryanontheinside",
+    "description": "Aggressive bass-focused experiment with heavy growls and dark energy.",
+    "tags": ["Bass", "Aggressive", "Experiment"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/ryanontheinside/deathsteap_1",
+    "sourceRevision": "de649276593df20b772b6bc0dc07915617210236",
+    "claimedLicense": "Other (publisher claim)",
+    "terms": "Commercial and training-data rights are not established by the publisher information currently reviewed.",
+    "claimedBaseModel": "ACE-Step 1.5",
+    "compatibility": "unverified",
+    "rights": "unknown",
+    "installable": true,
+    "trigger": "deathstep, growl",
+    "defaultScale": 0.7,
+    "lane": "community",
+    "bytes": 88130248,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "deathsteap_1.safetensors",
+          "bytes": 88130248,
+          "sha256": "fd3132bb156df48237360d826e4fa41e23f4693c655960bdedfe604b637a4bd2",
+          "url": "https://huggingface.co/ryanontheinside/deathsteap_1/resolve/de649276593df20b772b6bc0dc07915617210236/deathsteap_1.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "ambient-dream-v1",
+    "name": "Ambient Dream",
+    "maker": "DisturbingTheField",
+    "description": "Slow, spacious instrumental ambience with a restrained dreamlike wash.",
+    "tags": ["Ambient", "Instrumental", "Atmospheric"],
+    "format": "peft",
+    "sourceUrl": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-ambient_dream1-LoRA",
+    "sourceRevision": "9b3544f78237b059a8774a3c50f69a9643edb0b5",
+    "claimedLicense": "MIT (publisher claim)",
+    "terms": "The publisher says it used self-recorded material, but Iblis has not verified that claim or the adapter runtime.",
+    "claimedBaseModel": "ACE-Step 1.5 Turbo",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "trigger": "ambient_dream1",
+    "defaultScale": 0.6,
+    "lane": "community",
+    "bytes": 88131333,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "adapter_config.json",
+          "bytes": 1053,
+          "sha256": "3e7ebdd74194b96a65cc706d793da84ed30ed500ad83175a65f7682c5bcb5bd4",
+          "url": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-ambient_dream1-LoRA/resolve/9b3544f78237b059a8774a3c50f69a9643edb0b5/adapter_config.json?download=true"
+        },
+        {
+          "path": "adapter_model.safetensors",
+          "bytes": 88130280,
+          "sha256": "e5e53064ab61233f1b3915c36b8977562852d6ebca6bdcbe2e4029a378fc359e",
+          "url": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-ambient_dream1-LoRA/resolve/9b3544f78237b059a8774a3c50f69a9643edb0b5/adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "raspy-instrumental-v1",
+    "name": "Raspy Instrumental",
+    "maker": "DisturbingTheField",
+    "description": "A rough-edged instrumental filter spanning guitar, bass, drums, piano, and synth.",
+    "tags": ["Instrumental", "Guitar", "Rough"],
+    "format": "peft",
+    "sourceUrl": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs",
+    "sourceRevision": "41c0afb54e8a3e51f4bf4af84d644f78a879c455",
+    "claimedLicense": "MIT (publisher claim)",
+    "terms": "The publisher describes self-recorded tracks. Iblis has not independently verified rights, compatibility, or audible results.",
+    "claimedBaseModel": "ACE-Step 1.5 Base and Turbo (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "defaultScale": 0.5,
+    "lane": "community",
+    "bytes": 176211709,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "adapter_config.json",
+          "bytes": 1053,
+          "sha256": "ac8c4e9780cde59a7c332abf0bfd0e8eff549ee31fce5dafe72f291f55e001be",
+          "url": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs/resolve/41c0afb54e8a3e51f4bf4af84d644f78a879c455/adapter_config.json?download=true"
+        },
+        {
+          "path": "instrumental_adapter_model.safetensors",
+          "bytes": 176210656,
+          "sha256": "33bb66ffe4502221f0bac8ba531636755e161b04090fc88a69226c78b9800726",
+          "url": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs/resolve/41c0afb54e8a3e51f4bf4af84d644f78a879c455/instrumental_adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "raspy-vocals-v1",
+    "name": "Raspy Vocals",
+    "maker": "DisturbingTheField",
+    "description": "A hoarse male-vocal color created from a small self-recorded vocal set.",
+    "tags": ["Vocals", "Raspy", "Experimental"],
+    "format": "peft",
+    "sourceUrl": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs",
+    "sourceRevision": "41c0afb54e8a3e51f4bf4af84d644f78a879c455",
+    "claimedLicense": "MIT (publisher claim)",
+    "terms": "The publisher attributes this to self-recorded vocals. Iblis has not independently verified rights, compatibility, or audible results.",
+    "claimedBaseModel": "ACE-Step 1.5 Base and Turbo (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "defaultScale": 0.5,
+    "lane": "community",
+    "bytes": 176211709,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "adapter_config.json",
+          "bytes": 1053,
+          "sha256": "ac8c4e9780cde59a7c332abf0bfd0e8eff549ee31fce5dafe72f291f55e001be",
+          "url": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs/resolve/41c0afb54e8a3e51f4bf4af84d644f78a879c455/adapter_config.json?download=true"
+        },
+        {
+          "path": "male_vocals_adapter_model.safetensors",
+          "bytes": 176210656,
+          "sha256": "502e15d117968be30ec87a57ca94cdfa0cd5fc945d7489b3fca4e9e17c32bfac",
+          "url": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs/resolve/41c0afb54e8a3e51f4bf4af84d644f78a879c455/male_vocals_adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "raspy-balanced-v1",
+    "name": "Raspy Blend",
+    "maker": "DisturbingTheField",
+    "description": "A publisher-made balance of raspy vocals and instrumental material.",
+    "tags": ["Vocals", "Instrumental", "Balanced"],
+    "format": "peft",
+    "sourceUrl": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs",
+    "sourceRevision": "41c0afb54e8a3e51f4bf4af84d644f78a879c455",
+    "claimedLicense": "MIT (publisher claim)",
+    "terms": "This is a publisher-made merge. Iblis has not independently verified its derivation, rights, compatibility, or audible results.",
+    "claimedBaseModel": "ACE-Step 1.5 Base and Turbo (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "defaultScale": 0.6,
+    "lane": "community",
+    "bytes": 176234477,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "adapter_config.json",
+          "bytes": 1053,
+          "sha256": "ac8c4e9780cde59a7c332abf0bfd0e8eff549ee31fce5dafe72f291f55e001be",
+          "url": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs/resolve/41c0afb54e8a3e51f4bf4af84d644f78a879c455/adapter_config.json?download=true"
+        },
+        {
+          "path": "adapter_model.safetensors",
+          "bytes": 176233424,
+          "sha256": "7bbfb690b7efb9d833ae1a3526e12a5f14dcc584859e69c8e663e7fec4a45f08",
+          "url": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs/resolve/41c0afb54e8a3e51f4bf4af84d644f78a879c455/adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "russian-pop-v1",
+    "name": "Russian Pop",
+    "maker": "kemendev",
+    "description": "A Russian-pop community style for ACE-Step 1.5.",
+    "tags": ["Russian pop", "Song", "Community"],
+    "format": "peft",
+    "sourceUrl": "https://huggingface.co/kemendev/russian-pop-lora",
+    "sourceRevision": "c45ffe3cf3cd5004c1943ab8ab12acf1125f2dfc",
+    "claimedLicense": "Not supplied",
+    "terms": "The publisher has not supplied a license or training-data rights statement in the reviewed record.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "unknown",
+    "installable": true,
+    "defaultScale": 0.7,
+    "lane": "community",
+    "bytes": 176211709,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "adapter_config.json",
+          "bytes": 1053,
+          "sha256": "484c4ea1b8135b0bce452d91778e3c2b3ae3330ed60981d6c3431dc48f675df7",
+          "url": "https://huggingface.co/kemendev/russian-pop-lora/resolve/c45ffe3cf3cd5004c1943ab8ab12acf1125f2dfc/adapter_config.json?download=true"
+        },
+        {
+          "path": "adapter_model.safetensors",
+          "bytes": 176210656,
+          "sha256": "961cd742a37bea4318096af8dc1f09045b3fc9bb96f9267248ce65f771942984",
+          "url": "https://huggingface.co/kemendev/russian-pop-lora/resolve/c45ffe3cf3cd5004c1943ab8ab12acf1125f2dfc/adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  }
+]

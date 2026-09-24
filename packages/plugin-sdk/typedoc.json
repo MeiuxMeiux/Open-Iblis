@@ -1,0 +1,9 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/index.ts"],
+  "out": "api-docs",
+  "name": "@iblis/plugin-sdk",
+  "readme": "README.md",
+  "excludePrivate": true,
+  "excludeInternal": true
+}

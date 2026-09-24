@@ -1,0 +1,98 @@
+# env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+# ...except the public verification keys, which ship in the app
+!apps/shell/electron/main/keys/catalog.pub.pem
+!apps/shell/electron/main/keys/license.pub.pem
+
+# node / pnpm
+node_modules/
+.pnpm-store/
+.npm/
+.yarn/
+
+# build outputs
+dist/
+build/
+out/
+release/
+*.tsbuildinfo
+coverage/
+# generated plugin-sdk reference (just sdk-docs)
+packages/plugin-sdk/api-docs/
+
+# electron-builder
+apps/shell/release/
+apps/shell/dist/
+apps/shell/.vite/
+apps/shell/.media-test/
+
+# python (only used in dev tooling, never runtime)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# php
+apps/site/vendor/
+apps/admin/vendor/
+apps/site/.phpunit.cache/
+apps/site/composer.phar
+
+# open-source export work tree + pinned scanners (see oss/)
+.oss-work/
+.oss-tools/
+
+# logs / temp
+.catalog-stage/
+# training-pack build cache + stage (multi-GB downloads; see tools/training-pack)
+.training-pack-cache/
+*.log
+logs/
+tmp/
+.tmp/
+*.swp
+*.swo
+
+# editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+!.vscode/extensions.json
+*.iml
+
+# binary blobs — keep under 10 MB rule
+*.gguf
+*.safetensors
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.dll
+
+# installer artifacts
+*.exe
+*.msi
+*.dmg
+*.pkg
+*.AppImage
+
+# audio / images that aren't repo fixtures
+/scratch/
+*.wav
+*.mp3
+*.flac
+!apps/site/public/assets/**
+!docs/**/*.png
+!docs/**/*.svg
+
+# image-generation working dirs (master copies live in GCS)
+tools/imagegen/out/
+tools/imagegen/ledger.jsonl

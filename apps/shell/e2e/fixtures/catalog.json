@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-07-22T08:54:52.987Z",
+  "plugins": [
+    {
+      "manifest": {
+        "id": "mx.iblis.processor.echo",
+        "name": "Echo Server",
+        "version": "0.1.0",
+        "kind": "processor",
+        "hostMinVersion": "0.0.0",
+        "capabilities": [
+          "echo"
+        ],
+        "executable": {
+          "bin": "echo-server.cjs",
+          "portArg": "--port",
+          "sessionEnv": "IBLIS_SESSION",
+          "healthPath": "/health",
+          "healthTimeoutMs": 5000
+        },
+        "license": "MIT",
+        "author": {
+          "name": "Meiux Meiux LLC",
+          "url": "https://iblis.meiuxmeiux.com"
+        },
+        "bugUrl": "https://iblis.meiuxmeiux.com/contact",
+        "assets": [
+          {
+            "path": "echo-server.cjs",
+            "sha256": "460ae7990ba27ae357b7b627044230e709364c472a50ba6450c13100129c830d",
+            "bytes": 3241,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.processor.echo/0.1.0/echo-server.cjs"
+              }
+            ]
+          }
+        ]
+      },
+      "channel": "stable"
+    },
+    {
+      "manifest": {
+        "id": "mx.iblis.skin.boodark-nord",
+        "name": "Boodark — Nord",
+        "version": "1.0.0",
+        "kind": "skin",
+        "hostMinVersion": "0.0.0",
+        "capabilities": [],
+        "license": "UNLICENSED",
+        "author": {
+          "name": "Meiux Meiux LLC",
+          "url": "https://iblis.meiuxmeiux.com"
+        },
+        "bugUrl": "https://iblis.meiuxmeiux.com/contact",
+        "assets": [
+          {
+            "path": "skin.json",
+            "sha256": "677e4709fb965931647d698db751ad012c4ea860c6bde7ef0278798cb586d139",
+            "bytes": 757,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/skins/mx.iblis.skin.boodark-nord/1.0.0/skin.json"
+              }
+            ]
+          },
+          {
+            "path": "extras.css",
+            "sha256": "87c9c7d41cc8f6b66f0b04b094dcf71dc18f4c9c74067507d1961d0b0e5be836",
+            "bytes": 478,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/skins/mx.iblis.skin.boodark-nord/1.0.0/extras.css"
+              }
+            ]
+          }
+        ]
+      },
+      "channel": "stable"
+    },
+    {
+      "manifest": {
+        "id": "mx.iblis.engine.acestep",
+        "name": "ACE-Step 1.5",
+        "version": "0.1.4",
+        "kind": "engine",
+        "hostMinVersion": "0.2.0-alpha.1",
+        "capabilities": [
+          "text-to-music"
+        ],
+        "executable": {
+          "bin": "ace-server.exe",
+          "portArg": "--port",
+          "args": [
+            "--models",
+            ".",
+            "--host",
+            "127.0.0.1",
+            "--keep-loaded"
+          ],
+          "healthPath": "/health",
+          "healthTimeoutMs": 300000,
+          "idleUnloadMinutes": 30
+        },
+        "presets": [
+          {
+            "id": "fast",
+            "name": "Fast",
+            "minVramMb": 4000
+          },
+          {
+            "id": "balanced",
+            "name": "Balanced",
+            "minVramMb": 6000
+          },
+          {
+            "id": "quality",
+            "name": "Quality",
+            "minVramMb": 12000
+          }
+        ],
+        "license": "MIT",
+        "author": {
+          "name": "Meiux Meiux LLC",
+          "url": "https://iblis.meiuxmeiux.com"
+        },
+        "bugUrl": "https://iblis.meiuxmeiux.com/contact",
+        "assets": [
+          {
+            "path": "ace-server.exe",
+            "sha256": "e9a0192174820158229860acbe101f24dbccbfef1ec29703590620cb3e46c2f0",
+            "bytes": 1408512,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/ace-server.exe"
+              }
+            ],
+            "executable": true
+          },
+          {
+            "path": "cudart64_12.dll",
+            "sha256": "760c38928bbe5759f7b31ed6692599eb7ec83cedd5702e84c2b72028a89837e1",
+            "bytes": 583680,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/cudart64_12.dll"
+              }
+            ]
+          },
+          {
+            "path": "cublas64_12.dll",
+            "sha256": "90052a83efd1b57a8e3616a6590b335855f81b814a4f16eecb7b5bf6d1b1d4eb",
+            "bytes": 102518272,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/cublas64_12.dll"
+              }
+            ]
+          },
+          {
+            "path": "cublasLt64_12.dll",
+            "sha256": "c3a05ea244c937314afec09f87b91f814c7e27977681f6c67eb51bb06ced3a4a",
+            "bytes": 668669952,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/cublasLt64_12.dll"
+              }
+            ]
+          },
+          {
+            "path": "vcruntime140.dll",
+            "sha256": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+            "bytes": 124544,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/vcruntime140.dll"
+              }
+            ]
+          },
+          {
+            "path": "vcruntime140_1.dll",
+            "sha256": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+            "bytes": 49792,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/vcruntime140_1.dll"
+              }
+            ]
+          },
+          {
+            "path": "msvcp140.dll",
+            "sha256": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+            "bytes": 557728,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/msvcp140.dll"
+              }
+            ]
+          },
+          {
+            "path": "concrt140.dll",
+            "sha256": "2405355f0a58067b258f8df33c327e3a3d716eaac5a3a5aebb757842d85bd376",
+            "bytes": 324208,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/concrt140.dll"
+              }
+            ]
+          },
+          {
+            "path": "ggml.dll",
+            "sha256": "b0ce031e1c66e7e94e74616f3db4c9c5dbbd4774ef3c3cdcbb28aa947c68cb91",
+            "bytes": 67072,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/ggml.dll"
+              }
+            ]
+          },
+          {
+            "path": "ggml-base.dll",
+            "sha256": "4a8e4dc994a8f8ea86ae4437d5557386acd959d1dde8fddfa691065e15182e37",
+            "bytes": 636928,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/ggml-base.dll"
+              }
+            ]
+          },
+          {
+            "path": "ggml-cpu.dll",
+            "sha256": "11d4286ed883c6e4c1612f86d7783775f4c51d3262bea5c65a8991ad8ea16c0e",
+            "bytes": 788480,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/ggml-cpu.dll"
+              }
+            ]
+          },
+          {
+            "path": "ggml-cuda.dll",
+            "sha256": "67b85493de7516a095d415f63983dd0d1daa626f7a0f1311eb8682ae5d71750a",
+            "bytes": 110000128,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/0.1.4/ggml-cuda.dll"
+              }
+            ]
+          },
+          {
+            "path": "acestep-5Hz-lm-1.7B-Q8_0.gguf",
+            "sha256": "726f99a82f050b32ebc5c5e36acaa9d7acd06bfe5e579a62b00e0d0d6d0b7ec6",
+            "bytes": 1975837568,
+            "sources": [
+              {
+                "kind": "vendor",
+                "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF/resolve/main/acestep-5Hz-lm-1.7B-Q8_0.gguf"
+              }
+            ]
+          },
+          {
+            "path": "Qwen3-Embedding-0.6B-Q8_0.gguf",
+            "sha256": "972f23255e46adfe744a0eb9a0039f3c63988f65753b0968d776e8b27168c321",
+            "bytes": 784144960,
+            "sources": [
+              {
+                "kind": "vendor",
+                "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF/resolve/main/Qwen3-Embedding-0.6B-Q8_0.gguf"
+              }
+            ]
+          },
+          {
+            "path": "acestep-v15-turbo-Q8_0.gguf",
+            "sha256": "288f708a61cfc241013a98a62f98ba331f83fe34d0d3559acdd9b0f6a2f7cd6b",
+            "bytes": 2549528000,
+            "sources": [
+              {
+                "kind": "vendor",
+                "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF/resolve/main/acestep-v15-turbo-Q8_0.gguf"
+              }
+            ]
+          },
+          {
+            "path": "vae-BF16.gguf",
+            "sha256": "0599862ac5d15cd308e1d2e368373aea6c02e25ebd1737ad4a4562a0901b0ef8",
+            "bytes": 337420928,
+            "sources": [
+              {
+                "kind": "vendor",
+                "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF/resolve/main/vae-BF16.gguf"
+              }
+            ]
+          }
+        ]
+      },
+      "channel": "beta"
+    },
+    {
+      "manifest": {
+        "id": "mx.iblis.engine.fixture",
+        "name": "Fixture Engine",
+        "version": "0.1.0",
+        "kind": "engine",
+        "hostMinVersion": "0.2.0-alpha.43",
+        "capabilities": [
+          "text-to-music"
+        ],
+        "engine": {
+          "protocolVersion": 2,
+          "descriptorAsset": "engine.v2.json",
+          "execution": "local-sidecar"
+        },
+        "executable": {
+          "bin": "fixture-engine.cjs",
+          "portArg": "--port",
+          "sessionEnv": "IBLIS_SESSION",
+          "healthPath": "/health",
+          "healthTimeoutMs": 5000,
+          "idleUnloadMinutes": 1
+        },
+        "license": "MIT",
+        "author": {
+          "name": "Meiux Meiux LLC",
+          "url": "https://iblis.meiuxmeiux.com"
+        },
+        "bugUrl": "https://iblis.meiuxmeiux.com/contact",
+        "assets": [
+          {
+            "path": "fixture-engine.cjs",
+            "sha256": "5cec801ff8555473b488021237d5d8fe129e0c06d7557be12c5d9560d71d74c8",
+            "bytes": 11056,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.fixture/0.1.0/fixture-engine.cjs"
+              }
+            ]
+          },
+          {
+            "path": "engine.v2.json",
+            "sha256": "6a89e316fa73454a4363658f080f8ce1ba9ad14074fcd3dea4fd33e043a69018",
+            "bytes": 1505,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.fixture/0.1.0/engine.v2.json"
+              }
+            ]
+          }
+        ]
+      },
+      "channel": "beta"
+    },
+    {
+      "manifest": {
+        "id": "mx.iblis.training.acestep",
+        "name": "ACE-Step 1.5 Training",
+        "version": "0.1.1",
+        "kind": "training",
+        "hostMinVersion": "0.2.0-alpha.19",
+        "capabilities": [
+          "lora-training"
+        ],
+        "executable": {
+          "bin": "runtime/python.exe",
+          "portArg": "--port",
+          "args": [
+            "-I",
+            "-m",
+            "iblis_train"
+          ],
+          "healthPath": "/health",
+          "healthTimeoutMs": 120000
+        },
+        "license": "MIT",
+        "author": {
+          "name": "Meiux Meiux LLC",
+          "url": "https://iblis.meiuxmeiux.com"
+        },
+        "bugUrl": "https://iblis.meiuxmeiux.com/contact",
+        "assets": [
+          {
+            "path": "runtime.zip",
+            "sha256": "78e1b451841a80bb4097465bba7e4a23bed61cf7f040243a15435971c6a33952",
+            "bytes": 8601263749,
+            "sources": [
+              {
+                "kind": "gcs",
+                "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.training.acestep/0.1.1/runtime.zip"
+              }
+            ],
+            "unpack": "zip"
+          }
+        ]
+      },
+      "channel": "beta"
+    },
+    {
+      "manifest": {
+        "id": "mx.iblis.cloud.openrouter",
+        "name": "OpenRouter Cloud Provider",
+        "version": "0.1.0",
+        "kind": "cloud-provider",
+        "hostMinVersion": "0.2.0-alpha.34",
+        "capabilities": [
+          "song-ideas",
+          "lyrics-assistance"
+        ],
+        "cloudProvider": {
+          "id": "openrouter"
+        },
+        "license": "UNLICENSED",
+        "author": {
+          "name": "Meiux Meiux LLC",
+          "url": "https://iblis.meiuxmeiux.com"
+        },
+        "assets": []
+      },
+      "channel": "beta"
+    },
+    {
+      "manifest": {
+        "id": "mx.iblis.cloud.imagerouter",
+        "name": "ImageRouter Cloud Provider",
+        "version": "0.1.0",
+        "kind": "cloud-provider",
+        "hostMinVersion": "0.2.0-alpha.34",
+        "capabilities": [
+          "cover-generation"
+        ],
+        "cloudProvider": {
+          "id": "imagerouter"
+        },
+        "license": "UNLICENSED",
+        "author": {
+          "name": "Meiux Meiux LLC",
+          "url": "https://iblis.meiuxmeiux.com"
+        },
+        "assets": []
+      },
+      "channel": "beta"
+    }
+  ]
+}

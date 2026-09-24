@@ -1,0 +1,345 @@
+[
+  {
+    "id": "funk-dora-v2",
+    "name": "FUNK_A DoRA",
+    "maker": "ryanontheinside",
+    "description": "Funk-oriented DoRA experiment authored for the ACE-Step Base DiT.",
+    "tags": ["Funk", "DoRA", "Base model"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/ryanontheinside/funk50-acestep1.5-dora-v2",
+    "sourceRevision": "8c7f3dd9e6afd4abe0c246b68c7db9b9bc9bc5e6",
+    "claimedLicense": "Other (publisher claim)",
+    "terms": "The publisher mirrors a third-party asset; Iblis has not verified redistribution, rights, or Turbo compatibility.",
+    "claimedBaseModel": "ACE-Step Base DiT at 50 steps",
+    "compatibility": "different-model",
+    "rights": "unknown",
+    "installable": true,
+    "availabilityNote": "Your installed engine is Turbo-only; this remains an Experimental download and proof candidate.",
+    "lane": "experimental",
+    "bytes": 164959808,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "funk50-acestep1.5-dora-v2.safetensors",
+          "bytes": 164959808,
+          "sha256": "337bf20b667b59eb158f9c287bb3f439f1d19d00e481fa226a186a164a3e97b7",
+          "url": "https://huggingface.co/ryanontheinside/funk50-acestep1.5-dora-v2/resolve/8c7f3dd9e6afd4abe0c246b68c7db9b9bc9bc5e6/funk50-acestep1.5-dora-v2.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "super-eurobeats-v1",
+    "name": "Super Eurobeats",
+    "maker": "tarn59",
+    "description": "A community Eurobeat LoRA listed against ACE-Step 1.5.",
+    "tags": ["Eurobeat", "Community", "Unverified"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/tarn59/super_eurobeats_ACE_STEP-1.5-lora",
+    "sourceRevision": "cce3124c1491aca7f15a127435103875499a5394",
+    "claimedLicense": "Apache-2.0 (publisher claim)",
+    "terms": "Iblis has not evaluated the publisher claims, data provenance, format, or runtime behavior.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "lane": "experimental",
+    "bytes": 176231008,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "adapter_model.safetensors",
+          "bytes": 176231008,
+          "sha256": "4be7b23f5f36cf5703d83133df4565a07309d7ca0cf84d512b0b93dac8064f26",
+          "url": "https://huggingface.co/tarn59/super_eurobeats_ACE_STEP-1.5-lora/resolve/cce3124c1491aca7f15a127435103875499a5394/adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "acoustic-guitar-v1",
+    "name": "Acoustic Guitar",
+    "maker": "DisturbingTheField",
+    "description": "A publisher-listed acoustic-guitar LoRA.",
+    "tags": ["Acoustic", "Guitar", "Unverified"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-acoustic-guitar-and-a-merge-LoRA",
+    "sourceRevision": "041aa44bbd79a685fa40d652078ecd6c91da18e9",
+    "claimedLicense": "MIT (publisher claim)",
+    "terms": "Iblis has not independently verified the model card, training material, format, or native loading.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "lane": "experimental",
+    "bytes": 176210656,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "adapter_model.safetensors",
+          "bytes": 176210656,
+          "sha256": "58adb4f3d4fd3f9bd270560bf8446314a424410aafb32870bed3099937bcc77f",
+          "url": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-acoustic-guitar-and-a-merge-LoRA/resolve/041aa44bbd79a685fa40d652078ecd6c91da18e9/adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "acoustic-vocal-merge-v1",
+    "name": "Acoustic Vocal Merge",
+    "maker": "DisturbingTheField",
+    "description": "A publisher-made vocal and instrumental merge from the acoustic-guitar collection.",
+    "tags": ["Acoustic", "Vocals", "Merge"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-acoustic-guitar-and-a-merge-LoRA",
+    "sourceRevision": "041aa44bbd79a685fa40d652078ecd6c91da18e9",
+    "claimedLicense": "MIT (publisher claim)",
+    "terms": "This is an unverified publisher merge; Iblis has not evaluated derivation, rights, format, or native loading.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "lane": "experimental",
+    "bytes": 176233424,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "vocal_instrument_merge_adapter_model.safetensors",
+          "bytes": 176233424,
+          "sha256": "7444f41abd2b3be8ee372cada44a9854a97e62caddefe66f20609b1554dc3d28",
+          "url": "https://huggingface.co/DisturbingTheField/ACE-Step-v1.5-acoustic-guitar-and-a-merge-LoRA/resolve/041aa44bbd79a685fa40d652078ecd6c91da18e9/vocal_instrument_merge_adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "raspy-vocals-06-v1",
+    "name": "Raspy Vocals 60/40",
+    "maker": "m125148",
+    "description": "A mirror-published vocal-heavy raspy blend.",
+    "tags": ["Vocals", "Raspy", "Mirror"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/m125148/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs",
+    "sourceRevision": "28e125e64910469e6477fc994b12c3e30c55441c",
+    "claimedLicense": "MIT (publisher claim)",
+    "terms": "This mirror and its derivation have not been independently verified by Iblis.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "lane": "experimental",
+    "bytes": 176233424,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "voc_06_inst_14___adapter_model.safetensors",
+          "bytes": 176233424,
+          "sha256": "ca0242217b1c03c08157a465cd3cc9efa5312947657806d1b85c1c1eedccdb4c",
+          "url": "https://huggingface.co/m125148/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs/resolve/28e125e64910469e6477fc994b12c3e30c55441c/voc_06_inst_14___adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "raspy-instrumental-06-v1",
+    "name": "Raspy Instrumental 60/40",
+    "maker": "m125148",
+    "description": "A mirror-published instrumental-heavy raspy blend.",
+    "tags": ["Instrumental", "Raspy", "Mirror"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/m125148/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs",
+    "sourceRevision": "28e125e64910469e6477fc994b12c3e30c55441c",
+    "claimedLicense": "MIT (publisher claim)",
+    "terms": "This mirror and its derivation have not been independently verified by Iblis.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "lane": "experimental",
+    "bytes": 176233424,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "voc_14_inst_06___adapter_model.safetensors",
+          "bytes": 176233424,
+          "sha256": "c7d3f70fa0911072f98b9f0c9f44a0758e70817374d5a3a2de7d8f08a2ee21f4",
+          "url": "https://huggingface.co/m125148/ACE-Step-v1.5-raspy-vocal-and-instrumental-5-LoRAs/resolve/28e125e64910469e6477fc994b12c3e30c55441c/voc_14_inst_06___adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "russian-rap-final-v1",
+    "name": "Russian Rap Final",
+    "maker": "ruslanmusinrusmus",
+    "description": "The publisher’s final Russian-rap checkpoint.",
+    "tags": ["Rap", "Russian", "Checkpoint"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/ruslanmusinrusmus/russianrap-v2-lora",
+    "sourceRevision": "5b915de142b3c5722192d69be548e32904cc0267",
+    "claimedLicense": "Not supplied",
+    "terms": "The publisher record does not provide a license; Iblis has not evaluated its training source, format, or compatibility.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "unknown",
+    "installable": true,
+    "lane": "experimental",
+    "bytes": 176210656,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "v15-final/adapter_model.safetensors",
+          "bytes": 176210656,
+          "sha256": "27a92bd00c3928756541dd99a033aef9b3d860ed599bec3e3c3c6428cfe0a0ee",
+          "url": "https://huggingface.co/ruslanmusinrusmus/russianrap-v2-lora/resolve/5b915de142b3c5722192d69be548e32904cc0267/v15-final%2Fadapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "zulu-final-v1",
+    "name": "Zulu Fine-tune",
+    "maker": "Gyimah3",
+    "description": "The publisher’s final Zulu ACE-Step 1.5 adapter checkpoint.",
+    "tags": ["Zulu", "Fine-tune", "Checkpoint"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/Gyimah3/ACE-Step1.5-Zulu-Finteuned",
+    "sourceRevision": "40171ce56ba143df172c86b6e5cf475118cf89e7",
+    "claimedLicense": "Apache-2.0 (publisher claim)",
+    "terms": "Iblis has not independently verified language data, rights, format, or runtime compatibility.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "lane": "experimental",
+    "bytes": 176211424,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "checkpoints/final/adapter_model.safetensors",
+          "bytes": 176211424,
+          "sha256": "0692484fc03e28236e0afa45889ce6166bc7f8c097887aaccf8e08104410228e",
+          "url": "https://huggingface.co/Gyimah3/ACE-Step1.5-Zulu-Finteuned/resolve/40171ce56ba143df172c86b6e5cf475118cf89e7/checkpoints%2Ffinal%2Fadapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "redmond-refine-v1",
+    "name": "Redmond Refine",
+    "maker": "artificialguybr",
+    "description": "A standard-format refine LoRA from the publisher’s ACE-Step record.",
+    "tags": ["Refine", "Community", "Unverified"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/artificialguybr/AceStep_Refine_Redmond",
+    "sourceRevision": "14720050154ec914db3ed62be9cc41605265763a",
+    "claimedLicense": "MIT (publisher claim)",
+    "terms": "Iblis has not evaluated the source material, stated intent, format, or native loader behavior.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "lane": "experimental",
+    "bytes": 132170688,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "standard/AceStep_Refine_Redmond_standard.safetensors",
+          "bytes": 132170688,
+          "sha256": "4091beb6516a3e29ac337545fe94851a0a8812ac6c1644e0ad8307272144b5f1",
+          "url": "https://huggingface.co/artificialguybr/AceStep_Refine_Redmond/resolve/14720050154ec914db3ed62be9cc41605265763a/standard%2FAceStep_Refine_Redmond_standard.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "purple-posse-v1",
+    "name": "Purple Posse",
+    "maker": "tim-dude",
+    "description": "A community ACE-Step 1.5 adapter record with no supplied license.",
+    "tags": ["Community", "Unknown terms", "Unverified"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/tim-dude/purpleposse1",
+    "sourceRevision": "7dcce8aefe40af5bd80e3977bd3e89a663e7cadc",
+    "claimedLicense": "Not supplied",
+    "terms": "No license or compatibility evidence was supplied in the publisher record reviewed by Iblis.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "unknown",
+    "installable": true,
+    "lane": "experimental",
+    "bytes": 114117328,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "adapter_model.safetensors",
+          "bytes": 114117328,
+          "sha256": "9ab50b717193f1db3292fbda91b79862d4f93ac016b2a872cceac42636a99fcc",
+          "url": "https://huggingface.co/tim-dude/purpleposse1/resolve/7dcce8aefe40af5bd80e3977bd3e89a663e7cadc/adapter_model.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "synthpop-v1",
+    "name": "Synthpop",
+    "maker": "daydreamlive",
+    "description": "A single-file Synthpop LoRA published against ACE-Step 1.5.",
+    "tags": ["Synthpop", "Community", "Unverified"],
+    "format": "safetensors",
+    "sourceUrl": "https://huggingface.co/daydreamlive/synthpop",
+    "sourceRevision": "e9a64ce1cd65a175b8d5b34c4076256acc5b1b51",
+    "claimedLicense": "Apache-2.0 (publisher claim)",
+    "terms": "Iblis has not evaluated the publisher’s data, claims, file format, or runtime behavior.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "installable": true,
+    "lane": "experimental",
+    "bytes": 88130280,
+    "requiresRiskAcknowledgement": true,
+    "download": {
+      "files": [
+        {
+          "path": "synthpop.safetensors",
+          "bytes": 88130280,
+          "sha256": "6f66ef8fa9feddd59716bb8e90a89bb185efcad6024937d04733720dc417992f",
+          "url": "https://huggingface.co/daydreamlive/synthpop/resolve/e9a64ce1cd65a175b8d5b34c4076256acc5b1b51/synthpop.safetensors?download=true"
+        }
+      ]
+    }
+  },
+  {
+    "id": "demon-reference-v1",
+    "name": "DEMON",
+    "maker": "daydreamlive",
+    "description": "An ACE-Step-related Audio-to-Audio record, not a downloadable adapter weight.",
+    "tags": ["Audio-to-Audio", "No adapter file"],
+    "format": "safetensors",
+    "bytes": 0,
+    "sourceUrl": "https://huggingface.co/daydreamlive/DEMON",
+    "sourceRevision": "4de9c17cafcf9781b2362964268d8f28d804eb14",
+    "claimedLicense": "MIT (publisher claim)",
+    "terms": "The publisher record exposes no Safetensors or PEFT adapter weight to pin and import.",
+    "claimedBaseModel": "ACE-Step 1.5 (publisher claim)",
+    "compatibility": "unverified",
+    "rights": "commercial-claim",
+    "requiresRiskAcknowledgement": true,
+    "installable": false,
+    "availabilityNote": "No adapter-weight file is published; use Source & terms to follow the project.",
+    "lane": "experimental",
+    "download": {
+      "files": []
+    }
+  }
+]

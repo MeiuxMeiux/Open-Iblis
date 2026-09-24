@@ -1,0 +1,33 @@
+{
+  "id": "mx.iblis.skin.boodark-nord",
+  "name": "Boodark — Nord",
+  "version": "1.0.1",
+  "kind": "skin",
+  "hostMinVersion": "0.0.0",
+  "capabilities": [],
+  "assets": [
+    {
+      "path": "skin.json",
+      "file": "skin.json",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/skins/mx.iblis.skin.boodark-nord/{version}/skin.json"
+        }
+      ]
+    },
+    {
+      "path": "extras.css",
+      "file": "extras.css",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/skins/mx.iblis.skin.boodark-nord/{version}/extras.css"
+        }
+      ]
+    }
+  ],
+  "license": "MIT",
+  "author": { "name": "Meiux Meiux LLC", "url": "https://iblis.meiuxmeiux.com" },
+  "bugUrl": "https://iblis.meiuxmeiux.com/contact"
+}

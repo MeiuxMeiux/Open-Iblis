@@ -1,0 +1,52 @@
+name: dco
+
+# Fails a pull request when any of its commits lacks a Signed-off-by trailer
+# matching the commit author (Developer Certificate of Origin). Plain git over
+# the PR range; no third-party action, no secrets.
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  signoff:
+    name: every commit is signed off
+    # Dependabot cannot sign off; maintainers review its updates by hand.
+    if: github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check Signed-off-by trailers
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+          missing=0
+          count=0
+          for sha in $(git rev-list --no-merges "$BASE_SHA..$HEAD_SHA"); do
+            count=$((count + 1))
+            email="$(git show -s --format='%ae' "$sha")"
+            signoffs="$(git show -s --format='%(trailers:key=Signed-off-by,valueonly)' "$sha")"
+            if ! printf '%s\n' "$signoffs" | grep -qiF "<$email>"; then
+              missing=$((missing + 1))
+              echo "missing sign-off: $(git show -s --format='%h' "$sha") by <$email>"
+              echo "  subject: $(git show -s --format='%s' "$sha")"
+            fi
+          done
+          echo "checked $count commit(s)"
+          if [ "$missing" -gt 0 ]; then
+            echo "::error::$missing commit(s) lack a Signed-off-by line matching the author. Sign with 'git commit -s'; fix a branch with 'git rebase --signoff main' and force-push. See CONTRIBUTING.md."
+            exit 1
+          fi

@@ -1,0 +1,11 @@
+out
+release
+dist
+node_modules
+.vite
+pnpm-lock.yaml
+*.pem
+eslint-suppressions.json
+coverage
+# Signed bytes: any reformat breaks the signature.
+e2e/fixtures

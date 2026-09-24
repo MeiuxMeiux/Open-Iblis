@@ -1,0 +1,75 @@
+{
+  "electron/main/adapters/compatibility-proof.ts": {
+    "@typescript-eslint/no-base-to-string": {
+      "count": 1
+    }
+  },
+  "electron/main/cloud-providers/index.ts": {
+    "@typescript-eslint/no-dynamic-delete": {
+      "count": 2
+    }
+  },
+  "electron/main/engine/defaults.ts": {
+    "@typescript-eslint/no-dynamic-delete": {
+      "count": 1
+    }
+  },
+  "electron/main/engine/drivers/v2/driver.ts": {
+    "@typescript-eslint/require-await": {
+      "count": 1
+    }
+  },
+  "electron/main/generation-queue/leases.ts": {
+    "@typescript-eslint/require-await": {
+      "count": 1
+    }
+  },
+  "electron/main/generation-queue/scheduler.ts": {
+    "@typescript-eslint/require-await": {
+      "count": 3
+    }
+  },
+  "electron/main/library/analysis/index.ts": {
+    "@typescript-eslint/no-base-to-string": {
+      "count": 2
+    }
+  },
+  "electron/main/library/analysis/waveform-worker.ts": {
+    "@typescript-eslint/no-base-to-string": {
+      "count": 1
+    }
+  },
+  "electron/main/processors/builtin/client.ts": {
+    "@typescript-eslint/require-await": {
+      "count": 3
+    }
+  },
+  "electron/main/processors/scheduler.ts": {
+    "@typescript-eslint/require-await": {
+      "count": 1
+    }
+  },
+  "electron/main/processors/store.ts": {
+    "@typescript-eslint/no-dynamic-delete": {
+      "count": 1
+    }
+  },
+  "electron/main/training/pipeline.ts": {
+    "@typescript-eslint/no-dynamic-delete": {
+      "count": 1
+    },
+    "@typescript-eslint/require-await": {
+      "count": 1
+    }
+  },
+  "electron/main/training/remote.ts": {
+    "@typescript-eslint/no-base-to-string": {
+      "count": 3
+    }
+  },
+  "electron/main/training/upload-flow.ts": {
+    "@typescript-eslint/no-base-to-string": {
+      "count": 3
+    }
+  }
+}

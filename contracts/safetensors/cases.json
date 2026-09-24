@@ -1,0 +1,229 @@
+[
+  {
+    "name": "one tensor",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "metadata object of strings",
+    "header": "{\"__metadata__\":{\"format\":\"pt\"},\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "empty metadata object",
+    "header": "{\"__metadata__\":{},\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "scalar tensor, empty shape",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[],\"data_offsets\":[0,4]}}",
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "zero-length tensor",
+    "header": "{\"w\":{\"dtype\":\"U8\",\"shape\":[0],\"data_offsets\":[8,8]}}",
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "tensor named 0",
+    "header": "{\"0\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "space-padded header",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}}        ",
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "offsets end at the last byte",
+    "header": "{\"w\":{\"dtype\":\"U8\",\"shape\":[8],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "header length 128 (first byte 0x80)",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}}",
+    "padTo": 128,
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "header length 0x4b50 (first bytes PK)",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}}",
+    "padTo": 19280,
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "boolean dimension",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[true],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "offsets past the data",
+    "header": "{\"w\":{\"dtype\":\"U8\",\"shape\":[9],\"data_offsets\":[0,9]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "offsets reversed",
+    "header": "{\"w\":{\"dtype\":\"U8\",\"shape\":[1],\"data_offsets\":[4,3]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "negative offset",
+    "header": "{\"w\":{\"dtype\":\"U8\",\"shape\":[1],\"data_offsets\":[-1,3]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "float dimension",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2.0],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "exponent dimension",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2e0],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "float offset",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8.0]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "negative dimension",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[-2],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "shape is an object",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":{},\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "offsets are an object",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":{\"0\":0,\"1\":8}}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "three offsets",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,4,8]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "unknown dtype",
+    "header": "{\"w\":{\"dtype\":\"F128\",\"shape\":[2],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "extra tensor field",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8],\"x\":1}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "missing tensor field",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "tensor is an array",
+    "header": "{\"w\":[\"F32\",[2],[0,8]]}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "metadata is an array",
+    "header": "{\"__metadata__\":[\"pt\"],\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "metadata value is a number",
+    "header": "{\"__metadata__\":{\"n\":1},\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "metadata only",
+    "header": "{\"__metadata__\":{\"format\":\"pt\"}}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "empty object",
+    "header": "{}",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "header is an array",
+    "header": "[{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}]",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "header is not JSON",
+    "header": "{\"w\":",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "header is a string",
+    "header": "\"w\"",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "invalid UTF-8",
+    "headerBase64": "eyJfX21ldGFkYXRhX18iOnsibiI6Iv8ifSwidyI6eyJkdHlwZSI6IkYzMiIsInNoYXBlIjpbMl0sImRhdGFfb2Zmc2V0cyI6WzAsOF19fQ==",
+    "dataBytes": 8,
+    "ok": false
+  },
+  {
+    "name": "header length past the file",
+    "raw": "ff000000000000007b7d",
+    "ok": false
+  },
+  {
+    "name": "header length over 1 MiB",
+    "raw": "01001000000000007b7d",
+    "ok": false
+  },
+  {
+    "name": "too small",
+    "raw": "0200000000000000",
+    "ok": false
+  },
+  {
+    "name": "pickle lead bytes",
+    "raw": "80049563000000000000007d",
+    "ok": false,
+    "reason": "pickle/zip"
+  },
+  {
+    "name": "zip lead bytes",
+    "raw": "504b030414000000080000",
+    "ok": false,
+    "reason": "pickle/zip"
+  }
+]

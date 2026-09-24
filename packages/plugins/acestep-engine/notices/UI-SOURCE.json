@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "files": [
+    {
+      "filename": "licenses/svelte-MIT.txt",
+      "component": "Svelte",
+      "version": "5.55.2",
+      "revision": "2e29c87cc9f41ce3cab70ce3cff0c6dc85b009f5",
+      "sourceUrl": "https://raw.githubusercontent.com/sveltejs/svelte/2e29c87cc9f41ce3cab70ce3cff0c6dc85b009f5/LICENSE.md",
+      "textSha256": "06257f4847b13a49a039efb17b944c141e71b12fd8d231b362d86919067d77a3"
+    },
+    {
+      "filename": "licenses/lucide-ISC-and-Feather-MIT.txt",
+      "component": "Lucide",
+      "version": "0.577.0",
+      "revision": "0ea8780434e2b4527dc860b18ff94883d080b59c",
+      "sourceUrl": "https://raw.githubusercontent.com/lucide-icons/lucide/0ea8780434e2b4527dc860b18ff94883d080b59c/LICENSE",
+      "textSha256": "668dcc52803480e0a026b31140a4cae668772663cd764e5991d252eef03f98db"
+    },
+    {
+      "filename": "licenses/yaml-ISC.txt",
+      "component": "YAML",
+      "version": "2.8.4",
+      "revision": "ccdf7439587544f64223429498a1d9ec514eaac1",
+      "sourceUrl": "https://raw.githubusercontent.com/eemeli/yaml/ccdf7439587544f64223429498a1d9ec514eaac1/LICENSE",
+      "textSha256": "5bba27375d93e9119f76c1015f7672cf9ad5f70952296e0842fb2243d6376869"
+    },
+    {
+      "filename": "licenses/clsx-MIT.txt",
+      "component": "clsx",
+      "version": "2.1.1",
+      "revision": "925494cf31bcd97d3337aacd34e659e80cae7fe2",
+      "sourceUrl": "https://raw.githubusercontent.com/lukeed/clsx/925494cf31bcd97d3337aacd34e659e80cae7fe2/license",
+      "textSha256": "9a9edad7baae52622bddf3c15b2ef8a33d2c89f2d25408ad13e8a7481c6b0c97"
+    },
+    {
+      "filename": "licenses/esm-env-MIT.txt",
+      "component": "esm-env",
+      "version": "1.2.2",
+      "revision": "29965dc0db750c27616db85262817f5d40e6cc79",
+      "sourceUrl": "https://raw.githubusercontent.com/benmccann/esm-env/29965dc0db750c27616db85262817f5d40e6cc79/LICENSE",
+      "textSha256": "a00d58e4ec7b7df7d1b0d7814f86db56a8a7393c827d513aca9739207e4336f3"
+    }
+  ]
+}

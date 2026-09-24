@@ -1,0 +1,188 @@
+# acestep-engine — upstream pin
+#
+# The Iblis music engine wraps ServeurpersoCom/acestep.cpp (a portable C++17
+# GGML implementation of ACE-Step 1.5). This file pins the exact upstream the
+# Spike-0 CI workflow (.github/workflows/engine-build.yml) checks out and builds.
+# Bump it deliberately, re-confirm the LICENSE at the new SHA, and re-run the
+# Windows smoke before shipping any catalog entry. See docs/phase-3-plan.md.
+
+repo    = https://github.com/ServeurpersoCom/acestep.cpp
+commit  = 9761469d95fc204b5468623c68a1a2203e50b1f9   # master, 2026-08-08
+desc    = "lm: heterogeneous request batching on a single generate entry
+#         point" — head of the Jul-12..Aug-08 batch (10 commits past 948b929):
+#         direct static graph execution for LM and DiT (f335633), loader
+#         u32-count validation (7eb2777), GGML fork bumps for CUDA k-quant /
+#         full GET_ROWS coverage (969602a, 54bd7e4, fa33775), and the /lm
+#         array entry point (9761469). Server API: POST /lm now accepts an
+#         AceRequest OR [AceRequest, ...]; the single-object form Iblis sends
+#         is behaviour-preserving (expands to lm_batch_size seed variants and
+#         now resolves `seed` alongside `lm_seed` before the worker runs).
+#         /synth, /job, /props, /health unchanged. Compat driver re-validated
+#         2026-08-24 against tools/ace-server.cpp at this SHA: no change.
+# prev  = 948b92977eda15c28b052bb59ecf04142e147564   # master, 2026-07-11 (packs 0.1.3-0.1.4)
+# prev  = 4922ed10a925a11b479c0b2a281f954810b9a7e9   # master, 2026-05-20 (packs <= 0.1.2)
+
+# ---- License (Charter Q6 / phase-3-plan R5) --------------------------------
+# RESOLVED 2026-06-09, RE-VERIFIED 2026-07-12 at 948b929 and 2026-08-24 at
+# 9761469 (LICENSE blob 60b5693f5da9c859e4e767fdf4ef4b1e847916a7, unchanged):
+# MIT LICENSE present
+#   "Copyright (c) 2023-2026 The acestep.cpp authors"
+# (GitHub license API reports SPDX MIT). MIT permits redistribution of the
+# unmodified source + built binaries inside the plugin folder. Re-verify the
+# LICENSE on every pin bump.
+
+# ---- Verified source/binary dependency closure (2026-07-13, re-run 2026-08-24)
+# The only gitlink at the ACE pin is:
+#   ggml = c044c6f03892f9d5e98213b05f8afea1f8b0d3c9   (was b677b63 at 948b929)
+# It is the sole entry in ACE's .gitmodules. That GGML tree has an empty
+# .gitmodules and no gitlinks, so recursive checkout stops there.
+# ServeurpersoCom/ggml is a fork of ggml-org/ggml; this exact commit also
+# exists in the canonical repo (fetched from ggml-org/ggml 2026-08-24). Its
+# LICENSE is the same blob e7dca554bcb802f98408383a864404e3aa4eacca.
+# GGML records these source-sync markers at c044c6f:
+#   llama.cpp  = 635cdd5fcc5bdeb8ec2e108bb2a40acf62d9039b
+#   whisper.cpp = 7695a5331230c585f5ce92291c4256973985ae5a
+# (at b677b63 they were 8141e730f1598780c19b153e0e212ed70a672c53 and
+# 865ec171aa83625a388bce0b43f091bb3054f56b)
+# They come from scripts/sync-{llama,whisper}.last; they are provenance markers,
+# not submodules. GGML, llama.cpp, and whisper.cpp use the same MIT LICENSE blob
+# e7dca554bcb802f98408383a864404e3aa4eacca (2023-2026 The ggml authors).
+# The selected CPU/CUDA sources also contain YaRN-derived code under MIT:
+# jquesnelle/yarn@a18e54988639030e706f6ff9db224cf74e08a65a.
+#
+# ace-server.exe statically incorporates these vendored sources:
+#   cpp-httplib 0.44.0 @ 811dd0b6f2382f50f801f3cfdb5ba349d08bb575
+#   yyjson (version 0.12.0) @ de7abc1aede96d4a968a9e668524b1aad4df4258
+#   minimp3 file blob 3220ae1a85b858a95af5766155ada91304344465
+# cpp-httplib's split files match that tag. ACE's yyjson blobs match that exact
+# upstream tree. All three vendored trees and tools/public/index.html.gz are
+# blob-identical between 948b929 and 9761469 (verified 2026-08-24), so the
+# vendored notice set below carries over unchanged. The minimp3 blob is unchanged since upstream commit ca7c706;
+# the copied checkout is not recorded, so preserve blob-level provenance. The
+# ACE-authored mp3enc remains under ACE's top-level MIT license.
+# ace-server also embeds tools/public/index.html.gz. Its shipped UI runtime is
+# Svelte 5.55.2, Lucide 0.577.0, and yaml 2.8.4; carry clsx 2.1.1 and esm-env
+# 1.2.2 notices conservatively because they are Svelte runtime dependencies.
+#
+# Not in this build closure: GGML_LLAMAFILE and GGML_CPU_KLEIDIAI (both OFF),
+# OpenMP/vcomp, SYCL, CANN, Metal, Vulkan, OpenVINO, and other unselected GGML
+# backends. Vite, Rollup, esbuild, TypeScript, and the Svelte compiler are build
+# tools, not shipped runtime components. There is no llama.cpp submodule.
+#
+# Before the next catalog pack, install these exact notice assets:
+#   THIRD_PARTY_NOTICES.txt
+#   licenses/acestep.cpp-MIT.txt
+#   licenses/ggml-MIT.txt              # also maps llama/whisper sync sources
+#   licenses/yarn-MIT.txt
+#   licenses/cpp-httplib-MIT.txt
+#   licenses/yyjson-MIT.txt
+#   licenses/minimp3-CC0-1.0.txt
+#   licenses/svelte-MIT.txt
+#   licenses/lucide-ISC-and-Feather-MIT.txt
+#   licenses/yaml-ISC.txt
+#   licenses/clsx-MIT.txt
+#   licenses/esm-env-MIT.txt
+#   licenses/ACE-Step-1.5-MIT.txt
+#   licenses/Qwen-Apache-2.0.txt
+#   MODEL_ATTRIBUTION.txt
+#   licenses/NVIDIA-CUDA-12.9.1-EULA.pdf
+# Copy the immutable upstream license texts verbatim and list every SHA/version
+# above in THIRD_PARTY_NOTICES.txt. The text payloads and source records are now
+# tracked under notices/; `just engine-notices-stage` fetches/verifies the
+# NVIDIA PDF without a native build. Manifest entries remain a release gate.
+# MIT requires preserving its notices; bundling full source is optional.
+
+# ---- Build (cross-platform CMake; the *.sh wrappers are thin cmake calls) ---
+# Targets defined in CMakeLists.txt: ace-server, ace-synth, ace-lm, ... .
+# We build `ace-server` only.
+#   CPU : cmake .. -DCMAKE_BUILD_TYPE=Release -DGGML_OPENMP=OFF   (BLAS off for the smoke)
+#   CUDA: cmake .. -DGGML_CUDA=ON -DGGML_OPENMP=OFF -DCMAKE_CUDA_ARCHITECTURES=...
+# GGML_OPENMP=OFF since pack 0.1.3: ggml internal threadpool, no vcomp140.dll
+# (engine-stability.md Track B2 — no OpenMP busy-spin between phases).
+# MSVC multi-config generator emits build/Release/ace-server.exe.
+
+# ---- Shipped runtime staging provenance ------------------------------------
+# Pack 0.1.4's native closure came from these retained successful run logs:
+#   engine-build run 29184244446, CUDA job 86627377197
+#     ace-server.exe and all four ggml DLLs: one Release build directory
+#     cudart/cublas/cublasLt: CUDA_PATH v12.9 bin (no alternate match copied)
+#   vcrt-stage run 27281822481, job 80578145711
+#     all four VC DLLs: one VS2022 redist directory,
+#     14.44.35112/x64/Microsoft.VC143.CRT (no System32 fallback used)
+# Pack 0.1.5 (2026-08-24) re-pins the engine, so ace-server.exe and the four
+# ggml DLLs are rebuilt by engine-build.yml at 9761469; the CUDA 12.9.1 runtime
+# DLLs and the four VC DLLs are byte-identical to 0.1.4 and are copied
+# server-side on GCS from the 0.1.4 object path by the workflow's `publish`
+# job (after it proves the fresh build's CUDA runtime hashes still equal the
+# manifest pins). Nothing native is built or stored on the dev box; the run's
+# `engine-pack-assets.json` artifact carries the sha256/bytes that go into
+# manifest.source.json. Future engine-build/vcrt-stage runs hard-fail unless
+# the same-source closures exist, validate vendor signatures, and emit
+# version/hash provenance. CUDA artifacts also checksum-gate
+# NVIDIA-CUDA-12.9.1-EULA.pdf and emit two provenance JSON files. Pack 0.1.5
+# still needs the EULA and source/model notices as installed assets; do not
+# call workflow artifacts alone a release.
+
+# ---- Model set --------------------------------------------------------------
+# HF repo     = https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF
+# HF revision = 9b3707625776cc4cf775e9b12ab82f9fe48335ff
+# Metadata    = https://huggingface.co/api/models/Serveurperso/ACE-Step-1.5-GGUF/revision/9b3707625776cc4cf775e9b12ab82f9fe48335ff?blobs=true
+# LFS object IDs and byte counts below were verified through that immutable API
+# and resolve-endpoint headers on 2026-07-13. Pack 0.1.4 contains these four:
+#   acestep-5Hz-lm-1.7B-Q8_0.gguf
+#     1,975,837,568 bytes; sha256:726f99a82f050b32ebc5c5e36acaa9d7acd06bfe5e579a62b00e0d0d6d0b7ec6
+#   Qwen3-Embedding-0.6B-Q8_0.gguf
+#     784,144,960 bytes; sha256:972f23255e46adfe744a0eb9a0039f3c63988f65753b0968d776e8b27168c321
+#   acestep-v15-turbo-Q8_0.gguf
+#     2,549,528,000 bytes; sha256:288f708a61cfc241013a98a62f98ba331f83fe34d0d3559acdd9b0f6a2f7cd6b
+#   vae-BF16.gguf
+#     337,420,928 bytes; sha256:0599862ac5d15cd308e1d2e368373aea6c02e25ebd1737ad4a4562a0901b0ef8
+# Pack 0.1.5 adds the XL (4B DiT) turbo candidate for the 8 GB bakeoff
+# (session plan 2026-08-24 S3); Q6_K (4,098,812,992 bytes) is deliberately NOT
+# packed: with the 1.7B Q8 LM resident it does not fit 8 GB.
+#   acestep-v15-xl-turbo-Q4_K_M.gguf
+#     2,989,922,688 bytes; sha256:475e60e8644b1f91eebc0cd25f24c060bed06e64a862b4e60ffafe634c740478
+# Candidate SFT asset (not in pack 0.1.4/0.1.5 and not yet published):
+#   acestep-v15-sft-Q8_0.gguf
+#     2,549,527,936 bytes; sha256:17f1984e48aaab27b3eb8ccbf0b754a6656e677884c60ea7003845cfc0059b70
+# The Windows CPU smoke substitutes these smaller files and shares the same
+# embedding and VAE above:
+#   acestep-5Hz-lm-0.6B-Q8_0.gguf
+#     709,846,656 bytes; sha256:bdaf9e292d4470f31c19cafeaca1b74936a114667e3a85e5d33b65247e9908ec
+#   acestep-v15-turbo-Q4_K_M.gguf
+#     1,445,710,272 bytes; sha256:55b4d8514850f3d0f82536f37e99673aaf48df802b5ae5b153eea32a2e2daa5e
+# Pack 0.1.4 totals 5,646,931,456 model bytes; pack 0.1.5 totals
+# 8,636,854,144 (with XL turbo Q4_K_M); adding SFT would add 2,549,527,936.
+# ace-server discovers models by GGUF architecture metadata, so neither
+# addition needs a filename contract change. XL support (encoder/decoder
+# dimension split + timbre CLS token, commit 0308fa5) predates 948b929.
+#
+# Provenance limit: this revision immutably identifies the distributed GGUF
+# bytes, but its model card does not record the exact ACE-Step/Qwen input
+# revisions or a conversion attestation. At engine pin 9761469 (unchanged
+# since 948b929), checkpoints.sh maps the embedding to ACE-Step/Ace-Step1.5,
+# SFT to ACE-Step/acestep-v15-sft, and XL turbo to
+# ACE-Step/acestep-v15-xl-turbo (HF revision d4a0b288, MIT model card); convert.py converts safetensors to GGUF but embeds
+# no source revision or license metadata. Preserve that distinction rather
+# than claiming a cryptographically complete source-to-GGUF chain.
+
+# ---- Server API (as built, NOT the engines.md draft) -----------------------
+# ace-server --models <dir> --port <N> [--host 127.0.0.1]
+#   GET  /health  -> {"status":"ok"}
+#   GET  /props   -> { version, models:{lm,embedding,dit,vae}, cli, default, presets }
+#   POST /lm      <AceRequest|[AceRequest]> {caption, lm_mode:"generate",
+#                 seed?} -> {"id":<job>}  (array form since 9761469; Iblis
+#                 sends the single-object form)
+#   POST /synth   <AceRequest|[AceRequest]> (output_format:"wav32", synth_model,
+#                 vae) -> {"id":<job>}
+#   GET  /job?id=<job>&result=1  -> /lm: JSON array of enriched AceRequest;
+#                 /synth: multipart/mixed (audio/wav part + raw-latent part).
+# Flow: POST /lm -> poll job -> feed the result array to POST /synth -> poll job
+#       -> extract the audio/wav part. (Two-phase, not the single /generate the
+#       design draft assumed.)
+#
+# GAP (Step-2 decision): ace-server has NO request auth. The Iblis host expects
+# sidecars to enforce X-Iblis-Session (echo-server does). Resolve before catalog
+# ship: patch upstream to check the header, front it with a tiny auth shim, or
+# formally accept loopback-bind + ephemeral-high-port as the boundary for this
+# binary. Does NOT block the isolated Spike-0 smoke.

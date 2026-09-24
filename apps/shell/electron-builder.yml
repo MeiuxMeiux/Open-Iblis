@@ -1,0 +1,51 @@
+appId: com.meiuxmeiux.iblis
+productName: Iblis
+copyright: Copyright (c) 2026 Meiux Meiux LLC. Licensed GPL-3.0-or-later.
+
+directories:
+  output: release
+
+files:
+  - out/**
+  - package.json
+  - '!**/*.map'
+
+# Flip Electron fuses on the packaged binary (see the hook for the rationale
+# and the deliberate RunAsNode exception for .js sidecar plugins).
+afterPack: scripts/after-pack-fuses.cjs
+
+# The catalog-verification public key ships alongside the binary; the
+# main process reads it from resources at runtime (Phase 2 catalog client).
+extraResources:
+  - from: electron/main/keys
+    to: keys
+  # GPL-3.0 text and the third-party notice inventory ship with every
+  # install (resources/LICENSE.txt, resources/THIRD_PARTY_NOTICES.md).
+  - from: LICENSE
+    to: LICENSE.txt
+  - from: ../../THIRD_PARTY_NOTICES.md
+    to: THIRD_PARTY_NOTICES.md
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: ../../packages/brand/installer/iblis.ico
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  # Required for electron-updater delta downloads (Phase 1 step 4).
+  differentialPackage: true
+  artifactName: Iblis-Setup-${version}.${ext}
+
+# electron-updater feed. Generic provider over a STABLE channel directory:
+# electron-builder bakes this url into app-update.yml and emits latest.yml.
+# The shell-build workflow uploads exe + blockmap + latest.yml to this dir.
+# Versioned filenames mean every release is archived; only latest.yml moves.
+publish:
+  - provider: generic
+    url: https://storage.googleapis.com/iblis-dist/shell
+    channel: latest

@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "kind": "stream",
+  "reason": "error",
+  "installId": "5f0c2a4e-8d1b-4c3a-9e7f-2b6d1a0c9e84",
+  "level": "verbose",
+  "sentAt": "2027-01-15T08:00:30.000Z",
+  "events": [
+    "{\"t\":\"2027-01-15T08:00:29.000Z\",\"level\":\"error\",\"component\":\"sidecar\",\"msg\":\"engine exited\",\"code\":3221225477}"
+  ]
+}

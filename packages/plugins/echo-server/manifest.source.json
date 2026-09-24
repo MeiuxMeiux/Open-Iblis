@@ -1,0 +1,30 @@
+{
+  "id": "mx.iblis.processor.echo",
+  "name": "Echo Server",
+  "version": "0.1.0",
+  "kind": "processor",
+  "hostMinVersion": "0.0.0",
+  "capabilities": ["echo"],
+  "assets": [
+    {
+      "path": "echo-server.cjs",
+      "file": "src/echo-server.cjs",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.processor.echo/{version}/echo-server.cjs"
+        }
+      ]
+    }
+  ],
+  "executable": {
+    "bin": "echo-server.cjs",
+    "portArg": "--port",
+    "sessionEnv": "IBLIS_SESSION",
+    "healthPath": "/health",
+    "healthTimeoutMs": 5000
+  },
+  "license": "MIT",
+  "author": { "name": "Meiux Meiux LLC", "url": "https://iblis.meiuxmeiux.com" },
+  "bugUrl": "https://iblis.meiuxmeiux.com/contact"
+}

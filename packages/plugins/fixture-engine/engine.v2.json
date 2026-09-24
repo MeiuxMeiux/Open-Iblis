@@ -1,0 +1,51 @@
+{
+  "protocolVersion": 2,
+  "engineFamily": "iblis-fixture",
+  "models": [
+    { "id": "pastiche-mini", "revision": "r3" },
+    { "id": "pastiche-grand", "revision": "r1" }
+  ],
+  "profiles": [
+    { "id": "sketchbook", "label": "Sketchbook", "modelId": "pastiche-mini" },
+    { "id": "gallery", "label": "Gallery", "modelId": "pastiche-grand" }
+  ],
+  "phases": ["prime", "sketch", "varnish"],
+  "operations": [
+    {
+      "id": "music.generate",
+      "inputs": [],
+      "prompt": { "required": true, "maxBytes": 2048 },
+      "lyrics": null,
+      "duration": { "minSec": 1, "maxSec": 120 },
+      "outputs": [
+        { "role": "mix", "maxCount": 1 },
+        { "role": "preview", "maxCount": 1 }
+      ],
+      "commonControls": ["bpm"],
+      "advancedControls": [
+        {
+          "id": "canvas",
+          "label": "Canvas",
+          "help": "Miniature keeps the arrangement sparse; mural stacks every layer.",
+          "kind": "enum",
+          "values": ["miniature", "mural"],
+          "default": "miniature"
+        },
+        {
+          "id": "layers",
+          "label": "Layers",
+          "help": "How many voices the fixture stacks into the mix.",
+          "kind": "integer",
+          "min": 1,
+          "max": 8,
+          "default": 3
+        },
+        { "id": "crackle", "label": "Crackle", "kind": "boolean", "default": false }
+      ],
+      "profileIds": ["sketchbook", "gallery"],
+      "adapters": null,
+      "seed": "uint32",
+      "cancellation": true
+    }
+  ]
+}

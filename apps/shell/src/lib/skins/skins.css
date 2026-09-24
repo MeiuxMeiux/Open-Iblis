@@ -1,0 +1,105 @@
+/* SPDX-FileCopyrightText: 2026 Meiux Meiux LLC */
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
+/*
+ * Built-in skins. Each skin redefines only the COLOR tokens of the
+ * SkinContract under `:root[data-skin="<id>"]`; everything else (radii,
+ * spacing, type, shadows, motion, chrome) is inherited from the `:root`
+ * defaults in app.css. This mirrors the website's
+ * apps/site/public/assets/css/skins/*.css so a palette reads the same in
+ * both surfaces.
+ *
+ * dark-3d is the default and equals `:root`; it is restated here so a switch
+ * BACK to it after another skin was applied resets the palette cleanly.
+ *
+ * Keep this list in sync with skins.ts (the id/name/swatch registry).
+ */
+
+/* dark-3d — deep black + the anaglyph red lens. The default. */
+:root[data-skin='dark-3d'] {
+  --color-bg-base: #020203;
+  --color-bg-elevated: #0a0a10;
+  --color-bg-subtle: #13131c;
+  --color-bg-inset: #000000;
+
+  --color-text-primary: #ecedf2;
+  --color-text-secondary: #a4a6b3;
+  --color-text-muted: #5b5d6a;
+  --color-text-inverse: #0a0a10;
+
+  --color-border-subtle: #1a1c26;
+  --color-border-default: #262936;
+  --color-border-strong: #3a3e4f;
+
+  --color-accent: #e23535;
+
+  color-scheme: dark;
+}
+
+/* light-paper — paper-white restrained light skin. Inverted palette. */
+:root[data-skin='light-paper'] {
+  --color-bg-base: #f6f5f1;
+  --color-bg-elevated: #ffffff;
+  --color-bg-subtle: #ecebe6;
+  --color-bg-inset: #e6e4dd;
+
+  --color-text-primary: #161615;
+  --color-text-secondary: #4b4c52;
+  --color-text-muted: #82838b;
+  --color-text-inverse: #ffffff;
+
+  --color-border-subtle: #e3e2dc;
+  --color-border-default: #c9c8c2;
+  --color-border-strong: #a8a7a1;
+
+  --color-accent: #c92626;
+
+  /* Light skins want soft, lifted shadows rather than deep dark ones. */
+  --shadow-sm: 0 1px 0 rgba(255, 255, 255, 0.6), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 1px 0 rgba(255, 255, 255, 0.7), 0 6px 18px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 1px 0 rgba(255, 255, 255, 0.8), 0 18px 40px rgba(0, 0, 0, 0.1);
+
+  color-scheme: light;
+}
+
+/* infernal — the running-gag skin: red + black, very dark, restrained. */
+:root[data-skin='infernal'] {
+  --color-bg-base: #0a0204;
+  --color-bg-elevated: #150508;
+  --color-bg-subtle: #1f0810;
+  --color-bg-inset: #050102;
+
+  --color-text-primary: #f0d8da;
+  --color-text-secondary: #b9939a;
+  --color-text-muted: #75555c;
+  --color-text-inverse: #1a0508;
+
+  --color-border-subtle: #2a0c14;
+  --color-border-default: #3d1019;
+  --color-border-strong: #5b1825;
+
+  --color-accent: #ff3b3b;
+
+  color-scheme: dark;
+}
+
+/* cathedral — warm golds, candlelight on dark. */
+:root[data-skin='cathedral'] {
+  --color-bg-base: #0e0a05;
+  --color-bg-elevated: #1a1308;
+  --color-bg-subtle: #251a0c;
+  --color-bg-inset: #050302;
+
+  --color-text-primary: #f4e3c1;
+  --color-text-secondary: #c5ad7e;
+  --color-text-muted: #7e6b48;
+  --color-text-inverse: #1a1308;
+
+  --color-border-subtle: #2a1f10;
+  --color-border-default: #3a2b18;
+  --color-border-strong: #5a4524;
+
+  --color-accent: #d8a13a;
+
+  color-scheme: dark;
+}

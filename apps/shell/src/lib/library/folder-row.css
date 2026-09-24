@@ -1,0 +1,133 @@
+/* SPDX-FileCopyrightText: 2026 Meiux Meiux LLC */
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
+/* Actions overlay the count on reveal instead of living in a second grid
+   column: a reserved column squeezes folder names into ellipsis even when
+   the actions are invisible. */
+.folder-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-1);
+  align-items: center;
+}
+.folder-name {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--space-2);
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  padding: var(--space-2);
+  color: var(--color-text-secondary);
+  text-align: left;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-md);
+}
+.folder-name > span:nth-child(2) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.folder-name:hover,
+.folder-name.current {
+  color: var(--color-text-primary);
+  background: var(--app-surface-hover);
+}
+.count {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-variant-numeric: tabular-nums;
+}
+input {
+  min-width: 0;
+  width: 100%;
+  padding: var(--space-2);
+  color: var(--color-text-primary);
+  background: var(--color-bg-inset);
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-md);
+  font: inherit;
+}
+.folder-actions {
+  position: absolute;
+  top: 50%;
+  right: var(--space-1);
+  transform: translateY(-50%);
+  display: flex;
+  gap: 2px;
+  opacity: 0;
+  pointer-events: none;
+}
+.folder-row:hover .folder-actions,
+.folder-row:focus-within .folder-actions,
+.folder-row.active .folder-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+.folder-row:hover .count,
+.folder-row:focus-within .count,
+.folder-row.active .count {
+  visibility: hidden;
+}
+.folder-row.editing .folder-actions {
+  opacity: 0;
+  pointer-events: none;
+}
+.folder-actions button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: var(--color-text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+}
+.folder-actions button.danger {
+  display: inline-flex;
+  width: auto;
+  padding: 0 var(--space-1);
+  gap: 2px;
+}
+.folder-actions button:hover:not(:disabled) {
+  color: var(--color-text-primary);
+  border-color: var(--color-border-default);
+}
+.folder-actions button.danger:hover:not(:disabled) {
+  color: var(--color-state-danger);
+  border-color: var(--color-state-danger);
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+.rename-error {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--color-state-danger);
+  font-size: var(--font-size-xs);
+}
+/* Touch has no hover reveal: keep the actions in their own column so the
+   count stays readable. */
+@media (hover: none), (pointer: coarse) {
+  .folder-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .folder-actions {
+    position: static;
+    grid-column: 2;
+    grid-row: 1;
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .folder-row:hover .count,
+  .folder-row:focus-within .count,
+  .folder-row.active .count {
+    visibility: visible;
+  }
+}

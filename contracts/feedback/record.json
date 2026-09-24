@@ -1,0 +1,17 @@
+{
+    "id": "FB-7K3M9QXA",
+    "type": "bug",
+    "title": "Waveform stops after pressing next twice",
+    "body": "Steps:\n1. Play any track in the Library.\n2. Press next twice quickly.\n\nExpected: the waveform follows the new track.\nActual: it freezes on the first one until I click it.",
+    "version": "0.2.0-alpha.51",
+    "build": "official",
+    "os": "Windows 11 24H2",
+    "diag": "diag-1a2b3c",
+    "email": "reporter@example.com",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+    "created_at": "2027-01-15T08:00:00Z",
+    "updated_at": "2027-01-15T08:00:00Z",
+    "state": "new",
+    "notes": "",
+    "github_issue": null
+}

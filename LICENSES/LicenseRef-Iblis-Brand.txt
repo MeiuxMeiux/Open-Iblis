@@ -1,0 +1,25 @@
+Iblis brand files
+
+Copyright (c) 2026 Meiux Meiux LLC. All rights reserved.
+
+This notice covers the files in packages/brand/ (logos, the wordmark,
+installer art, application icons, and the interface icon sprite). These files
+are not licensed under the GNU General Public License, the Apache License, the
+MIT License, or any other open-source license that covers the rest of this
+repository.
+
+Permission is granted to copy and redistribute these files without
+modification, only as part of an unmodified copy of the Iblis source
+repository or of a build made from it without changes.
+
+Permission is also granted to use the interface icon sprite
+(packages/brand/icons/sprite.svg) in modified versions of the Iblis desktop
+application, provided it is not used to identify the modified version as
+Iblis.
+
+No other right is granted. In particular, the logos, wordmark, installer art,
+and application icons may not be used in a modified version, or to identify
+any other product, service, or organization. "Iblis" and the Iblis logo are
+trademarks of Meiux Meiux LLC; see TRADEMARKS.md.
+
+THESE FILES ARE PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.

@@ -1,0 +1,104 @@
+# REUSE (https://reuse.software) licensing for files that cannot carry an
+# SPDX header, or have none. Source files carry their own headers, which win
+# over this file ("closest"). When several annotations match a file, the last
+# one applies, so the general areas come first and the exceptions after.
+version = 1
+
+# Repository tooling and configuration: GPL-3.0-or-later, like the app.
+[[annotations]]
+path = [
+  ".gitattributes",
+  ".gitignore",
+  "Justfile",
+  "package.json",
+  "pnpm-workspace.yaml",
+  ".github/**",
+  "scripts/**",
+  "tools/**",
+]
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Meiux Meiux LLC"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# The generated lockfile carries no creative content.
+[[annotations]]
+path = "pnpm-lock.yaml"
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Meiux Meiux LLC"
+SPDX-License-Identifier = "CC0-1.0"
+
+# Desktop app: code, configuration, JSON, keys, fixtures.
+[[annotations]]
+path = "apps/shell/**"
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Meiux Meiux LLC"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# Plugin SDK and the shared wire-contract fixtures.
+[[annotations]]
+path = ["packages/plugin-sdk/**", "contracts/**"]
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Meiux Meiux LLC"
+SPDX-License-Identifier = "Apache-2.0"
+
+# Plugin and engine packs: manifests, descriptors, skin data, sidecars.
+[[annotations]]
+path = "packages/plugins/**"
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Meiux Meiux LLC"
+SPDX-License-Identifier = "MIT"
+
+# Documentation, wherever it lives.
+[[annotations]]
+path = [
+  "*.md",
+  "docs/**",
+  "**/README.md",
+  "**/THIRD_PARTY_NOTICES.md",
+  "packages/plugins/acestep-engine/notices/THIRD_PARTY_NOTICES.txt",
+  "packages/plugins/acestep-engine/notices/MODEL_ATTRIBUTION.txt",
+]
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Meiux Meiux LLC"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# Brand files: all rights reserved (see TRADEMARKS.md).
+[[annotations]]
+path = "packages/brand/**"
+precedence = "closest"
+SPDX-FileCopyrightText = "2026 Meiux Meiux LLC"
+SPDX-License-Identifier = "LicenseRef-Iblis-Brand"
+
+# Upstream license texts shipped beside the engine binaries. Each is the
+# upstream project's own license text, under that license.
+[[annotations]]
+path = [
+  "packages/plugins/acestep-engine/notices/licenses/*-MIT.txt",
+]
+precedence = "closest"
+SPDX-FileCopyrightText = "The respective upstream authors named in each file"
+SPDX-License-Identifier = "MIT"
+
+[[annotations]]
+path = "packages/plugins/acestep-engine/notices/licenses/Qwen-Apache-2.0.txt"
+precedence = "closest"
+SPDX-FileCopyrightText = "The Qwen authors"
+SPDX-License-Identifier = "Apache-2.0"
+
+[[annotations]]
+path = "packages/plugins/acestep-engine/notices/licenses/yaml-ISC.txt"
+precedence = "closest"
+SPDX-FileCopyrightText = "The yaml authors named in the file"
+SPDX-License-Identifier = "ISC"
+
+[[annotations]]
+path = "packages/plugins/acestep-engine/notices/licenses/lucide-ISC-and-Feather-MIT.txt"
+precedence = "closest"
+SPDX-FileCopyrightText = "The Lucide and Feather authors named in the file"
+SPDX-License-Identifier = "ISC AND MIT"
+
+[[annotations]]
+path = "packages/plugins/acestep-engine/notices/licenses/minimp3-CC0-1.0.txt"
+precedence = "closest"
+SPDX-FileCopyrightText = "The minimp3 authors"
+SPDX-License-Identifier = "CC0-1.0"

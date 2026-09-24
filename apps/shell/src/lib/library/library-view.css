@@ -1,0 +1,194 @@
+/* SPDX-FileCopyrightText: 2026 Meiux Meiux LLC */
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
+.library {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.organizer {
+  display: grid;
+  grid-template-columns: minmax(190px, 230px) minmax(0, 1fr);
+  gap: var(--space-4);
+  align-items: start;
+}
+
+.track-pane {
+  min-width: 0;
+}
+
+.track-heading {
+  min-height: 30px;
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.track-heading-copy {
+  min-width: 0;
+}
+
+.track-pane h2 {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+
+.track-count {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.track-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: min(220px, 28vw);
+  min-height: 32px;
+  padding: 0 var(--space-2);
+  color: var(--color-text-muted);
+  background: var(--color-bg-inset);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+}
+
+.search:focus-within {
+  color: var(--color-text-secondary);
+  border-color: var(--color-accent);
+}
+
+.search input {
+  width: 100%;
+  min-width: 0;
+  padding: var(--space-1) 0;
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: var(--font-size-xs);
+  background: transparent;
+  border: 0;
+}
+
+.search input:focus {
+  outline: none;
+}
+
+.search input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.search input::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.lead {
+  margin: 6px 0 0;
+  font-size: 13.5px;
+  color: var(--color-text-secondary);
+}
+
+.error {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--color-state-danger);
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 40px 0;
+}
+
+.empty.compact {
+  padding: var(--space-6) 0;
+}
+
+.empty button {
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+}
+
+.empty button:hover {
+  border-color: var(--color-accent);
+}
+
+.empty button:focus-visible,
+.track-pane h2:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.sigil {
+  color: var(--color-accent);
+  opacity: 0.5;
+}
+
+.muted {
+  max-width: 420px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+}
+
+/* Includes the permanent nav rail; this must trigger above the 880px window minimum. */
+@media (max-width: 1080px) {
+  .organizer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 620px) {
+  .track-heading,
+  .track-tools {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .search {
+    width: 100%;
+  }
+}

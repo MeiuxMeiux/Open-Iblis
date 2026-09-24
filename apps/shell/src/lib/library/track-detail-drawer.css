@@ -1,0 +1,159 @@
+/* SPDX-FileCopyrightText: 2026 Meiux Meiux LLC */
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
+.track-detail-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  border: 0;
+  background: color-mix(in srgb, var(--app-bg) 70%, transparent);
+}
+
+.track-detail-drawer {
+  position: fixed;
+  z-index: 41;
+  inset: 0 0 0 auto;
+  width: min(520px, 92vw);
+  overflow: auto;
+  padding: 24px;
+  border: 0;
+  border-left: 1px solid var(--color-border-default);
+  background: var(--app-surface);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-lg);
+}
+
+.track-detail-drawer:focus {
+  outline: none;
+}
+
+.track-detail-drawer header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.track-detail-drawer h2,
+.track-detail-drawer h3,
+.track-detail-drawer h4,
+.track-detail-drawer p {
+  margin-top: 0;
+}
+
+.track-detail-drawer h2 {
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+.track-detail-drawer h3 {
+  font-size: 14px;
+}
+
+.track-detail-drawer h4 {
+  margin: 14px 0 6px;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.track-detail-drawer .eyebrow {
+  margin-bottom: 4px;
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.track-detail-drawer section {
+  padding: 18px 0;
+  border-top: 1px solid var(--color-border-default);
+}
+
+.track-detail-drawer .actions {
+  margin: 18px 0;
+}
+
+.track-detail-drawer button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  background: transparent;
+  color: var(--color-text-primary);
+  padding: 6px 11px;
+}
+
+.track-detail-drawer .close {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+}
+
+.track-detail-drawer button:hover {
+  border-color: var(--color-accent);
+}
+
+.track-detail-drawer button:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.track-detail-drawer .remix {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-text-inverse);
+}
+
+.track-detail-drawer button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+.track-detail-drawer .notice,
+.track-detail-drawer .muted,
+.track-detail-drawer .error {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+
+.track-detail-drawer .verbatim {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.track-detail-drawer dl {
+  margin: 0;
+  display: grid;
+  gap: 7px;
+}
+
+.track-detail-drawer dl div {
+  display: grid;
+  grid-template-columns: minmax(110px, 1fr) minmax(0, 2fr);
+  gap: 12px;
+}
+
+.track-detail-drawer dt {
+  color: var(--color-text-secondary);
+  font-size: 11.5px;
+}
+
+.track-detail-drawer dd {
+  margin: 0;
+  font-size: 11.5px;
+  overflow-wrap: anywhere;
+}
+
+.track-detail-drawer .trace {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 11.5px;
+  color: var(--color-text-secondary);
+}

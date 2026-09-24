@@ -1,0 +1,440 @@
+{
+  "$comment": "Authoring source for the ACE-Step 1.5 engine pack. `just catalog-build` reads this, hashes the first-party assets that declare a local `file`, and copies the inline sha256/bytes for vendor-direct assets (the GGUFs, fetched straight from HuggingFace \u2014 never mirrored to GCS for the alpha). Since 0.1.5 the native closure is published to GCS by engine-build.yml's publish job and transcribed with `just engine-pack-transcribe` (no local dist/ staging); the notices ship as installed assets (EULA staged by `just engine-notices-stage`). Historic note: the exe + its full DLL closure (ggml{,-base,-cpu,-cuda}.dll, the CUDA runtime cudart/cublas/cublasLt, and the MSVC runtime vcruntime140{,_1}/msvcp140/concrt140) MUST be staged at packages/plugins/acestep-engine/dist/ before building (they are gitignored; see UPSTREAM.txt 'Staging'). vcomp140.dll dropped in 0.1.3: the engine builds with GGML_OPENMP=OFF and no longer links MSVC OpenMP. The exe + ggml DLLs are ABI-matched \u2014 stage them from the SAME engine-build run; the CUDA/MSVC DLLs come from the toolkit and vcrt-stage.yml. GPU/CUDA-only for the alpha: the binary is the CUDA build and CPU is unusably slow.",
+  "id": "mx.iblis.engine.acestep",
+  "name": "ACE-Step 1.5",
+  "version": "0.1.4",
+  "kind": "engine",
+  "hostMinVersion": "0.2.0-alpha.1",
+  "capabilities": [
+    "text-to-music"
+  ],
+  "executable": {
+    "bin": "ace-server.exe",
+    "portArg": "--port",
+    "args": [
+      "--models",
+      ".",
+      "--host",
+      "127.0.0.1",
+      "--keep-loaded"
+    ],
+    "healthPath": "/health",
+    "healthTimeoutMs": 300000,
+    "idleUnloadMinutes": 30
+  },
+  "presets": [
+    {
+      "id": "fast",
+      "name": "Fast",
+      "minVramMb": 4000
+    },
+    {
+      "id": "balanced",
+      "name": "Balanced",
+      "minVramMb": 6000
+    },
+    {
+      "id": "quality",
+      "name": "Quality",
+      "minVramMb": 12000
+    }
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Meiux Meiux LLC",
+    "url": "https://iblis.meiuxmeiux.com"
+  },
+  "bugUrl": "https://iblis.meiuxmeiux.com/contact",
+  "assets": [
+    {
+      "path": "ace-server.exe",
+      "sha256": "e9a0192174820158229860acbe101f24dbccbfef1ec29703590620cb3e46c2f0",
+      "bytes": 1408512,
+      "published": true,
+      "executable": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ace-server.exe"
+        }
+      ]
+    },
+    {
+      "path": "cudart64_12.dll",
+      "sha256": "760c38928bbe5759f7b31ed6692599eb7ec83cedd5702e84c2b72028a89837e1",
+      "bytes": 583680,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/cudart64_12.dll"
+        }
+      ]
+    },
+    {
+      "path": "cublas64_12.dll",
+      "sha256": "90052a83efd1b57a8e3616a6590b335855f81b814a4f16eecb7b5bf6d1b1d4eb",
+      "bytes": 102518272,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/cublas64_12.dll"
+        }
+      ]
+    },
+    {
+      "path": "cublasLt64_12.dll",
+      "sha256": "c3a05ea244c937314afec09f87b91f814c7e27977681f6c67eb51bb06ced3a4a",
+      "bytes": 668669952,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/cublasLt64_12.dll"
+        }
+      ]
+    },
+    {
+      "path": "vcruntime140.dll",
+      "sha256": "d5e4d9a3e835fa679450145d6a7d94e36573a509317111904d9b3712c30d9066",
+      "bytes": 124544,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/vcruntime140.dll"
+        }
+      ]
+    },
+    {
+      "path": "vcruntime140_1.dll",
+      "sha256": "1f2d41c4aa5db0bc33ebf7b66d72943a817d7ce6cbe880502a9403823633093f",
+      "bytes": 49792,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/vcruntime140_1.dll"
+        }
+      ]
+    },
+    {
+      "path": "msvcp140.dll",
+      "sha256": "0f885b509a685d2bbfa652fed26b5fb31d88fbdab0a978c641d1c7b8aa460aa9",
+      "bytes": 557728,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/msvcp140.dll"
+        }
+      ]
+    },
+    {
+      "path": "concrt140.dll",
+      "sha256": "2405355f0a58067b258f8df33c327e3a3d716eaac5a3a5aebb757842d85bd376",
+      "bytes": 324208,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/concrt140.dll"
+        }
+      ]
+    },
+    {
+      "path": "ggml.dll",
+      "sha256": "b0ce031e1c66e7e94e74616f3db4c9c5dbbd4774ef3c3cdcbb28aa947c68cb91",
+      "bytes": 67072,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ggml.dll"
+        }
+      ]
+    },
+    {
+      "path": "ggml-base.dll",
+      "sha256": "4a8e4dc994a8f8ea86ae4437d5557386acd959d1dde8fddfa691065e15182e37",
+      "bytes": 636928,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ggml-base.dll"
+        }
+      ]
+    },
+    {
+      "path": "ggml-cpu.dll",
+      "sha256": "11d4286ed883c6e4c1612f86d7783775f4c51d3262bea5c65a8991ad8ea16c0e",
+      "bytes": 788480,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ggml-cpu.dll"
+        }
+      ]
+    },
+    {
+      "path": "ggml-cuda.dll",
+      "sha256": "67b85493de7516a095d415f63983dd0d1daa626f7a0f1311eb8682ae5d71750a",
+      "bytes": 110000128,
+      "published": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ggml-cuda.dll"
+        }
+      ]
+    },
+    {
+      "path": "acestep-5Hz-lm-1.7B-Q8_0.gguf",
+      "sha256": "726f99a82f050b32ebc5c5e36acaa9d7acd06bfe5e579a62b00e0d0d6d0b7ec6",
+      "bytes": 1975837568,
+      "sources": [
+        {
+          "kind": "vendor",
+          "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF/resolve/main/acestep-5Hz-lm-1.7B-Q8_0.gguf"
+        }
+      ]
+    },
+    {
+      "path": "Qwen3-Embedding-0.6B-Q8_0.gguf",
+      "sha256": "972f23255e46adfe744a0eb9a0039f3c63988f65753b0968d776e8b27168c321",
+      "bytes": 784144960,
+      "sources": [
+        {
+          "kind": "vendor",
+          "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF/resolve/main/Qwen3-Embedding-0.6B-Q8_0.gguf"
+        }
+      ]
+    },
+    {
+      "path": "acestep-v15-turbo-Q8_0.gguf",
+      "sha256": "288f708a61cfc241013a98a62f98ba331f83fe34d0d3559acdd9b0f6a2f7cd6b",
+      "bytes": 2549528000,
+      "sources": [
+        {
+          "kind": "vendor",
+          "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF/resolve/main/acestep-v15-turbo-Q8_0.gguf"
+        }
+      ]
+    },
+    {
+      "path": "vae-BF16.gguf",
+      "sha256": "0599862ac5d15cd308e1d2e368373aea6c02e25ebd1737ad4a4562a0901b0ef8",
+      "bytes": 337420928,
+      "sources": [
+        {
+          "kind": "vendor",
+          "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF/resolve/main/vae-BF16.gguf"
+        }
+      ]
+    },
+    {
+      "path": "acestep-v15-xl-turbo-Q4_K_M.gguf",
+      "sha256": "475e60e8644b1f91eebc0cd25f24c060bed06e64a862b4e60ffafe634c740478",
+      "bytes": 2989922688,
+      "sources": [
+        {
+          "kind": "vendor",
+          "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF/resolve/main/acestep-v15-xl-turbo-Q4_K_M.gguf"
+        }
+      ]
+    },
+    {
+      "path": "notices/THIRD_PARTY_NOTICES.txt",
+      "file": "notices/THIRD_PARTY_NOTICES.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/THIRD_PARTY_NOTICES.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/MODEL_ATTRIBUTION.txt",
+      "file": "notices/MODEL_ATTRIBUTION.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/MODEL_ATTRIBUTION.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/MODEL-SOURCE.json",
+      "file": "notices/MODEL-SOURCE.json",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/MODEL-SOURCE.json"
+        }
+      ]
+    },
+    {
+      "path": "notices/UI-SOURCE.json",
+      "file": "notices/UI-SOURCE.json",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/UI-SOURCE.json"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/SOURCE.json",
+      "file": "notices/licenses/SOURCE.json",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/SOURCE.json"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/ACE-Step-1.5-MIT.txt",
+      "file": "notices/licenses/ACE-Step-1.5-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/ACE-Step-1.5-MIT.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/Qwen-Apache-2.0.txt",
+      "file": "notices/licenses/Qwen-Apache-2.0.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/Qwen-Apache-2.0.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/acestep.cpp-MIT.txt",
+      "file": "notices/licenses/acestep.cpp-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/acestep.cpp-MIT.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/clsx-MIT.txt",
+      "file": "notices/licenses/clsx-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/clsx-MIT.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/cpp-httplib-MIT.txt",
+      "file": "notices/licenses/cpp-httplib-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/cpp-httplib-MIT.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/esm-env-MIT.txt",
+      "file": "notices/licenses/esm-env-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/esm-env-MIT.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/ggml-MIT.txt",
+      "file": "notices/licenses/ggml-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/ggml-MIT.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/lucide-ISC-and-Feather-MIT.txt",
+      "file": "notices/licenses/lucide-ISC-and-Feather-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/lucide-ISC-and-Feather-MIT.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/minimp3-CC0-1.0.txt",
+      "file": "notices/licenses/minimp3-CC0-1.0.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/minimp3-CC0-1.0.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/svelte-MIT.txt",
+      "file": "notices/licenses/svelte-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/svelte-MIT.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/yaml-ISC.txt",
+      "file": "notices/licenses/yaml-ISC.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/yaml-ISC.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/yarn-MIT.txt",
+      "file": "notices/licenses/yarn-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/yarn-MIT.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/yyjson-MIT.txt",
+      "file": "notices/licenses/yyjson-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/yyjson-MIT.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/NVIDIA-CUDA-12.9.1-EULA.pdf",
+      "file": "dist/licenses/NVIDIA-CUDA-12.9.1-EULA.pdf",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/NVIDIA-CUDA-12.9.1-EULA.pdf"
+        }
+      ]
+    }
+  ]
+}

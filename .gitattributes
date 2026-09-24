@@ -1,0 +1,3 @@
+packages/plugins/acestep-engine/notices/licenses/*.txt whitespace=-blank-at-eof
+# Signed catalog snapshot for the shell E2E suite: never normalize line endings.
+apps/shell/e2e/fixtures/catalog.json* -text

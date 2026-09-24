@@ -1,0 +1,48 @@
+name: Question
+description: Ask how something works, or get help with setup or a build.
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the README and docs/ first; the answer may already be there.
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true
+  - type: textarea
+    id: tried
+    attributes:
+      label: What you have tried
+      description: Commands, settings, or docs you already looked at.
+  - type: input
+    id: version
+    attributes:
+      label: Iblis version
+      description: Settings, Updates shows the installed version. For a source build, the commit you built.
+      placeholder: 0.2.0-alpha.51
+  - type: dropdown
+    id: build
+    attributes:
+      label: Build
+      options:
+        - Official installer
+        - Source build
+        - Not installed yet
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows 11 24H2
+  - type: input
+    id: gpu
+    attributes:
+      label: GPU and VRAM
+      placeholder: NVIDIA RTX 4060, 8 GB
+  - type: input
+    id: diagnostics
+    attributes:
+      label: Diagnostics reference (optional)
+      description: In Settings, Diagnostics, choose a level other than Off and press Send diagnostics now.

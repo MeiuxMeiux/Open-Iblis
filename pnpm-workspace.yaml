@@ -1,0 +1,10 @@
+packages:
+  - apps/shell
+  - packages/*
+  - packages/plugins/*
+
+# pnpm 11+ build-script approvals (replaces package.json "pnpm.onlyBuiltDependencies").
+allowBuilds:
+  esbuild: true
+  # Squirrel.Windows helper pulled in by electron-builder; Iblis ships NSIS, never needs it.
+  electron-winstaller: false

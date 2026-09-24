@@ -1,0 +1,12 @@
+{
+  "id": "mx.iblis.cloud.openrouter",
+  "name": "OpenRouter Cloud Provider",
+  "version": "0.1.1",
+  "kind": "cloud-provider",
+  "hostMinVersion": "0.2.0-alpha.34",
+  "capabilities": ["song-ideas", "lyrics-assistance"],
+  "cloudProvider": { "id": "openrouter" },
+  "assets": [],
+  "license": "MIT",
+  "author": { "name": "Meiux Meiux LLC", "url": "https://iblis.meiuxmeiux.com" }
+}

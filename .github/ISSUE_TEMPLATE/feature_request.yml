@@ -1,0 +1,60 @@
+name: Feature request
+description: Suggest an improvement or a new capability.
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please search existing issues first. One idea per issue helps us track it.
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What are you trying to do, and what gets in the way today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like
+      description: Describe the behavior you want. Mockups or examples from other tools are welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Create (generation)
+        - Training
+        - Styles
+        - Library and playback
+        - Plugins, engines, and the SDK
+        - Skins and appearance
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Iblis version you use
+      description: Settings, Updates shows the installed version.
+      placeholder: 0.2.0-alpha.51
+  - type: dropdown
+    id: build
+    attributes:
+      label: Build
+      options:
+        - Official installer
+        - Source build
+        - Not using Iblis yet
+  - type: checkboxes
+    id: contribute
+    attributes:
+      label: Contributing
+      options:
+        - label: I would like to work on this myself (see CONTRIBUTING.md).

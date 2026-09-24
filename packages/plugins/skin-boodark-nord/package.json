@@ -1,0 +1,7 @@
+{
+  "name": "@iblis/skin-boodark-nord",
+  "version": "1.0.1",
+  "private": true,
+  "description": "Boodark — Nord skin plugin (cool Nord palette) for the Iblis shell.",
+  "license": "MIT"
+}

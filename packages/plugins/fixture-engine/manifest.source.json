@@ -1,0 +1,47 @@
+{
+  "$comment": "Authoring source for the canonical engine-contract-v2 fixture (planning packet 2026-07-21, roadmap 4C). A tiny zero-dependency Node sidecar whose models, phases, controls, and outputs are deliberately unlike ACE-Step: it proves the shell's v2 routing, exact queue targeting, and on-demand lifecycle with no engine-id branch. It synthesizes a real WAV locally and needs no GPU.",
+  "id": "mx.iblis.engine.fixture",
+  "name": "Fixture Engine",
+  "version": "0.1.0",
+  "kind": "engine",
+  "hostMinVersion": "0.2.0-alpha.43",
+  "capabilities": ["text-to-music"],
+  "engine": {
+    "protocolVersion": 2,
+    "descriptorAsset": "engine.v2.json",
+    "execution": "local-sidecar"
+  },
+  "executable": {
+    "bin": "fixture-engine.cjs",
+    "portArg": "--port",
+    "sessionEnv": "IBLIS_SESSION",
+    "healthPath": "/health",
+    "healthTimeoutMs": 5000,
+    "idleUnloadMinutes": 1
+  },
+  "assets": [
+    {
+      "path": "fixture-engine.cjs",
+      "file": "src/fixture-engine.cjs",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.fixture/{version}/fixture-engine.cjs"
+        }
+      ]
+    },
+    {
+      "path": "engine.v2.json",
+      "file": "engine.v2.json",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.fixture/{version}/engine.v2.json"
+        }
+      ]
+    }
+  ],
+  "license": "MIT",
+  "author": { "name": "Meiux Meiux LLC", "url": "https://iblis.meiuxmeiux.com" },
+  "bugUrl": "https://iblis.meiuxmeiux.com/contact"
+}

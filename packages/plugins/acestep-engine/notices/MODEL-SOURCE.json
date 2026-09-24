@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "artifactRepository": {
+    "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF",
+    "revision": "9b3707625776cc4cf775e9b12ab82f9fe48335ff",
+    "modelCard": {
+      "url": "https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF/raw/9b3707625776cc4cf775e9b12ab82f9fe48335ff/README.md",
+      "textSha256": "334dea364dfe11c27df4748bc379d43ca029c7353e8cd0e42e196f13fa93e0b6"
+    }
+  },
+  "models": [
+    {
+      "file": "acestep-5Hz-lm-1.7B-Q8_0.gguf",
+      "artifact": {
+        "bytes": 1975837568,
+        "lfsOid": "sha256:726f99a82f050b32ebc5c5e36acaa9d7acd06bfe5e579a62b00e0d0d6d0b7ec6"
+      },
+      "aceStepSource": {
+        "url": "https://huggingface.co/ACE-Step/Ace-Step1.5",
+        "revision": "19671f406d603126926c1b7e2adc169acbcade22",
+        "modelCardUrl": "https://huggingface.co/ACE-Step/Ace-Step1.5/raw/19671f406d603126926c1b7e2adc169acbcade22/README.md",
+        "modelCardTextSha256": "69d69b89e313706b93b420b13aa6232259b207a1cd19b0b70358d166e8e451a0"
+      },
+      "qwenOrigin": {
+        "url": "https://huggingface.co/Qwen/Qwen3-1.7B",
+        "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e",
+        "modelCardUrl": "https://huggingface.co/Qwen/Qwen3-1.7B/raw/70d244cc86ccca08cf5af4e1e306ecf908b1ad5e/README.md",
+        "modelCardTextSha256": "257e52c419dac2258852643f18af6c974f21f8c6c1b6f371b6cca6201cf29091",
+        "relationship": "ACE-Step model card identifies the 1.7B LM as pretrained from Qwen3-1.7B",
+        "baseModel": {
+          "url": "https://huggingface.co/Qwen/Qwen3-1.7B-Base",
+          "revision": "ea980cb0a6c2ae4b936e82123acc929f1cec04c1"
+        }
+      }
+    },
+    {
+      "file": "Qwen3-Embedding-0.6B-Q8_0.gguf",
+      "artifact": {
+        "bytes": 784144960,
+        "lfsOid": "sha256:972f23255e46adfe744a0eb9a0039f3c63988f65753b0968d776e8b27168c321"
+      },
+      "aceStepSource": {
+        "url": "https://huggingface.co/ACE-Step/Ace-Step1.5",
+        "revision": "19671f406d603126926c1b7e2adc169acbcade22",
+        "weightPath": "Qwen3-Embedding-0.6B/model.safetensors",
+        "weightBytes": 1191586416,
+        "weightLfsOid": "sha256:0437e45c94563b09e13cb7a64478fc406947a93cb34a7e05870fc8dcd48e23fd"
+      },
+      "qwenOrigin": {
+        "url": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B",
+        "revision": "c54f2e6e80b2d7b7de06f51cec4959f6b3e03418",
+        "modelCardUrl": "https://huggingface.co/Qwen/Qwen3-Embedding-0.6B/raw/c54f2e6e80b2d7b7de06f51cec4959f6b3e03418/README.md",
+        "modelCardTextSha256": "165914ec295689ae52c6e653221506912feb98d64043e03c3a27632aa135b0a3",
+        "weightBytes": 1191586416,
+        "weightLfsOid": "sha256:0437e45c94563b09e13cb7a64478fc406947a93cb34a7e05870fc8dcd48e23fd"
+      }
+    },
+    {
+      "file": "acestep-v15-xl-turbo-Q4_K_M.gguf",
+      "artifact": {
+        "bytes": 2989922688,
+        "lfsOid": "sha256:475e60e8644b1f91eebc0cd25f24c060bed06e64a862b4e60ffafe634c740478"
+      },
+      "aceStepSource": {
+        "url": "https://huggingface.co/ACE-Step/acestep-v15-xl-turbo",
+        "revision": "d4a0b288b83ebb7e25a8c0b32c573c22e134e8ee",
+        "modelCardUrl": "https://huggingface.co/ACE-Step/acestep-v15-xl-turbo/raw/d4a0b288b83ebb7e25a8c0b32c573c22e134e8ee/README.md",
+        "modelCardTextSha256": "9cd512227aa80bc7572d09c318d5e3acc584bad1a7b5230ea03fa07220dbb6db",
+        "modelCardLicense": "mit",
+        "weightShards": [
+          {
+            "path": "model-00001-of-00004.safetensors",
+            "bytes": 4986971456,
+            "lfsOid": "sha256:e54a8413c981797312f53d512dec9944023d03f42f0740cbe86f62582cc27bdc"
+          },
+          {
+            "path": "model-00002-of-00004.safetensors",
+            "bytes": 4986942776,
+            "lfsOid": "sha256:b45f788b6dc9f15957cfa3d9b403f25f3f64c5211ecaf18dda45b67ea6470664"
+          },
+          {
+            "path": "model-00003-of-00004.safetensors",
+            "bytes": 4986942808,
+            "lfsOid": "sha256:a4f6bd572eab79cf5f3e4678796f904c6d6c33680a3e6ed09034d6de7cabea4d"
+          },
+          {
+            "path": "model-00004-of-00004.safetensors",
+            "bytes": 4988483464,
+            "lfsOid": "sha256:a868b05493c73808408f58b33a903371bb2846b53c8b19bd7476991bc8837259"
+          }
+        ],
+        "relationship": "acestep.cpp checkpoints.sh maps acestep-v15-xl-turbo to this repository; the GGUF is Serveurperso's Q4_K_M quantization of it",
+        "packRole": "pack 0.1.5 8 GB bakeoff candidate; exposed by the shell as the xl-turbo-experiment profile, never as a quality tier"
+      }
+    }
+  ],
+  "licenseTexts": [
+    {
+      "component": "ACE-Step 1.5 model weights",
+      "spdx": "MIT",
+      "copyright": "Copyright (c) 2026 ACEStep",
+      "sourceUrl": "https://raw.githubusercontent.com/ace-step/ACE-Step-1.5/ce2108509c4feb83b21c46f02e5f59093f01980a/LICENSE",
+      "revision": "ce2108509c4feb83b21c46f02e5f59093f01980a",
+      "localPath": "licenses/ACE-Step-1.5-MIT.txt",
+      "bytes": 1064,
+      "textSha256": "05a6bce42a62636d2cfb24139cc008b6b899754e244175814bb5dd2f4a485357"
+    },
+    {
+      "component": "Qwen3-Embedding-0.6B and Qwen3-1.7B origins",
+      "spdx": "Apache-2.0",
+      "copyright": "Copyright 2024 Alibaba Cloud",
+      "sourceUrl": "https://huggingface.co/Qwen/Qwen3-0.6B-Base/raw/da87bfb608c14b7cf20ba1ce41287e8de496c0cd/LICENSE",
+      "revision": "da87bfb608c14b7cf20ba1ce41287e8de496c0cd",
+      "localPath": "licenses/Qwen-Apache-2.0.txt",
+      "bytes": 11343,
+      "textSha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+      "sameTextVerifiedAt": {
+        "sourceUrl": "https://huggingface.co/Qwen/Qwen3-1.7B-Base/raw/ea980cb0a6c2ae4b936e82123acc929f1cec04c1/LICENSE",
+        "revision": "ea980cb0a6c2ae4b936e82123acc929f1cec04c1",
+        "textSha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+      }
+    }
+  ],
+  "provenanceLimit": "Artifact hashes prove distributed bytes; the artifact repository does not provide exact conversion-input revisions or a build attestation."
+}

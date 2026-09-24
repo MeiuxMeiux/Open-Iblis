@@ -1,0 +1,12 @@
+{
+  "id": "mx.iblis.cloud.imagerouter",
+  "name": "ImageRouter Cloud Provider",
+  "version": "0.1.1",
+  "kind": "cloud-provider",
+  "hostMinVersion": "0.2.0-alpha.34",
+  "capabilities": ["cover-generation"],
+  "cloudProvider": { "id": "imagerouter" },
+  "assets": [],
+  "license": "MIT",
+  "author": { "name": "Meiux Meiux LLC", "url": "https://iblis.meiuxmeiux.com" }
+}

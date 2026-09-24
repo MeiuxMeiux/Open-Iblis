@@ -1,0 +1,29 @@
+{
+  "id": "mx.iblis.skin.boodark-nord",
+  "name": "Boodark — Nord",
+  "version": "1.0.0",
+  "extends": "dark-3d",
+  "theme": "dark",
+  "tokens": {
+    "color.bg.base": "#2e3440",
+    "color.bg.elevated": "#3b4252",
+    "color.bg.subtle": "#434c5e",
+    "color.bg.inset": "#272c36",
+
+    "color.text.primary": "#eceff4",
+    "color.text.secondary": "#d8dee9",
+    "color.text.muted": "#7b88a1",
+    "color.text.inverse": "#2e3440",
+
+    "color.border.subtle": "#3b4252",
+    "color.border.default": "#434c5e",
+    "color.border.strong": "#4c566a",
+
+    "color.accent": "#88c0d0",
+    "color.state.danger": "#bf616a",
+    "color.state.warning": "#ebcb8b",
+    "color.state.success": "#a3be8c",
+    "color.state.info": "#81a1c1"
+  },
+  "css": "extras.css"
+}

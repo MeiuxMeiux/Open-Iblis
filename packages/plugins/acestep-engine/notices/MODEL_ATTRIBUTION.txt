@@ -1,0 +1,64 @@
+Iblis ACE-Step model attribution
+
+Distributed artifact repository
+  https://huggingface.co/Serveurperso/ACE-Step-1.5-GGUF
+Immutable artifact revision
+  9b3707625776cc4cf775e9b12ab82f9fe48335ff
+
+The signed Iblis catalog independently pins every installed model file by
+SHA-256 and byte count. The mappings below describe the two shipped
+Qwen-derived components (engine packs 0.1.4 and 0.1.5) and the XL turbo DiT
+candidate added in pack 0.1.5.
+
+acestep-5Hz-lm-1.7B-Q8_0.gguf
+  Artifact LFS OID
+    sha256:726f99a82f050b32ebc5c5e36acaa9d7acd06bfe5e579a62b00e0d0d6d0b7ec6
+  Artifact size
+    1,975,837,568 bytes
+  ACE-Step origin
+    ACE-Step 1.5 by ACE Studio and StepFun. The official ACE-Step model card
+    identifies acestep-5Hz-lm-1.7B as pretrained from Qwen3-1.7B.
+  Qwen origin
+    Qwen3-1.7B by Alibaba Cloud, distributed under Apache License 2.0.
+
+Qwen3-Embedding-0.6B-Q8_0.gguf
+  Artifact LFS OID
+    sha256:972f23255e46adfe744a0eb9a0039f3c63988f65753b0968d776e8b27168c321
+  Artifact size
+    784,144,960 bytes
+  ACE-Step origin
+    The ACE-Step 1.5 model bundle includes Qwen3-Embedding-0.6B as its text
+    encoder. Its source model.safetensors is byte-identical to the official
+    Qwen3-Embedding-0.6B weight object recorded in MODEL-SOURCE.json.
+  Qwen origin
+    Qwen3-Embedding-0.6B by Alibaba Cloud, distributed under Apache License
+    2.0 and based on Qwen3-0.6B-Base.
+
+acestep-v15-xl-turbo-Q4_K_M.gguf (pack 0.1.5 bakeoff candidate)
+  Artifact LFS OID
+    sha256:475e60e8644b1f91eebc0cd25f24c060bed06e64a862b4e60ffafe634c740478
+  Artifact size
+    2,989,922,688 bytes
+  ACE-Step origin
+    ACE-Step 1.5 XL Turbo (4B DiT) by ACE Studio and StepFun, published at
+    https://huggingface.co/ACE-Step/acestep-v15-xl-turbo revision
+    d4a0b288b83ebb7e25a8c0b32c573c22e134e8ee under the MIT license. The
+    upstream model card states an 8-step distilled recipe without CFG and
+    lists 12 GB or more of VRAM for its own Python runtime; the acestep.cpp
+    Q4_K_M quantization is the object under test on 8 GB and carries no
+    quality claim until the recorded bakeoff decides one.
+
+Conversion and attribution boundary
+  Serveurperso publishes these files as pre-quantized GGUF models for
+  acestep.cpp. The embedding was converted from safetensors and quantized to
+  Q8_0; the ACE-Step LM is likewise distributed here as Q8_0 GGUF. The
+  immutable artifact revision proves the exact distributed bytes, but the
+  artifact repository does not record exact input revisions or a conversion
+  attestation. This notice therefore does not claim a cryptographically
+  complete source-to-GGUF chain.
+
+Copyright and license notices
+  ACE-Step 1.5: Copyright (c) 2026 ACEStep. See
+    licenses/ACE-Step-1.5-MIT.txt
+  Qwen: Copyright 2024 Alibaba Cloud. See
+    licenses/Qwen-Apache-2.0.txt

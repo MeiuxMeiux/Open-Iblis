@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "files": {
+    "acestep.cpp-MIT.txt": {
+      "component": "ServeurpersoCom/acestep.cpp",
+      "revision": "9761469d95fc204b5468623c68a1a2203e50b1f9",
+      "licenseBlob": "60b5693f5da9c859e4e767fdf4ef4b1e847916a7",
+      "sourceUrl": "https://raw.githubusercontent.com/ServeurpersoCom/acestep.cpp/9761469d95fc204b5468623c68a1a2203e50b1f9/LICENSE",
+      "sha256": "43e5610846745c687f675badd848d769c8af0a671604efe45cb1466517fd3ddb"
+    },
+    "cpp-httplib-MIT.txt": {
+      "component": "yhirose/cpp-httplib",
+      "revision": "811dd0b6f2382f50f801f3cfdb5ba349d08bb575",
+      "licenseBlob": "3e5ed359a2bb16f52c383745c25f14bb7a81c9e4",
+      "sourceUrl": "https://raw.githubusercontent.com/yhirose/cpp-httplib/811dd0b6f2382f50f801f3cfdb5ba349d08bb575/LICENSE",
+      "sha256": "4b45cbe16d7b71b89ae6127e26e0d90a029198ca5e958ad8e3d0b8bbed364d8b"
+    },
+    "ggml-MIT.txt": {
+      "component": "ggml-org/ggml",
+      "revision": "c044c6f03892f9d5e98213b05f8afea1f8b0d3c9",
+      "licenseBlob": "e7dca554bcb802f98408383a864404e3aa4eacca",
+      "sourceUrl": "https://raw.githubusercontent.com/ggml-org/ggml/c044c6f03892f9d5e98213b05f8afea1f8b0d3c9/LICENSE",
+      "sha256": "94f29bbed6a22c35b992c5c6ebf0e7c92f13b836b90f36f461c9cf2f0f1d010d"
+    },
+    "minimp3-CC0-1.0.txt": {
+      "component": "lieff/minimp3",
+      "revision": "ca7c706001331a5a8e3182ce3b3ce3b243589154",
+      "componentBlob": "3220ae1a85b858a95af5766155ada91304344465",
+      "licenseBlob": "2c4afabdb632b5d68e60c9fe9fe0b0819676a729",
+      "sourceUrl": "https://raw.githubusercontent.com/lieff/minimp3/ca7c706001331a5a8e3182ce3b3ce3b243589154/LICENSE",
+      "sha256": "6a1ee543e5282cd9061881edf462e6fdab181f328da71fc2c9a6950a80e94d01"
+    },
+    "yarn-MIT.txt": {
+      "component": "jquesnelle/yarn",
+      "revision": "a18e54988639030e706f6ff9db224cf74e08a65a",
+      "licenseBlob": "bf8c87304a63657d159dabdf69d029d035c6b639",
+      "sourceUrl": "https://raw.githubusercontent.com/jquesnelle/yarn/a18e54988639030e706f6ff9db224cf74e08a65a/LICENSE",
+      "sha256": "c3ec00ded224ebaaa673373961babc2d79f3081914897f3325cb7927a76234c1"
+    },
+    "yyjson-MIT.txt": {
+      "component": "ibireme/yyjson",
+      "revision": "de7abc1aede96d4a968a9e668524b1aad4df4258",
+      "licenseBlob": "a09bff355348932f9a1bd8c2e7417afb1ec0c943",
+      "sourceUrl": "https://raw.githubusercontent.com/ibireme/yyjson/de7abc1aede96d4a968a9e668524b1aad4df4258/LICENSE",
+      "sha256": "45e384d3d52c73cba3a64d6e6c25d47cd738cd8a55c30629e3201046eda62947"
+    }
+  }
+}

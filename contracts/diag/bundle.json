@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "installId": "5f0c2a4e-8d1b-4c3a-9e7f-2b6d1a0c9e84",
+  "level": "errors",
+  "sentAt": "2027-01-15T08:00:00.000Z",
+  "note": "<omitted>",
+  "app": {
+    "version": "0.2.0-alpha.49",
+    "electron": "38.1.0",
+    "chrome": "140.0.7339.80",
+    "node": "22.19.0",
+    "platform": "win32",
+    "arch": "x64"
+  },
+  "system": {
+    "osRelease": "10.0.26100",
+    "cpu": "Intel(R) Core(TM) Ultra 9 275HX",
+    "cores": 24,
+    "ramGB": 32,
+    "gpu": "NVIDIA GeForce RTX 5070 Laptop GPU, 581.29, 8151 MiB"
+  },
+  "plugins": [],
+  "health": {},
+  "licensing": {
+    "state": null,
+    "enforced": true,
+    "recentEvents": []
+  },
+  "logs": {
+    "main.log": "{\"t\":\"2027-01-15T07:59:58.000Z\",\"level\":\"info\",\"msg\":\"ready\",\"path\":\"C:\\\\Users\\\\<user>\\\\AppData\\\\Roaming\\\\Iblis\"}"
+  }
+}

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "tr-0123456789abcdef", "name": "Tape Warmth", "version": 2, "status": "live",
+    "category": "[\"texture\"]", "tags": "[\"warm\",\"tape/sat\"]", "install_id": "install-a",
+    "bytes": 157286405, "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "gcs_prefix": "trainings/tr-0123456789abcdef/v2", "download_count": 42,
+    "files": "[{\"name\":\"adapter_texture.safetensors\",\"bytes\":157286400,\"sha256\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\"},{\"name\":\"preview.mp3\",\"bytes\":5,\"sha256\":\"cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc\"}]",
+    "created_at": 1790000000, "updated_at": 1795000000
+  },
+  {
+    "id": "tr-fedcba9876543210", "name": "Brushed Groove", "version": 1, "status": "live",
+    "category": "[\"groove\"]", "tags": "[]", "install_id": "install-b",
+    "bytes": 99, "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "gcs_prefix": "trainings/tr-fedcba9876543210/v1", "download_count": 0,
+    "files": "[{\"name\":\"adapter_groove.safetensors\",\"bytes\":90,\"sha256\":\"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee\"},{\"name\":\"metadata.json\",\"bytes\":9,\"sha256\":\"ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\"}]",
+    "created_at": 1791000000, "updated_at": 1791000000
+  },
+  {
+    "id": "tr-00000000000000ff", "name": "Reserved Upload", "version": 1, "status": "reserved",
+    "category": "", "tags": "[]", "install_id": "install-c",
+    "bytes": 0, "sha256": "", "gcs_prefix": "", "download_count": 0,
+    "files": "[]", "created_at": 1799000000, "updated_at": 1799000000
+  }
+]

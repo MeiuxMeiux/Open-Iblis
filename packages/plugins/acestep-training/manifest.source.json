@@ -1,0 +1,43 @@
+{
+  "$comment": "Authoring source for the ACE-Step 1.5 training pack (docs/training/01-training-pack.md). The single runtime.zip asset is the entire embedded toolchain: isolated CPython 3.11 + torch cu128 + Demucs + librosa tagger + the vendored ACE-Step 1.5 trainer + ffmpeg + htdemucs_6s weights + base-model checkpoints, built reproducibly by `just training-pack-build` from tools/training-pack/pins.json. Stage dist/runtime.zip (gitignored, multi-GB) before `just catalog-build`; catalog-publish uploads the same hashed bytes to GCS. The shell unpacks it (unpack: zip) into the version dir and spawns runtime/python.exe -I -m iblis_train --port N with cwd = the version dir and IBLIS_SESSION = the per-session secret. The sidecar binds 127.0.0.1 only, never touches the network, and refuses requests without the session header.",
+  "id": "mx.iblis.training.acestep",
+  "name": "ACE-Step 1.5 Training",
+  "version": "0.1.1",
+  "kind": "training",
+  "hostMinVersion": "0.2.0-alpha.19",
+  "capabilities": [
+    "lora-training"
+  ],
+  "executable": {
+    "bin": "runtime/python.exe",
+    "portArg": "--port",
+    "args": [
+      "-I",
+      "-m",
+      "iblis_train"
+    ],
+    "healthPath": "/health",
+    "healthTimeoutMs": 120000
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Meiux Meiux LLC",
+    "url": "https://iblis.meiuxmeiux.com"
+  },
+  "bugUrl": "https://iblis.meiuxmeiux.com/contact",
+  "assets": [
+    {
+      "path": "runtime.zip",
+      "sha256": "78e1b451841a80bb4097465bba7e4a23bed61cf7f040243a15435971c6a33952",
+      "bytes": 8601263749,
+      "published": true,
+      "unpack": "zip",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.training.acestep/{version}/runtime.zip"
+        }
+      ]
+    }
+  ]
+}

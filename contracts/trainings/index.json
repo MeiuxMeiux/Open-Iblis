@@ -1,0 +1,75 @@
+{
+    "schema": 1,
+    "generatedAt": "2027-01-15T08:00:00+00:00",
+    "shard": {
+        "index": 0,
+        "count": 1
+    },
+    "trainings": [
+        {
+            "id": "tr-fedcba9876543210",
+            "name": "Brushed Groove",
+            "version": 1,
+            "categories": [
+                "groove"
+            ],
+            "tags": [],
+            "bytes": 99,
+            "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "files": [
+                {
+                    "name": "adapter_groove.safetensors",
+                    "bytes": 90,
+                    "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    "url": "https://storage.googleapis.com/iblis-dist/trainings/tr-fedcba9876543210/v1/adapter_groove.safetensors"
+                },
+                {
+                    "name": "metadata.json",
+                    "bytes": 9,
+                    "sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                    "url": "https://storage.googleapis.com/iblis-dist/trainings/tr-fedcba9876543210/v1/metadata.json"
+                }
+            ],
+            "previewUrl": null,
+            "createdAt": "2026-10-03T04:00:00+00:00",
+            "updatedAt": "2026-10-03T04:00:00+00:00",
+            "downloadCount": 0,
+            "minAppVersion": null,
+            "originHash": "87593beae7f947ebdff24257cf6e6bbd046051abc9fefae8f48ad67c200ae08a"
+        },
+        {
+            "id": "tr-0123456789abcdef",
+            "name": "Tape Warmth",
+            "version": 2,
+            "categories": [
+                "texture"
+            ],
+            "tags": [
+                "warm",
+                "tape/sat"
+            ],
+            "bytes": 157286405,
+            "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "files": [
+                {
+                    "name": "adapter_texture.safetensors",
+                    "bytes": 157286400,
+                    "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    "url": "https://storage.googleapis.com/iblis-dist/trainings/tr-0123456789abcdef/v2/adapter_texture.safetensors"
+                },
+                {
+                    "name": "preview.mp3",
+                    "bytes": 5,
+                    "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+                    "url": "https://storage.googleapis.com/iblis-dist/trainings/tr-0123456789abcdef/v2/preview.mp3"
+                }
+            ],
+            "previewUrl": "https://storage.googleapis.com/iblis-dist/trainings/tr-0123456789abcdef/v2/preview.mp3",
+            "createdAt": "2026-09-21T14:13:20+00:00",
+            "updatedAt": "2026-11-18T11:06:40+00:00",
+            "downloadCount": 42,
+            "minAppVersion": null,
+            "originHash": "0b160a1edbc6429c7cedf0faa0c4360c3f09eba20ac9ef1f9c0522119d3e4d0b"
+        }
+    ]
+}
