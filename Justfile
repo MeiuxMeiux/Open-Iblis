@@ -56,6 +56,10 @@ media-test:
 e2e: build
     @sh scripts/shell-e2e.sh
 
+# Documentation screenshots of the built shell (PNG, to apps/shell/shots or $1).
+screenshots out="apps/shell/shots": build
+    @sh scripts/shell-screenshots.sh {{out}}
+
 # Bundle and run the waveform analysis worker against a generated WAV.
 analysis-test: build
     @sh scripts/shell-analysis-test.sh

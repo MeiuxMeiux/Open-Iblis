@@ -122,6 +122,18 @@ describe('safetensorsProblem', () => {
     )
   })
 
+  it('rejects holes between tensors and bytes no tensor claims', async () => {
+    const hole = {
+      a: { dtype: 'U8', shape: [2], data_offsets: [0, 2] },
+      b: { dtype: 'U8', shape: [4], data_offsets: [4, 8] }
+    }
+    expect(await safetensorsProblem(await fixture(build(hole, 8)))).toMatch(/hole/)
+    const leading = { a: { dtype: 'U8', shape: [4], data_offsets: [4, 8] } }
+    expect(await safetensorsProblem(await fixture(build(leading, 8)))).toMatch(/hole/)
+    const tail = { a: { dtype: 'U8', shape: [4], data_offsets: [0, 4] } }
+    expect(await safetensorsProblem(await fixture(build(tail, 8)))).toMatch(/no tensor claims/)
+  })
+
   it('caps tensor rank', async () => {
     const header = { t: { dtype: 'U8', shape: [1, 1, 1, 1, 1, 1, 1, 1, 1], data_offsets: [0, 1] } }
     expect(await safetensorsProblem(await fixture(build(header)))).toMatch(/malformed shape/)

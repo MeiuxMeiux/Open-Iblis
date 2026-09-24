@@ -5,8 +5,8 @@
 // check in apps/site/src/Trainings/Safetensors.php (server) and the Python
 // exporter in packages/plugins/acestep-training (engine). A file is accepted
 // only when its 8-byte little-endian header length is sane, the JSON header
-// describes nothing but tensors (dtype/shape/data_offsets with offsets bounded
-// by the file), and the leading bytes are not a pickle/zip container in
+// describes nothing but tensors (dtype/shape/data_offsets whose ranges tile
+// the data exactly), and the leading bytes are not a pickle/zip container in
 // disguise. Runs on every import (dialog, training pull-down, catalog offer)
 // before the bytes are admitted to the library — a `.pt`/`.ckpt` renamed to
 // `.safetensors`, or a truncated/oversized-header file, never lands.
@@ -126,14 +126,22 @@ function headerProblem(headerJson: string, dataBytes: number): string | null {
     ranges.push(verdict)
   }
   if (ranges.length === 0) return 'safetensors header describes no tensors'
-  // No two tensors may share bytes.
-  ranges.sort((a, b) => a[0] - b[0])
+  return layoutProblem(ranges, dataBytes)
+}
+
+// Tensors must tile the data buffer exactly, as the reference loader demands:
+// in offset order each range starts where the previous one ended, from byte 0
+// to the last data byte. No overlap, no hole, no unclaimed tail (audit
+// 2026-09-24, M-TRN2 follow-up). A zero-length tensor sits at the cursor.
+function layoutProblem(ranges: [number, number][], dataBytes: number): string | null {
+  ranges.sort((a, b) => a[0] - b[0] || a[1] - b[1])
   let cursor = 0
   for (const [begin, end] of ranges) {
-    if (end === begin) continue
     if (begin < cursor) return 'safetensors tensors overlap'
+    if (begin > cursor) return 'safetensors tensors leave a hole in the data'
     cursor = end
   }
+  if (cursor !== dataBytes) return 'safetensors data has bytes no tensor claims'
   return null
 }
 

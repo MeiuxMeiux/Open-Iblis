@@ -65,7 +65,7 @@ describe('redactValue', () => {
 
   // L-DIAG3: product keys, leases, and inline user content in log text.
   it('redacts product keys and lease-shaped tokens but keeps the masked key', () => {
-    expect(redactText('key IBLIS-AB12-CD34-EF56-GH78 typed')).toBe('key <redacted> typed')
+    expect(redactText('key IBLIS-AAAA-CD34-EF56-GH78 typed')).toBe('key <redacted> typed')
     expect(redactText('IBLIS-****-****-****-GH78')).toBe('IBLIS-****-****-****-GH78')
     const lease = `${'a'.repeat(300)}.${'b'.repeat(86)}`
     expect(redactText(`lease=${lease}`)).toBe('lease=<redacted>')

@@ -12,10 +12,12 @@ from collections import Counter
 from .common import StageError, scratch_dir
 
 MAX_HEADER_BYTES = 1 << 20
-DTYPES = {
-    "F64", "F32", "F16", "BF16", "I64", "I32", "I16", "I8",
-    "U8", "BOOL", "F8_E4M3", "F8_E5M2",
+# Element width per dtype; the same table as the shell and server mirrors.
+DTYPE_BYTES = {
+    "F64": 8, "F32": 4, "F16": 2, "BF16": 2, "I64": 8, "I32": 4, "I16": 2,
+    "I8": 1, "U8": 1, "BOOL": 1, "F8_E4M3": 1, "F8_E5M2": 1,
 }
+MAX_RANK = 8
 TAG_LIMIT = 16
 
 
@@ -54,7 +56,7 @@ def _header_problem(header_json: bytes, data_bytes: int):
         return "safetensors header is not a JSON object"
     if not isinstance(header, dict) or not header:
         return "safetensors header is not a JSON object"
-    tensors = 0
+    ranges = []
     for key, entry in header.items():
         if key == "__metadata__":
             if not isinstance(entry, dict) or not all(
@@ -66,10 +68,10 @@ def _header_problem(header_json: bytes, data_bytes: int):
             return "safetensors header contains a non-tensor entry"
         if sorted(entry.keys()) != ["data_offsets", "dtype", "shape"]:
             return f"tensor '{key}' does not have exactly dtype/shape/data_offsets"
-        if entry["dtype"] not in DTYPES:
+        if entry["dtype"] not in DTYPE_BYTES:
             return f"tensor '{key}' has an unsupported dtype"
         shape = entry["shape"]
-        if not isinstance(shape, list) or not all(
+        if not isinstance(shape, list) or len(shape) > MAX_RANK or not all(
             isinstance(d, int) and not isinstance(d, bool) and d >= 0 for d in shape
         ):
             return f"tensor '{key}' has a malformed shape"
@@ -83,9 +85,33 @@ def _header_problem(header_json: bytes, data_bytes: int):
         begin, end = offsets
         if begin < 0 or end < begin or end > data_bytes:
             return f"tensor '{key}' has data_offsets outside the file"
-        tensors += 1
-    if tensors == 0:
+        # The range must hold exactly dtype * prod(shape) (audit 2026-09-24,
+        # M-TRN2); Python ints do not overflow, so no separate cap is needed.
+        want = DTYPE_BYTES[entry["dtype"]]
+        for dim in shape:
+            want *= dim
+        if end - begin != want:
+            return f"tensor '{key}' byte range does not match its dtype and shape"
+        ranges.append((begin, end))
+    if not ranges:
         return "safetensors header describes no tensors"
+    return _layout_problem(ranges, data_bytes)
+
+
+def _layout_problem(ranges, data_bytes):
+    # Tensors must tile the data buffer exactly, as the reference loader
+    # demands: in offset order each range starts where the previous one
+    # ended, from byte 0 to the last data byte. No overlap, no hole, no
+    # unclaimed tail (audit 2026-09-24, M-TRN2 follow-up).
+    cursor = 0
+    for begin, end in sorted(ranges):
+        if begin < cursor:
+            return "safetensors tensors overlap"
+        if begin > cursor:
+            return "safetensors tensors leave a hole in the data"
+        cursor = end
+    if cursor != data_bytes:
+        return "safetensors data has bytes no tensor claims"
     return None
 
 

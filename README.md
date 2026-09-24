@@ -21,6 +21,23 @@ catalog cannot push code the maintainers did not sign.
 - **Open source.** The desktop app, plugin SDK, and plugin packs are in this
   repository under the licenses in [License](#license).
 
+## Screenshots
+
+Real captures of the current alpha in the default Dark 3D skin, taken by
+`just screenshots` against the test engine.
+
+| Create | Library |
+| --- | --- |
+| ![Create view: prompt, engine card, profile, and the engine's own advanced controls](https://iblis.meiuxmeiux.com/assets/img/app/create.png) | ![Library view: folders, generated and imported tracks, and the persistent player](https://iblis.meiuxmeiux.com/assets/img/app/library.png) |
+
+| Styles | Training |
+| --- | --- |
+| ![Styles view: trained, community, and imported adapters with acknowledgement gating](https://iblis.meiuxmeiux.com/assets/img/app/styles.png) | ![Training view: hardware check for GPU memory, scratch disk, queue, and the training pack](https://iblis.meiuxmeiux.com/assets/img/app/training.png) |
+
+| Settings | Library in the Infernal skin |
+| --- | --- |
+| ![Settings hub: cards for Appearance, Engine, Audio analysis, Cloud providers, Data location, Diagnostics, Feedback, and Updates](https://iblis.meiuxmeiux.com/assets/img/app/settings.png) | ![Library in the Infernal skin](https://iblis.meiuxmeiux.com/assets/img/app/library-infernal.png) |
+
 ## Features
 
 - **Generate.** Text-to-music with ACE-Step 1.5 through `acestep.cpp`. Prompt,
@@ -189,6 +206,14 @@ stored here.
 "Iblis" and the Iblis logo are trademarks of Meiux Meiux LLC. The licenses
 above cover the code, not the name or logo. A fork must use its own name,
 icons, app id, and update feed. [TRADEMARKS.md](TRADEMARKS.md) has the details.
+
+## Roadmap
+
+What is shipped, what is next, and what is still only intent is kept in one
+place: <https://iblis.meiuxmeiux.com/roadmap>. It lists the unbuilt features
+by area with their current status, and it is updated with every release.
+Feature requests accepted from GitHub issues and the website's feedback form
+are folded into it.
 
 ## Reporting bugs and asking questions
 

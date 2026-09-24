@@ -96,3 +96,4 @@ Thumbs.db
 # image-generation working dirs (master copies live in GCS)
 tools/imagegen/out/
 tools/imagegen/ledger.jsonl
+apps/shell/shots/

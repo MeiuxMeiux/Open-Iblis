@@ -3,8 +3,9 @@
 Thanks for helping. This file covers setup, the rules a change must follow,
 and how a pull request travels from this repository into a release.
 
-Before starting anything larger than a small fix, open an issue (or comment on
-an existing one) so we can agree on the approach. It saves both sides a
+Before starting anything larger than a small fix, check the
+[roadmap](https://iblis.meiuxmeiux.com/roadmap) and open an issue (or comment
+on an existing one) so we can agree on the approach. It saves both sides a
 rewrite.
 
 ## Setup

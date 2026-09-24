@@ -92,8 +92,8 @@ const DTYPE_BYTES: Record<string, number> = {
 }
 
 // A well-formed header: each tensor's range holds exactly dtype * prod(shape)
-// bytes, ranges never overlap (optional gaps between them), optional string
-// metadata, optional space padding (audit 2026-09-24, M-TRN2).
+// bytes, ranges tile the data with no gap (as the reference loader demands),
+// optional string metadata, optional space padding (audit 2026-09-24, M-TRN2).
 const validFile = fc
   .record({
     tensors: fc.dictionary(
@@ -102,8 +102,7 @@ const validFile = fc
         .filter((k) => k !== '__metadata__' && k !== '__proto__'),
       fc.record({
         dtype: fc.constantFrom(...Object.keys(DTYPE_BYTES)),
-        shape: fc.array(fc.nat({ max: 8 }), { maxLength: 4 }),
-        gap: fc.nat({ max: 16 })
+        shape: fc.array(fc.nat({ max: 8 }), { maxLength: 4 })
       }),
       { minKeys: 1, maxKeys: 5 }
     ),
@@ -115,9 +114,8 @@ const validFile = fc
     let cursor = 0
     for (const [name, t] of Object.entries(tensors)) {
       const bytes = t.shape.reduce((n, d) => n * d, DTYPE_BYTES[t.dtype] ?? 1)
-      const begin = cursor + t.gap
-      header[name] = { dtype: t.dtype, shape: t.shape, data_offsets: [begin, begin + bytes] }
-      cursor = begin + bytes
+      header[name] = { dtype: t.dtype, shape: t.shape, data_offsets: [cursor, cursor + bytes] }
+      cursor += bytes
     }
     return safetensorsBytes(JSON.stringify(header) + ' '.repeat(padding), cursor)
   })

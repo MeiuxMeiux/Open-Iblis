@@ -20,12 +20,12 @@
   {
     "name": "scalar tensor, empty shape",
     "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[],\"data_offsets\":[0,4]}}",
-    "dataBytes": 8,
+    "dataBytes": 4,
     "ok": true
   },
   {
-    "name": "zero-length tensor",
-    "header": "{\"w\":{\"dtype\":\"U8\",\"shape\":[0],\"data_offsets\":[8,8]}}",
+    "name": "zero-length tensor at the end",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]},\"z\":{\"dtype\":\"U8\",\"shape\":[0],\"data_offsets\":[8,8]}}",
     "dataBytes": 8,
     "ok": true
   },
@@ -58,6 +58,12 @@
     "name": "header length 0x4b50 (first bytes PK)",
     "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]}}",
     "padTo": 19280,
+    "dataBytes": 8,
+    "ok": true
+  },
+  {
+    "name": "adjacent tensors tile the data",
+    "header": "{\"a\":{\"dtype\":\"U8\",\"shape\":[4],\"data_offsets\":[0,4]},\"b\":{\"dtype\":\"F32\",\"shape\":[1],\"data_offsets\":[4,8]}}",
     "dataBytes": 8,
     "ok": true
   },
@@ -198,6 +204,55 @@
     "headerBase64": "eyJfX21ldGFkYXRhX18iOnsibiI6Iv8ifSwidyI6eyJkdHlwZSI6IkYzMiIsInNoYXBlIjpbMl0sImRhdGFfb2Zmc2V0cyI6WzAsOF19fQ==",
     "dataBytes": 8,
     "ok": false
+  },
+  {
+    "name": "hole before the first tensor",
+    "header": "{\"w\":{\"dtype\":\"U8\",\"shape\":[4],\"data_offsets\":[4,8]}}",
+    "dataBytes": 8,
+    "ok": false,
+    "reason": "hole"
+  },
+  {
+    "name": "hole between tensors",
+    "header": "{\"a\":{\"dtype\":\"U8\",\"shape\":[2],\"data_offsets\":[0,2]},\"b\":{\"dtype\":\"U8\",\"shape\":[4],\"data_offsets\":[4,8]}}",
+    "dataBytes": 8,
+    "ok": false,
+    "reason": "hole"
+  },
+  {
+    "name": "bytes after the last tensor",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[1],\"data_offsets\":[0,4]}}",
+    "dataBytes": 8,
+    "ok": false,
+    "reason": "no tensor claims"
+  },
+  {
+    "name": "zero-length tensor alone leaves a hole",
+    "header": "{\"z\":{\"dtype\":\"U8\",\"shape\":[0],\"data_offsets\":[8,8]}}",
+    "dataBytes": 8,
+    "ok": false,
+    "reason": "hole"
+  },
+  {
+    "name": "zero-length tensor inside another",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[2],\"data_offsets\":[0,8]},\"z\":{\"dtype\":\"U8\",\"shape\":[0],\"data_offsets\":[4,4]}}",
+    "dataBytes": 8,
+    "ok": false,
+    "reason": "overlap"
+  },
+  {
+    "name": "overlapping tensors",
+    "header": "{\"a\":{\"dtype\":\"U8\",\"shape\":[6],\"data_offsets\":[0,6]},\"b\":{\"dtype\":\"U8\",\"shape\":[4],\"data_offsets\":[4,8]}}",
+    "dataBytes": 8,
+    "ok": false,
+    "reason": "overlap"
+  },
+  {
+    "name": "range shorter than dtype times shape",
+    "header": "{\"w\":{\"dtype\":\"F32\",\"shape\":[4],\"data_offsets\":[0,8]}}",
+    "dataBytes": 8,
+    "ok": false,
+    "reason": "does not match"
   },
   {
     "name": "header length past the file",

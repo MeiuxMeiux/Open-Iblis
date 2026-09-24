@@ -141,6 +141,26 @@ class SafetensorsValidatorTest(unittest.TestCase):
         path = self.make({"__metadata__": {"format": "pt"}})
         self.assertIn("describes no tensors", safetensors_problem(path))
 
+    def test_range_must_match_dtype_and_shape(self):
+        path = self.make({"w": {"dtype": "F32", "shape": [8], "data_offsets": [0, 16]}})
+        self.assertIn("does not match", safetensors_problem(path))
+        deep = self.make({"w": {"dtype": "U8", "shape": [1] * 9, "data_offsets": [0, 1]}},
+                         data=b"\x00")
+        self.assertIn("malformed shape", safetensors_problem(deep))
+
+    def test_tensors_must_tile_the_data(self):
+        hole = self.make({"a": {"dtype": "U8", "shape": [2], "data_offsets": [0, 2]},
+                          "b": {"dtype": "U8", "shape": [4], "data_offsets": [12, 16]}})
+        self.assertIn("hole", safetensors_problem(hole))
+        overlap = self.make({"a": {"dtype": "U8", "shape": [12], "data_offsets": [0, 12]},
+                             "b": {"dtype": "U8", "shape": [8], "data_offsets": [8, 16]}})
+        self.assertIn("overlap", safetensors_problem(overlap))
+        tail = self.make({"a": {"dtype": "U8", "shape": [4], "data_offsets": [0, 4]}})
+        self.assertIn("no tensor claims", safetensors_problem(tail))
+        tiled = self.make({"a": {"dtype": "U8", "shape": [4], "data_offsets": [0, 4]},
+                           "b": {"dtype": "F32", "shape": [3], "data_offsets": [4, 16]}})
+        self.assertIsNone(safetensors_problem(tiled))
+
     def test_truncated_header_rejected(self):
         path = self.dir / "trunc.safetensors"
         path.write_bytes(struct.pack("<Q", 4096) + b"{}")
