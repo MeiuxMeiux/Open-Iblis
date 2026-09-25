@@ -10,6 +10,7 @@ secrets/
 # ...except the public verification keys, which ship in the app
 !apps/shell/electron/main/keys/catalog.pub.pem
 !apps/shell/electron/main/keys/license.pub.pem
+!apps/shell/electron/main/keys/release.pub.pem
 
 # node / pnpm
 node_modules/

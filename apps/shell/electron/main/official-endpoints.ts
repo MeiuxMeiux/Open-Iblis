@@ -81,7 +81,13 @@ export function buildKind(): BuildKind {
   return isOfficialBuild() ? 'official' : 'source'
 }
 
+// Environment overrides exist for development, tests, and self-built forks.
+// An official installer ignores them: otherwise anyone able to set the user's
+// process environment could redirect activation payloads or lease headers to
+// their own host (security scan 2026-09-25). Signed feeds would still verify,
+// but the hosted-service calls carry the user's credentials.
 function override(name: string): string | null {
+  if (isOfficialBuild()) return null
   const value = process.env[name]
   return value !== undefined && value !== '' ? value : null
 }
@@ -99,7 +105,8 @@ export function requireServiceEndpoint(service: ServiceEndpoint): string {
   return url
 }
 
-// Signed plugin catalog. The override replaces the whole route base.
+// Signed plugin catalog. The override replaces the whole route base (source
+// builds only, like every override).
 export function catalogBase(route: CatalogRoute): string {
   return override('IBLIS_CATALOG_BASE') ?? `${OFFICIAL_API_ROOT}/${route}`
 }

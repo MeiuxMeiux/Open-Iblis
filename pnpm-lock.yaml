@@ -2308,8 +2308,8 @@ packages:
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
-  js-yaml@4.2.0:
-    resolution: {integrity: sha512-ePWsvanv0DWuDRsW8dnt+R4jQ31SCRCQ7hhNcPXZPsoBZiemuZNYGf7adZdqX2D86j6rvKp3RpCxVTSb8WQlOw==}
+  js-yaml@4.3.2:
+    resolution: {integrity: sha512-SFNOvSJ+Dgf/9An904Yx+CgSlIPCkIpao4qo51lpee25TIRejdH3rhR4EZMGoNx3/TP3O+wzWuiTFl4sqbltzA==}
     hasBin: true
 
   jscpd-darwin-arm64@5.3.1:
@@ -4213,7 +4213,7 @@ snapshots:
     dependencies:
       '@types/http-cache-semantics': 4.2.0
       '@types/keyv': 3.1.4
-      '@types/node': 22.19.19
+      '@types/node': 24.13.6
       '@types/responselike': 1.0.3
 
   '@types/chai@5.2.3':
@@ -4233,7 +4233,7 @@ snapshots:
 
   '@types/fs-extra@9.0.13':
     dependencies:
-      '@types/node': 22.19.19
+      '@types/node': 24.13.6
 
   '@types/hast@3.0.5':
     dependencies:
@@ -4245,13 +4245,14 @@ snapshots:
 
   '@types/keyv@3.1.4':
     dependencies:
-      '@types/node': 22.19.19
+      '@types/node': 24.13.6
 
   '@types/ms@2.1.0': {}
 
   '@types/node@22.19.19':
     dependencies:
       undici-types: 6.21.0
+    optional: true
 
   '@types/node@24.13.6':
     dependencies:
@@ -4259,7 +4260,7 @@ snapshots:
 
   '@types/responselike@1.0.3':
     dependencies:
-      '@types/node': 22.19.19
+      '@types/node': 24.13.6
 
   '@types/unist@3.0.3': {}
 
@@ -4481,7 +4482,7 @@ snapshots:
       hosted-git-info: 4.1.0
       isbinaryfile: 5.0.7
       jiti: 2.7.0
-      js-yaml: 4.2.0
+      js-yaml: 4.3.2
       json5: 2.2.3
       lazy-val: 1.0.5
       minimatch: 10.2.5
@@ -4587,7 +4588,7 @@ snapshots:
       fs-extra: 10.1.0
       http-proxy-agent: 7.0.2(supports-color@7.2.0)
       https-proxy-agent: 7.0.6(supports-color@7.2.0)
-      js-yaml: 4.2.0
+      js-yaml: 4.3.2
       sanitize-filename: 1.6.4
       source-map-support: 0.5.21
       stat-mode: 1.0.0
@@ -4762,7 +4763,7 @@ snapshots:
       app-builder-lib: 26.15.3(dmg-builder@26.15.3)(electron-builder-squirrel-windows@26.15.3)(supports-color@7.2.0)
       builder-util: 26.15.3(supports-color@7.2.0)
       fs-extra: 10.1.0
-      js-yaml: 4.2.0
+      js-yaml: 4.3.2
     transitivePeerDependencies:
       - electron-builder-squirrel-windows
       - supports-color
@@ -4832,7 +4833,7 @@ snapshots:
     dependencies:
       builder-util-runtime: 9.7.0(supports-color@7.2.0)
       fs-extra: 10.1.0
-      js-yaml: 4.2.0
+      js-yaml: 4.3.2
       lazy-val: 1.0.5
       lodash.escaperegexp: 4.1.2
       lodash.isequal: 4.5.0
@@ -5260,7 +5261,7 @@ snapshots:
       es6-error: 4.1.1
       matcher: 3.0.0
       roarr: 2.15.4
-      semver: 7.8.1
+      semver: 7.8.5
       serialize-error: 7.0.1
     optional: true
 
@@ -5412,7 +5413,7 @@ snapshots:
 
   js-tokens@4.0.0: {}
 
-  js-yaml@4.2.0:
+  js-yaml@4.3.2:
     dependencies:
       argparse: 2.0.1
 
@@ -5625,11 +5626,11 @@ snapshots:
 
   node-abi@4.35.0:
     dependencies:
-      semver: 7.8.1
+      semver: 7.8.5
 
   node-api-version@0.2.1:
     dependencies:
-      semver: 7.8.1
+      semver: 7.8.5
 
   node-gyp@12.4.0:
     dependencies:
@@ -5638,7 +5639,7 @@ snapshots:
       graceful-fs: 4.2.11
       nopt: 9.0.0
       proc-log: 6.1.0
-      semver: 7.8.1
+      semver: 7.8.5
       tar: 7.5.22
       tinyglobby: 0.2.17
       undici: 6.28.1
@@ -6198,7 +6199,8 @@ snapshots:
 
   unbash@4.0.11: {}
 
-  undici-types@6.21.0: {}
+  undici-types@6.21.0:
+    optional: true
 
   undici-types@7.18.2: {}
 

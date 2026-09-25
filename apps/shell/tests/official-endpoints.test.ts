@@ -64,10 +64,16 @@ describe('official build', () => {
     expect(match?.[1]).toBe(OFFICIAL_UPDATE_FEED)
   })
 
-  it('lets environment overrides win', () => {
+  it('ignores environment overrides, so a hostile environment cannot redirect credentials', () => {
     build('official')
     vi.stubEnv('IBLIS_KEYS_BASE', 'http://127.0.0.1:9/keys')
-    expect(serviceEndpoint('keys')).toBe('http://127.0.0.1:9/keys')
+    vi.stubEnv('IBLIS_DIAG_ENDPOINT', 'http://127.0.0.1:9/diag')
+    vi.stubEnv('IBLIS_CATALOG_BASE', 'http://127.0.0.1:9/catalog')
+    vi.stubEnv('IBLIS_TRAININGS_INDEX_BASE', 'http://127.0.0.1:9/trainings')
+    expect(serviceEndpoint('keys')).toBe(`${OFFICIAL_SITE_ORIGIN}/api/v1/keys`)
+    expect(serviceEndpoint('diag')).toBe(`${OFFICIAL_SITE_ORIGIN}/api/v1/diag.php`)
+    expect(catalogBase('v1')).toBe(`${OFFICIAL_SITE_ORIGIN}/api/v1`)
+    expect(trainingsIndexBase()).toBe('https://storage.googleapis.com/iblis-dist/trainings')
   })
 })
 
