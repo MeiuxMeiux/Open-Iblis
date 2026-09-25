@@ -35,3 +35,24 @@ leases during product-key activation. Never committed.
   `95602c5e94d76318a857a1f029b768e10ed9b7b4123684f9d146485fe7d46d4c`
 - Rotation is routine: add the new `kid` to the shell verifier, ship,
   flip signing, retire the old key after one lease TTL (7 days).
+
+## release.pub.pem
+
+`release.pub.pem` is the **public** Ed25519 key the shell uses to verify shell
+installers before an auto-update downloads or installs them
+(`electron/main/release-signature.ts`). Same posture: safe to commit,
+verification only.
+
+The matching private key is held only by the release operator, outside any
+repository and outside CI: `scripts/release-sign.sh` (via `just release-sync`)
+signs each tagged installer's sha512 after CI publishes it and uploads the
+signature beside the installer. CI can build and upload an installer, but no
+installed app accepts one this key has not signed.
+
+- Generated: 2026-09-25, Ed25519 (`openssl genpkey -algorithm ed25519`).
+- Pubkey DER SHA-256 fingerprint:
+  `8a934ed1162700789bdbb2a061163b90a12e16d2cfcdee2b762584cafc866fca`
+- Rotation: ship a shell release whose verifier accepts both keys, flip the
+  signing key, then drop the old key one release later. Installed apps only
+  ever verify with the key their own build carries, so never rotate in a
+  single step.

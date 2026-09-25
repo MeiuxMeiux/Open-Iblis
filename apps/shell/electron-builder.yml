@@ -49,3 +49,9 @@ publish:
   - provider: generic
     url: https://storage.googleapis.com/iblis-dist/shell
     channel: latest
+    # Not an Authenticode publisher: the installer is unsigned. electron-updater
+    # only calls its verifyUpdateCodeSignature hook when app-update.yml carries
+    # a publisherName, and the shell's hook checks the Ed25519 release
+    # signature instead (electron/main/release-signature.ts, H-SUP1).
+    publisherName:
+      - Meiux Meiux LLC

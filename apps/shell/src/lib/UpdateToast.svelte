@@ -44,7 +44,7 @@
     <div class="body">
       {#if status.state === 'available'}
         <strong>Update {status.version}</strong>
-        <span class="sub">downloading…</span>
+        <span class="sub">checking signature…</span>
       {:else if status.state === 'downloading'}
         <strong>Downloading update</strong>
         <span class="sub">{status.percent}%</span>

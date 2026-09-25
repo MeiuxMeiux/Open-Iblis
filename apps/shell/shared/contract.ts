@@ -142,6 +142,9 @@ export type UpdateStatus =
   | { state: 'checking' }
   | { state: 'current' }
   | { state: 'available'; version: string }
+  // Offered by the feed but its release signature is not published yet; the
+  // shell downloads nothing until a later check finds it (release-signature.ts).
+  | { state: 'pending'; version: string }
   | { state: 'downloading'; percent: number }
   | { state: 'ready'; version: string }
   | { state: 'error'; error: string }

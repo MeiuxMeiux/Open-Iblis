@@ -100,7 +100,9 @@
       {#if update.state === 'checking'}
         Checking for updates…
       {:else if update.state === 'available'}
-        Update {update.version} found — downloading…
+        Update {update.version} found — checking its signature…
+      {:else if update.state === 'pending'}
+        Update {update.version} is being published.
       {:else if update.state === 'downloading'}
         Downloading update… {update.percent}%
       {:else if update.state === 'ready'}

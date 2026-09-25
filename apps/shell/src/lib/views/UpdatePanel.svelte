@@ -54,7 +54,9 @@
         {:else if status?.state === 'current'}
           Iblis is up to date.
         {:else if status?.state === 'available'}
-          Update {status.version} found — downloading…
+          Update {status.version} found — checking its signature…
+        {:else if status?.state === 'pending'}
+          Update {status.version} is being published. Iblis will download it once it is signed.
         {:else if status?.state === 'downloading'}
           Downloading update… {status.percent}%
         {:else if status?.state === 'ready'}
