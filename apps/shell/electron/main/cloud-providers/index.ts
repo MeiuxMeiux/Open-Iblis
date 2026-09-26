@@ -1,7 +1,7 @@
 // SPDX-FileCopyrightText: 2026 Meiux Meiux LLC
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import { app, safeStorage } from 'electron'
+import { app } from 'electron'
 import {
   CLOUD_PROVIDER_IDS,
   type CloudDefaultTask,
@@ -11,8 +11,7 @@ import {
   type CloudTask,
   type ModelSummaryV1
 } from '../../../shared/cloud-providers'
-import { listInstalled } from '../plugins/registry'
-import { readInstalledManifest } from '../plugins/installed-manifest'
+import type { AssistTask } from '../../../shared/text-assist'
 import { log } from '../logger'
 import { modelUrl, normalizeModels, PROVIDER_NAMES } from './adapters'
 import {
@@ -24,12 +23,9 @@ import {
   type CloudStore
 } from './store'
 import { errorMessage } from '../error-message'
+import { installedAdapters, secureStorage, type SecureStore } from './platform'
 
 const PROVIDERS: readonly CloudProviderId[] = CLOUD_PROVIDER_IDS
-const ADAPTER_PLUGIN_IDS: Record<CloudProviderId, string> = {
-  openrouter: 'mx.iblis.cloud.openrouter',
-  imagerouter: 'mx.iblis.cloud.imagerouter'
-}
 const PROVIDER_TASKS: Record<CloudProviderId, CloudTask[]> = {
   openrouter: ['song-ideas', 'lyrics-assistance'],
   imagerouter: ['cover-generation']
@@ -37,12 +33,6 @@ const PROVIDER_TASKS: Record<CloudProviderId, CloudTask[]> = {
 const DAY = 86_400_000
 const TIMEOUT_MS = 15_000
 const MAX_RESPONSE_BYTES = 2_000_000
-
-interface SecureStore {
-  available(): boolean
-  seal(value: string): string | null
-  unseal(value: string): string | null
-}
 
 interface HostDeps {
   store: CloudStore
@@ -66,49 +56,9 @@ export interface CloudProviderHost {
     enabled: boolean
   ): Promise<CloudProvidersSnapshot>
   setDefault(task: CloudDefaultTask, modelId?: string): Promise<CloudProvidersSnapshot>
-}
-
-function installedAdapters(): Set<CloudProviderId> {
-  const providers = new Set<CloudProviderId>()
-  for (const plugin of listInstalled()) {
-    if (!plugin.activeVersion) continue
-    const manifest = readInstalledManifest(plugin.id, plugin.activeVersion)
-    if (manifest?.kind !== 'cloud-provider') continue
-    const id = manifest.cloudProvider?.id
-    if ((id === 'openrouter' || id === 'imagerouter') && plugin.id === ADAPTER_PLUGIN_IDS[id]) {
-      providers.add(id)
-    }
-  }
-  return providers
-}
-
-function secureStorage(): SecureStore {
-  return {
-    available: () => {
-      try {
-        return safeStorage.isEncryptionAvailable()
-      } catch {
-        return false
-      }
-    },
-    seal: (value) => {
-      try {
-        return safeStorage.isEncryptionAvailable()
-          ? `enc:${safeStorage.encryptString(value).toString('base64')}`
-          : null
-      } catch {
-        return null
-      }
-    },
-    unseal: (value) => {
-      if (!value.startsWith('enc:')) return null
-      try {
-        return safeStorage.decryptString(Buffer.from(value.slice(4), 'base64'))
-      } catch {
-        return null
-      }
-    }
-  }
+  // Main-only: the OpenRouter key for a text task the user has switched on.
+  // Never exposed over IPC; the text-assist module is its only caller.
+  textKey(task: AssistTask): Promise<string>
 }
 
 function validKey(value: string): string {
@@ -339,6 +289,14 @@ export function createCloudProviderHost(deps: HostDeps): CloudProviderHost {
       loadedSettings().providers[provider].tasks[task] = enabled
       await saveSettings()
       return result()
+    },
+    async textKey(task) {
+      const key = await bearer('openrouter')
+      const providerSettings = loadedSettings().providers.openrouter
+      if (!providerSettings.consented || !providerSettings.tasks[task]) {
+        throw new Error('turn on this OpenRouter capability in Settings, Cloud providers')
+      }
+      return key
     },
     async setDefault(task, modelId) {
       await load()

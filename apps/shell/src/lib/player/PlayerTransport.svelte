@@ -13,6 +13,7 @@
   import { player } from '../player.svelte'
   import { waveformAnalysis } from '../waveform-analysis.svelte'
   import Icon from '../ui/Icon.svelte'
+  import DetectedFacts from '../library/DetectedFacts.svelte'
   import { formatAudio, formatGeneration, formatTime } from './format'
   import PlayerOptions from './PlayerOptions.svelte'
   import VolumeControl from './VolumeControl.svelte'
@@ -104,6 +105,7 @@
   <div class="identity">
     {#if player.track}
       <strong title={player.track.name}>{player.track.name}</strong>
+      <DetectedFacts track={player.track} />
       {#if display.showFormat || (display.showTargetMetadata && (!!target.bpm || !!target.key))}
         <span class="track-meta">
           {#if display.showFormat}<span>{formatAudio(player.track)}</span>{/if}

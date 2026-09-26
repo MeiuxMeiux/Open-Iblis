@@ -1,0 +1,25 @@
+Iblis stem-split processor: third-party notices
+================================================
+
+iblis-stems.exe is the Iblis stem-split sidecar (MIT, Meiux Meiux LLC). It
+links the components below. Full license texts for the model and the
+separation implementation are in notices/licenses/.
+
+- demucs-rs (demucs-core), a Rust implementation of HTDemucs v4.
+  Apache-2.0. https://github.com/nikhilunni/demucs-rs
+  Pinned at 97adfaae52e006be1557405bfc7b10614d805a78 (v0.3.4).
+  License: notices/licenses/demucs-rs-Apache-2.0.txt
+
+- Burn and CubeCL (tensor runtime), wgpu (GPU access): MIT OR Apache-2.0.
+
+- hound (WAV I/O): Apache-2.0. tiny_http: MIT OR Apache-2.0.
+  serde, serde_json, anyhow, pollster: MIT OR Apache-2.0.
+
+The model weights are a separate download; see MODEL_ATTRIBUTION.txt.
+
+Two small crates are MPL-2.0 (colored, option-ext). They are used
+unmodified; their source is available at https://crates.io/crates/colored
+and https://crates.io/crates/option-ext.
+
+No component is GPL or LGPL-only. Crates offered under a choice of
+licenses are used under their MIT or Apache-2.0 option.

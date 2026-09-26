@@ -1,8 +1,8 @@
 {
-  "$comment": "Authoring source for the ACE-Step 1.5 engine pack. `just catalog-build` reads this, hashes the first-party assets that declare a local `file`, and copies the inline sha256/bytes for vendor-direct assets (the GGUFs, fetched straight from HuggingFace \u2014 never mirrored to GCS for the alpha). Since 0.1.5 the native closure is published to GCS by engine-build.yml's publish job and transcribed with `just engine-pack-transcribe` (no local dist/ staging); the notices ship as installed assets (EULA staged by `just engine-notices-stage`). Historic note: the exe + its full DLL closure (ggml{,-base,-cpu,-cuda}.dll, the CUDA runtime cudart/cublas/cublasLt, and the MSVC runtime vcruntime140{,_1}/msvcp140/concrt140) MUST be staged at packages/plugins/acestep-engine/dist/ before building (they are gitignored; see UPSTREAM.txt 'Staging'). vcomp140.dll dropped in 0.1.3: the engine builds with GGML_OPENMP=OFF and no longer links MSVC OpenMP. The exe + ggml DLLs are ABI-matched \u2014 stage them from the SAME engine-build run; the CUDA/MSVC DLLs come from the toolkit and vcrt-stage.yml. GPU/CUDA-only for the alpha: the binary is the CUDA build and CPU is unusably slow.",
+  "$comment": "Authoring source for the ACE-Step 1.5 engine pack. `just catalog-build` reads this, hashes the first-party assets that declare a local `file`, and copies the inline sha256/bytes for vendor-direct assets (the GGUFs, fetched straight from HuggingFace — never mirrored to GCS for the alpha). Since 0.1.5 the native closure is published to GCS by engine-build.yml's publish job and transcribed with `just engine-pack-transcribe` (no local dist/ staging); the notices ship as installed assets (EULA staged by `just engine-notices-stage`). Historic note: the exe + its full DLL closure (ggml{,-base,-cpu,-cuda}.dll, the CUDA runtime cudart/cublas/cublasLt, and the MSVC runtime vcruntime140{,_1}/msvcp140/concrt140) MUST be staged at packages/plugins/acestep-engine/dist/ before building (they are gitignored; see UPSTREAM.txt 'Staging'). vcomp140.dll dropped in 0.1.3: the engine builds with GGML_OPENMP=OFF and no longer links MSVC OpenMP. The exe + ggml DLLs are ABI-matched — stage them from the SAME engine-build run; the CUDA/MSVC DLLs come from the toolkit and vcrt-stage.yml. GPU/CUDA-only for the alpha: the binary is the CUDA build and CPU is unusably slow.",
   "id": "mx.iblis.engine.acestep",
   "name": "ACE-Step 1.5",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "kind": "engine",
   "hostMinVersion": "0.2.0-alpha.1",
   "capabilities": [
@@ -48,8 +48,8 @@
   "assets": [
     {
       "path": "ace-server.exe",
-      "sha256": "e9a0192174820158229860acbe101f24dbccbfef1ec29703590620cb3e46c2f0",
-      "bytes": 1408512,
+      "sha256": "129c47204c36be8df54ade6dae8eeed4f36555a610a133199ebbd4237bf151e0",
+      "bytes": 1425920,
       "published": true,
       "executable": true,
       "sources": [
@@ -145,7 +145,7 @@
     },
     {
       "path": "ggml.dll",
-      "sha256": "b0ce031e1c66e7e94e74616f3db4c9c5dbbd4774ef3c3cdcbb28aa947c68cb91",
+      "sha256": "4ed505e59e5ac91e6cecedd5b339baa8a44a31dba69e30e8f4a40f6032e6a3e3",
       "bytes": 67072,
       "published": true,
       "sources": [
@@ -157,8 +157,8 @@
     },
     {
       "path": "ggml-base.dll",
-      "sha256": "4a8e4dc994a8f8ea86ae4437d5557386acd959d1dde8fddfa691065e15182e37",
-      "bytes": 636928,
+      "sha256": "c398b02b09047d1af147c2934341c5daf75ce2fb61e9d13dc9aa3f14027eb10b",
+      "bytes": 646656,
       "published": true,
       "sources": [
         {
@@ -169,8 +169,8 @@
     },
     {
       "path": "ggml-cpu.dll",
-      "sha256": "11d4286ed883c6e4c1612f86d7783775f4c51d3262bea5c65a8991ad8ea16c0e",
-      "bytes": 788480,
+      "sha256": "e492da7f4db052b4368008faf4e773097e9f7ba174720d6a53cfe50053198be4",
+      "bytes": 805376,
       "published": true,
       "sources": [
         {
@@ -181,8 +181,8 @@
     },
     {
       "path": "ggml-cuda.dll",
-      "sha256": "67b85493de7516a095d415f63983dd0d1daa626f7a0f1311eb8682ae5d71750a",
-      "bytes": 110000128,
+      "sha256": "98fcead0a7969c268ab845d5ba7c053eb69c44f101a33b1e9ff1d0c71f2a5a22",
+      "bytes": 99871232,
       "published": true,
       "sources": [
         {

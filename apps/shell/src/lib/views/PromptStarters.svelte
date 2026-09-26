@@ -4,6 +4,7 @@
 <script lang="ts">
   import { PROMPT_STARTERS, type PromptStarter } from './prompt-starters'
   import PromptHistory from './PromptHistory.svelte'
+  import AssistButton from '../assist/AssistButton.svelte'
 
   let {
     disabled,
@@ -22,7 +23,14 @@
 <div class="field">
   <div class="labelrow">
     <span>Prompt</span>
-    <PromptHistory onpick={(text: string) => (prompt = text)} />
+    <div class="tools">
+      <AssistButton
+        task="song-ideas"
+        current={prompt}
+        oninsert={(text: string) => (prompt = text)}
+      />
+      <PromptHistory onpick={(text: string) => (prompt = text)} />
+    </div>
   </div>
   <textarea
     bind:value={prompt}
@@ -55,7 +63,11 @@
     align-items: center;
     justify-content: space-between;
   }
-  .labelrow span,
+  .tools {
+    display: flex;
+    gap: 6px;
+  }
+  .labelrow > span,
   legend {
     font-size: 12px;
     color: var(--color-text-secondary);

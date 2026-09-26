@@ -78,7 +78,7 @@ listed as shipped components.
 Model artifacts
 
   ACE-Step 1.5 model weights (2B turbo DiT, 1.7B LM, VAE) and the
-  ACE-Step 1.5 XL turbo DiT (4B, pack 0.1.5 bakeoff candidate)
+  ACE-Step 1.5 XL turbo DiT (4B, pack 0.1.6 bakeoff candidate)
     License presented by upstream: MIT
     Copyright: Copyright (c) 2026 ACEStep
     Text: licenses/ACE-Step-1.5-MIT.txt

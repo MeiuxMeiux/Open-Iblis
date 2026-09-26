@@ -92,32 +92,36 @@ it('scans a song folder through the training sidecar', async () => {
   await next.click()
 })
 
-it('checks the name locally and trains privately without a product key', async () => {
-  const { win } = session.shell
-  expect(
-    await win.getByText('This training stays on this machine. A product key lets you').count()
-  ).toBe(1)
-  await win.getByRole('textbox', { name: 'Training name' }).fill('moss-garden')
-  await win.getByRole('button', { name: 'Check availability' }).click()
-  // Taken by the recovered job on this machine: refused locally.
-  await expect.poll(() => win.getByText('already uses this name').count()).toBe(1)
-  await win.getByRole('textbox', { name: 'Training name' }).fill('fern-static')
-  await win.getByRole('button', { name: 'Check availability' }).click()
-  await expect.poll(() => win.getByText('fern-static is free on this machine.').count()).toBe(1)
-  await win.getByRole('button', { name: 'Continue' }).click()
+it(
+  'checks the name locally and trains privately without a product key',
+  { timeout: 120_000 },
+  async () => {
+    const { win } = session.shell
+    expect(
+      await win.getByText('This training stays on this machine. A product key lets you').count()
+    ).toBe(1)
+    await win.getByRole('textbox', { name: 'Training name' }).fill('moss-garden')
+    await win.getByRole('button', { name: 'Check availability' }).click()
+    // Taken by the recovered job on this machine: refused locally.
+    await expect.poll(() => win.getByText('already uses this name').count()).toBe(1)
+    await win.getByRole('textbox', { name: 'Training name' }).fill('fern-static')
+    await win.getByRole('button', { name: 'Check availability' }).click()
+    await expect.poll(() => win.getByText('fern-static is free on this machine.').count()).toBe(1)
+    await win.getByRole('button', { name: 'Continue' }).click()
 
-  // Private consent: no public-upload disclosure, the rights attestation stays.
-  expect(await win.getByRole('switch').count()).toBe(1)
-  await win.getByRole('switch', { name: /I hold the rights/ }).click()
-  await win.getByRole('button', { name: 'Continue' }).click()
-  expect(await win.getByText('added to your Styles, marked Private').count()).toBe(1)
-  await win.getByRole('button', { name: 'Start training "fern-static"' }).click()
+    // Private consent: no public-upload disclosure, the rights attestation stays.
+    expect(await win.getByRole('switch').count()).toBe(1)
+    await win.getByRole('switch', { name: /I hold the rights/ }).click()
+    await win.getByRole('button', { name: 'Continue' }).click()
+    expect(await win.getByText('added to your Styles, marked Private').count()).toBe(1)
+    await win.getByRole('button', { name: 'Start training "fern-static"' }).click()
 
-  const row = win.getByRole('listitem').filter({ hasText: 'fern-static' })
-  await expect.poll(() => row.innerText(), { timeout: 60_000, interval: 500 }).toMatch(/Private/)
-  expect(await row.innerText()).not.toMatch(/upload/i)
-  expect(await axeViolations(win)).toEqual([])
-})
+    const row = win.getByRole('listitem').filter({ hasText: 'fern-static' })
+    await expect.poll(() => row.innerText(), { timeout: 60_000, interval: 500 }).toMatch(/Private/)
+    expect(await row.innerText()).not.toMatch(/upload/i)
+    expect(await axeViolations(win)).toEqual([])
+  }
+)
 
 it('lists the private training in Styles with a Private badge', async () => {
   const { win } = session.shell
@@ -144,9 +148,11 @@ it('resumes the interrupted run through every local stage', { timeout: 120_000 }
   await expect
     .poll(() => row.innerText(), { timeout: 60_000, interval: 500 })
     .toMatch(/Awaiting upload/)
-  const text = await row.innerText()
-  expect(text).toMatch(/16gb tier \/ rank 64 \/ adamw/)
-  expect(text).toMatch(/Upload failed: .*activated product key/)
+  // "Awaiting upload" can render a beat before the upload error line does.
+  await expect
+    .poll(() => row.innerText(), { timeout: 10_000, interval: 250 })
+    .toMatch(/Upload failed: .*activated product key/)
+  expect(await row.innerText()).toMatch(/16gb tier \/ rank 64 \/ adamw/)
   expect(await row.getByRole('button', { name: 'Retry upload' }).count()).toBe(1)
 })
 

@@ -11,6 +11,7 @@
   } from '../../../shared/cloud-providers'
   import ToggleSwitch from '../ui/ToggleSwitch.svelte'
   import CloudModelRegistry from './CloudModelRegistry.svelte'
+  import { OPENROUTER_DISCLOSURE } from '../assist/disclosures'
 
   let snapshot = $state<CloudProvidersSnapshot | null>(null)
   let key = $state<Record<CloudProviderId, string>>({ openrouter: '', imagerouter: '' })
@@ -44,9 +45,9 @@
   <div>
     <h2 id="cloud-heading">Cloud providers</h2>
     <p class="hint">
-      Optional user-owned keys for future, deliberate assistance tools. Nothing is sent while a
-      provider is disabled; refreshing models and testing a key never generates content or spends
-      credits.
+      Optional user-owned keys for the Create helpers (Song idea, Write lyrics). Nothing is sent
+      while a provider is disabled; refreshing models and testing a key never generates content or
+      spends credits. Each helper request names its model and estimate and asks first.
     </p>
   </div>
 
@@ -81,9 +82,7 @@
 
         <p class="disclosure">
           {#if provider.id === 'openrouter'}
-            OpenRouter may route a request across model providers. Future requests start with
-            provider fallback disabled and a privacy-preserving routing choice when available; the
-            selected model and routing policy are shown before submission.
+            {OPENROUTER_DISCLOSURE}
           {:else}
             ImageRouter logs prompts and forwards prompts, images, and parameters to an external
             provider. Its downstream retention may differ. Future cover requests use ephemeral image

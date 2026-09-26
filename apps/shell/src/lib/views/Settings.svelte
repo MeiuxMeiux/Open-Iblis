@@ -22,14 +22,18 @@
   import LicensePanel from './LicensePanel.svelte'
   import UpdatePanel from './UpdatePanel.svelte'
   import ProcessorSettingsPanel from './ProcessorSettingsPanel.svelte'
+  import StemSettingsPanel from './StemSettingsPanel.svelte'
   import CloudProvidersPanel from './CloudProvidersPanel.svelte'
+  import LocalModelPanel from './LocalModelPanel.svelte'
   import StoragePanel from './StoragePanel.svelte'
 
   type SectionId =
     | 'appearance'
     | 'engine'
     | 'analysis'
+    | 'stems'
     | 'cloud'
+    | 'local'
     | 'storage'
     | 'diagnostics'
     | 'feedback'
@@ -63,10 +67,22 @@
       detail: 'BPM and key providers, defaults, comparisons'
     },
     {
+      id: 'stems',
+      icon: 'stems',
+      title: 'Stems',
+      detail: 'Stem separator, model choice, and GPU or CPU'
+    },
+    {
       id: 'cloud',
       icon: 'cube',
       title: 'Cloud providers',
       detail: 'Your own keys for song ideas and cover art'
+    },
+    {
+      id: 'local',
+      icon: 'edit',
+      title: 'Local model',
+      detail: 'Song ideas and lyrics from a model server on this computer'
     },
     {
       id: 'storage',
@@ -158,8 +174,12 @@
     <EngineActionsProbe />
   {:else if open === 'analysis'}
     <ProcessorSettingsPanel />
+  {:else if open === 'stems'}
+    <StemSettingsPanel />
   {:else if open === 'cloud'}
     <CloudProvidersPanel />
+  {:else if open === 'local'}
+    <LocalModelPanel />
   {:else if open === 'storage'}
     <StoragePanel />
   {:else if open === 'diagnostics'}

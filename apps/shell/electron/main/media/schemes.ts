@@ -8,6 +8,7 @@ import { protocol } from 'electron'
 export function registerMediaSchemes(): void {
   protocol.registerSchemesAsPrivileged([
     { scheme: 'iblis-track', privileges: { stream: true } },
-    { scheme: 'iblis-probe', privileges: { stream: true } }
+    { scheme: 'iblis-probe', privileges: { stream: true } },
+    { scheme: 'iblis-stem', privileges: { stream: true } }
   ])
 }

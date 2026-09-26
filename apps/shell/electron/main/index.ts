@@ -19,8 +19,10 @@ import {
 import { initializeResourceState } from './resource-state'
 import { initializeTraining } from './training'
 import { initializeProcessors } from './processors'
+import { initializeStems, registerStemProtocol } from './stems'
 import { processorsMayRun } from './processor-gate'
 import { initializeCloudProviderHost } from './cloud-providers'
+import { initializeTextAssist } from './cloud-providers/generate'
 import { prepareStorage } from './storage'
 import { registerMediaSchemes } from './media/schemes'
 import { registerActionsProbeProtocol } from './engine/actions-probe-media'
@@ -54,11 +56,13 @@ if (!app.requestSingleInstanceLock()) {
     .then(() => {
       hardenSessions()
       registerTrackProtocol()
+      registerStemProtocol()
       registerActionsProbeProtocol()
       openWindow()
       initAutoUpdate((status) => mainWindow?.webContents.send('update:status', status))
       initDiagnostics()
       initializeCloudProviderHost()
+      initializeTextAssist()
       void startInstalledSidecars()
         .catch((error: unknown) => {
           log('error', 'installed sidecar startup failed', { error: String(error) })
@@ -74,6 +78,15 @@ if (!app.requestSingleInstanceLock()) {
               initializeProcessors({ input: getProcessorInput, mayRun: processorsMayRun }).catch(
                 (error: unknown) => {
                   log('error', 'processor host initialization failed', { error: String(error) })
+                }
+              )
+            )
+            // Stem separation is manual heavy work with its own store; the
+            // same isolation applies.
+            .then(() =>
+              initializeStems({ input: getProcessorInput, mayRun: processorsMayRun }).catch(
+                (error: unknown) => {
+                  log('error', 'stem host initialization failed', { error: String(error) })
                 }
               )
             )

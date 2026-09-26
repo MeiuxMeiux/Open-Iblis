@@ -48,7 +48,17 @@ export const ICON_NAMES = [
   'grid',
   'shield',
   'cube',
-  'lens'
+  'lens',
+  'stems',
+  'mic',
+  'drum',
+  'bass',
+  'guitar',
+  'piano',
+  'layers',
+  'headphones',
+  'metronome',
+  'key'
 ] as const
 
 export type IconName = (typeof ICON_NAMES)[number]

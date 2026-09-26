@@ -28,7 +28,8 @@ desc    = "lm: heterogeneous request batching on a single generate entry
 # MIT LICENSE present
 #   "Copyright (c) 2023-2026 The acestep.cpp authors"
 # (GitHub license API reports SPDX MIT). MIT permits redistribution of the
-# unmodified source + built binaries inside the plugin folder. Re-verify the
+# source (with the small patches/ Iblis carries) + built binaries inside the
+# plugin folder. Re-verify the
 # LICENSE on every pin bump.
 
 # ---- Verified source/binary dependency closure (2026-07-13, re-run 2026-08-24)
@@ -109,7 +110,7 @@ desc    = "lm: heterogeneous request batching on a single generate entry
 #   vcrt-stage run 27281822481, job 80578145711
 #     all four VC DLLs: one VS2022 redist directory,
 #     14.44.35112/x64/Microsoft.VC143.CRT (no System32 fallback used)
-# Pack 0.1.5 (2026-08-24) re-pins the engine, so ace-server.exe and the four
+# Pack 0.1.6 (prepared 2026-08-24 as 0.1.5) re-pins the engine, so ace-server.exe and the four
 # ggml DLLs are rebuilt by engine-build.yml at 9761469; the CUDA 12.9.1 runtime
 # DLLs and the four VC DLLs are byte-identical to 0.1.4 and are copied
 # server-side on GCS from the 0.1.4 object path by the workflow's `publish`
@@ -119,7 +120,7 @@ desc    = "lm: heterogeneous request batching on a single generate entry
 # manifest.source.json. Future engine-build/vcrt-stage runs hard-fail unless
 # the same-source closures exist, validate vendor signatures, and emit
 # version/hash provenance. CUDA artifacts also checksum-gate
-# NVIDIA-CUDA-12.9.1-EULA.pdf and emit two provenance JSON files. Pack 0.1.5
+# NVIDIA-CUDA-12.9.1-EULA.pdf and emit two provenance JSON files. The pack
 # still needs the EULA and source/model notices as installed assets; do not
 # call workflow artifacts alone a release.
 
@@ -137,12 +138,12 @@ desc    = "lm: heterogeneous request batching on a single generate entry
 #     2,549,528,000 bytes; sha256:288f708a61cfc241013a98a62f98ba331f83fe34d0d3559acdd9b0f6a2f7cd6b
 #   vae-BF16.gguf
 #     337,420,928 bytes; sha256:0599862ac5d15cd308e1d2e368373aea6c02e25ebd1737ad4a4562a0901b0ef8
-# Pack 0.1.5 adds the XL (4B DiT) turbo candidate for the 8 GB bakeoff
+# Pack 0.1.6 adds the XL (4B DiT) turbo candidate for the 8 GB bakeoff
 # (session plan 2026-08-24 S3); Q6_K (4,098,812,992 bytes) is deliberately NOT
 # packed: with the 1.7B Q8 LM resident it does not fit 8 GB.
 #   acestep-v15-xl-turbo-Q4_K_M.gguf
 #     2,989,922,688 bytes; sha256:475e60e8644b1f91eebc0cd25f24c060bed06e64a862b4e60ffafe634c740478
-# Candidate SFT asset (not in pack 0.1.4/0.1.5 and not yet published):
+# Candidate SFT asset (not in pack 0.1.4/0.1.6 and not yet published):
 #   acestep-v15-sft-Q8_0.gguf
 #     2,549,527,936 bytes; sha256:17f1984e48aaab27b3eb8ccbf0b754a6656e677884c60ea7003845cfc0059b70
 # The Windows CPU smoke substitutes these smaller files and shares the same
@@ -151,7 +152,7 @@ desc    = "lm: heterogeneous request batching on a single generate entry
 #     709,846,656 bytes; sha256:bdaf9e292d4470f31c19cafeaca1b74936a114667e3a85e5d33b65247e9908ec
 #   acestep-v15-turbo-Q4_K_M.gguf
 #     1,445,710,272 bytes; sha256:55b4d8514850f3d0f82536f37e99673aaf48df802b5ae5b153eea32a2e2daa5e
-# Pack 0.1.4 totals 5,646,931,456 model bytes; pack 0.1.5 totals
+# Pack 0.1.4 totals 5,646,931,456 model bytes; pack 0.1.6 totals
 # 8,636,854,144 (with XL turbo Q4_K_M); adding SFT would add 2,549,527,936.
 # ace-server discovers models by GGUF architecture metadata, so neither
 # addition needs a filename contract change. XL support (encoder/decoder
@@ -181,8 +182,14 @@ desc    = "lm: heterogeneous request batching on a single generate entry
 #       -> extract the audio/wav part. (Two-phase, not the single /generate the
 #       design draft assumed.)
 #
-# GAP (Step-2 decision): ace-server has NO request auth. The Iblis host expects
-# sidecars to enforce X-Iblis-Session (echo-server does). Resolve before catalog
-# ship: patch upstream to check the header, front it with a tiny auth shim, or
-# formally accept loopback-bind + ephemeral-high-port as the boundary for this
-# binary. Does NOT block the isolated Spike-0 smoke.
+# AUTH (audit A-3, 2026-09-26): upstream ace-server has no request auth, so
+# Iblis carries patches/0001-session-gate.patch, applied by engine-build.yml to
+# the pinned source before both builds. With IBLIS_SESSION in the environment
+# (the shell always sets it) a pre-routing handler answers 403 unless the
+# request has X-Iblis-Session equal to it, a loopback Host on the server's own
+# port, and no Origin header. Without the env var the binary behaves as
+# upstream. The CI smoke proves all four rejections plus the accepted path.
+# Packs <= 0.1.4 predate the patch; it ships from pack 0.1.6. Version 0.1.5
+# is skipped: run 32788095134 (2026-08-24) published UNPATCHED 0.1.5 native
+# bytes to their immutable GCS path, never cataloged; do not transcribe it. Re-apply (or
+# refresh the patch) on every pin bump: `git apply` failing stops the build.

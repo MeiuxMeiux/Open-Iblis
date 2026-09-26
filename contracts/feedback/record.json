@@ -13,5 +13,7 @@
     "updated_at": "2027-01-15T08:00:00Z",
     "state": "new",
     "notes": "",
-    "github_issue": null
+    "github_issue": null,
+    "public_note": "",
+    "notify": 1
 }

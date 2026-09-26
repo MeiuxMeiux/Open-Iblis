@@ -64,7 +64,13 @@ describe('shared icon system', () => {
       .map((path) => basename(path))
       .sort()
 
-    expect(rawSvgFiles).toEqual(['Icon.svelte', 'Sigil.svelte', 'Waveform.svelte'])
+    // StemLane draws a per-stem waveform, the same exemption as Waveform.
+    expect(rawSvgFiles).toEqual([
+      'Icon.svelte',
+      'Sigil.svelte',
+      'StemLane.svelte',
+      'Waveform.svelte'
+    ])
   })
 
   it('keeps dense Queue and Library artwork on named accessible controls', () => {

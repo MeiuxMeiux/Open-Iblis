@@ -1,0 +1,96 @@
+{
+  "$comment": "Authoring source for the htdemucs stem-split processor. The native sidecar (iblis-stems.exe, packages/plugins/demucs-stems/native, MIT) is built and published to GCS by .github/workflows/stems-build.yml and transcribed with `just stems-pack-transcribe`; the Demucs weights are fetched vendor-direct from a revision-pinned Hugging Face URL (never mirrored to GCS). All three Demucs packs share the same binary; only --model and the weights differ. See demucs-stems/UPSTREAM.txt.",
+  "id": "mx.iblis.processor.stems-demucs",
+  "name": "Stem Splitter: Demucs Standard",
+  "version": "0.1.0",
+  "kind": "processor",
+  "hostMinVersion": "0.2.0-alpha.57",
+  "capabilities": [
+    "stem-split"
+  ],
+  "executable": {
+    "bin": "iblis-stems.exe",
+    "args": [
+      "--model",
+      "htdemucs",
+      "--weights",
+      "htdemucs.safetensors"
+    ],
+    "portArg": "--port",
+    "sessionEnv": "IBLIS_SESSION",
+    "healthPath": "/health",
+    "healthTimeoutMs": 15000
+  },
+  "assets": [
+    {
+      "path": "iblis-stems.exe",
+      "sha256": "0507d50553f1861a861b50c1f6febced4ba627a6d327f3f5c14414e5dcb38650",
+      "bytes": 40283136,
+      "published": true,
+      "executable": true,
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.processor.stems-demucs/{version}/iblis-stems.exe"
+        }
+      ]
+    },
+    {
+      "path": "htdemucs.safetensors",
+      "sha256": "8193504cdfb3943adaf039b8acb524a46e87ebf232c383ac7a32c80a6578423e",
+      "bytes": 84030696,
+      "sources": [
+        {
+          "kind": "vendor",
+          "url": "https://huggingface.co/set-soft/audio_separation/resolve/939723568b2dca203e61cc7294317ba38549964f/Demucs/htdemucs.safetensors"
+        }
+      ]
+    },
+    {
+      "path": "notices/THIRD_PARTY_NOTICES.txt",
+      "file": "notices/THIRD_PARTY_NOTICES.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.processor.stems-demucs/{version}/notices/THIRD_PARTY_NOTICES.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/MODEL_ATTRIBUTION.txt",
+      "file": "notices/MODEL_ATTRIBUTION.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.processor.stems-demucs/{version}/notices/MODEL_ATTRIBUTION.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/demucs-rs-Apache-2.0.txt",
+      "file": "notices/licenses/demucs-rs-Apache-2.0.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.processor.stems-demucs/{version}/notices/licenses/demucs-rs-Apache-2.0.txt"
+        }
+      ]
+    },
+    {
+      "path": "notices/licenses/demucs-MIT.txt",
+      "file": "notices/licenses/demucs-MIT.txt",
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.processor.stems-demucs/{version}/notices/licenses/demucs-MIT.txt"
+        }
+      ]
+    }
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Meiux Meiux LLC",
+    "url": "https://iblis.meiuxmeiux.com"
+  },
+  "bugUrl": "https://iblis.meiuxmeiux.com/contact"
+}

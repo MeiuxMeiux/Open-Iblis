@@ -1,0 +1,59 @@
+diff --git a/tools/ace-server.cpp b/tools/ace-server.cpp
+index 78278f5..739d42c 100644
+--- a/tools/ace-server.cpp
++++ b/tools/ace-server.cpp
+@@ -141,6 +141,45 @@ static void on_signal(int) {
+     }
+ }
+ 
++// Iblis session gate (Iblis audit A-3). When the host sets IBLIS_SESSION, every
++// request must carry X-Iblis-Session equal to it, address the server as a
++// loopback host on its own port, and carry no Origin header. A custom header
++// forces a CORS preflight that this server never answers, and a DNS-rebinding
++// page can neither learn the secret nor present a loopback Host. Without
++// IBLIS_SESSION the server behaves exactly as upstream.
++static bool iblis_equal(const std::string & a, const std::string & b) {
++    unsigned char diff = a.size() == b.size() ? 0 : 1;
++    for (size_t i = 0; i < a.size(); i++) {
++        diff |= (unsigned char) (a[i] ^ (i < b.size() ? b[i] : 0));
++    }
++    return diff == 0;
++}
++
++static void iblis_install_session_gate(httplib::Server & svr, int port) {
++    const char * env = getenv("IBLIS_SESSION");
++    if (!env || !*env) {
++        fprintf(stderr, "[Server] IBLIS_SESSION unset: session gate off\n");
++        return;
++    }
++    std::string              secret = env;
++    std::string              suffix = ":" + std::to_string(port);
++    std::vector<std::string> hosts  = { "127.0.0.1" + suffix, "localhost" + suffix, "[::1]" + suffix };
++    svr.set_pre_routing_handler([secret, hosts](const httplib::Request & req, httplib::Response & res) {
++        std::string host    = req.get_header_value("Host");
++        bool        host_ok = false;
++        for (const auto & h : hosts) {
++            host_ok = host_ok || host == h;
++        }
++        if (req.has_header("Origin") || !host_ok || !iblis_equal(req.get_header_value("X-Iblis-Session"), secret)) {
++            res.status = 403;
++            res.set_content("{\"error\":\"forbidden\"}", "application/json");
++            return httplib::Server::HandlerResponse::Handled;
++        }
++        return httplib::Server::HandlerResponse::Unhandled;
++    });
++    fprintf(stderr, "[Server] session gate on (X-Iblis-Session, loopback Host, no Origin)\n");
++}
++
+ // work queue: all GPU jobs go through a single FIFO queue processed
+ // by one worker thread. GPU access is serialized by construction.
+ static std::deque<std::function<void()>> g_work_queue;
+@@ -1789,6 +1828,8 @@ int main(int argc, char ** argv) {
+     // reject oversized bodies (256 MB: src + ref audio, up to 10min WAV each)
+     svr.set_payload_max_length(256 * 1024 * 1024);
+ 
++    iblis_install_session_gate(svr, port);
++
+     // all endpoints are always registered. handlers return 501 when the
+     // backing pipeline has no models in the registry.
+     svr.Post("/lm", handle_lm);

@@ -26,7 +26,9 @@ import { registerStorageIpc } from './ipc-storage'
 import { registerTrainingIpc } from './ipc-training'
 import { registerLicensingIpc } from './ipc-licensing'
 import { registerCloudProviderIpc } from './ipc-cloud-providers'
+import { registerTextAssistIpc } from './ipc-text-assist'
 import { registerProcessorIpc } from './ipc-processors'
+import { registerStemIpc } from './ipc-stems'
 import { registerEngineOpsIpc } from './ipc-engine-ops'
 import { registerFeedbackIpc } from './ipc-feedback'
 import { errorMessage } from './error-message'
@@ -127,7 +129,9 @@ export function registerIpc(): void {
   registerTrainingIpc()
   registerLicensingIpc()
   registerCloudProviderIpc()
+  registerTextAssistIpc()
   registerProcessorIpc()
+  registerStemIpc()
   registerEngineOpsIpc()
   registerFeedbackIpc()
 

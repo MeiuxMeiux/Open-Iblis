@@ -13,7 +13,8 @@ export default defineConfig({
     // headless; main-process unit tests use a lightweight stub instead.
     alias: {
       electron: resolve(__dirname, 'tests/electron-stub.ts'),
-      './waveform-worker?nodeWorker': resolve(__dirname, 'tests/analysis-worker-stub.ts')
+      './waveform-worker?nodeWorker': resolve(__dirname, 'tests/analysis-worker-stub.ts'),
+      './measure-worker?nodeWorker': resolve(__dirname, 'tests/stem-measure-worker-stub.ts')
     },
     // `just shell-coverage`. Floors are the 2026-09 baseline
     // (docs/quality/baseline-2026-09.md); raise them as tests land, never lower.

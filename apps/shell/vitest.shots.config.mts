@@ -8,7 +8,7 @@ import { defineConfig } from 'vitest/config'
 export default defineConfig({
   test: {
     environment: 'node',
-    include: ['e2e/screenshots.shots.ts'],
+    include: ['e2e/*.shots.ts'],
     fileParallelism: false,
     testTimeout: 120_000,
     hookTimeout: 60_000,

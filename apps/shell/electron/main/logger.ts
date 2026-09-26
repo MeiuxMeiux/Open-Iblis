@@ -17,10 +17,19 @@ let logDir: string | null = null
 // (docs/feature/diagnostics.md Phase B). Bounded so it can never blow up memory.
 const RING_MAX = 500
 const ring: string[] = []
+let logged = 0 // events ever pushed; a cursor for "what is new since"
 let onErrorEvent: (() => void) | null = null
 
 export function recentEvents(): string[] {
   return ring.slice()
+}
+
+// Events logged after `cursor` (a previous `next`), oldest first, plus the new
+// cursor. Lets the streamer send each breadcrumb once instead of re-sending
+// the whole ring every tick. Events already rotated out of the ring are lost.
+export function eventsSince(cursor: number): { events: string[]; next: number } {
+  const fresh = Math.min(Math.max(logged - cursor, 0), ring.length)
+  return { events: fresh === 0 ? [] : ring.slice(ring.length - fresh), next: logged }
 }
 
 // The diagnostics module registers a callback here so an `error`-level event can
@@ -52,6 +61,7 @@ export function log(level: Level, msg: string, fields: Record<string, unknown> =
   if (level === 'error') console.error(line)
   else console.log(line)
   ring.push(line)
+  logged++
   if (ring.length > RING_MAX) ring.shift()
   try {
     appendFileSync(join(dir(), 'main.log'), line + '\n')

@@ -6,7 +6,7 @@ import { gzipSync } from 'node:zlib'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { currentLease } from '../licensing'
-import { log, recentEvents, setErrorHook } from '../logger'
+import { eventsSince, log, setErrorHook } from '../logger'
 import { buildBundle, getInstallId, DIAG_SCHEMA } from './bundle'
 import { redactValue, type DiagLevel } from './redact'
 import { requireServiceEndpoint } from '../official-endpoints'
@@ -106,14 +106,17 @@ export async function send(note?: string): Promise<{ ref: string }> {
 
 // --- Phase B — opt-in streaming + crash capture ----------------------------
 let timer: ReturnType<typeof setInterval> | null = null
+let streamed = 0 // eventsSince cursor: breadcrumbs up to here were already sent
 
-// A lightweight batch of recent breadcrumbs, schema-tagged so the reader can
-// tell it from a full bundle. Best-effort: never throws into the caller.
+// A lightweight batch of the breadcrumbs logged since the last batch,
+// schema-tagged so the reader can tell it from a full bundle. An idle app
+// sends nothing. Best-effort: never throws into the caller.
 function streamBatch(reason: string): void {
   const level = getLevel()
   if (level === 'off') return
-  const events = recentEvents()
+  const { events, next } = eventsSince(streamed)
   if (events.length === 0 && reason === 'tick') return
+  streamed = next
   const batch = redactValue(
     {
       schema: DIAG_SCHEMA,

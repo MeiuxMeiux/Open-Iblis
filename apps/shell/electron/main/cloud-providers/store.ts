@@ -123,7 +123,7 @@ export function parseKeys(value: unknown): Partial<Record<CloudProviderId, strin
   return parsed
 }
 
-async function readJson<T>(file: string): Promise<T | null> {
+export async function readJson<T>(file: string): Promise<T | null> {
   try {
     return JSON.parse(await readFile(file, 'utf8')) as T
   } catch {
@@ -131,7 +131,7 @@ async function readJson<T>(file: string): Promise<T | null> {
   }
 }
 
-async function writeJson(file: string, value: unknown, mode?: number): Promise<void> {
+export async function writeJson(file: string, value: unknown, mode?: number): Promise<void> {
   await mkdir(dirname(file), { recursive: true })
   const temp = `${file}.${randomUUID()}.tmp`
   try {

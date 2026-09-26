@@ -9,13 +9,23 @@
   let {
     detail,
     onretry,
+    onanalyze,
     retrying
   }: {
     detail: TrackDetail
     onretry: (capability: ProcessorAnalysisCapability) => void
+    onanalyze: () => void
     retrying: ProcessorAnalysisCapability | null
   } = $props()
 </script>
+
+{#if !detail.processorJobs?.length && !detail.processorResults?.length && detail.track.format.toLowerCase() === 'wav'}
+  <section>
+    <h3>Detected tempo and key</h3>
+    <p class="notice">This track has not been analyzed yet.</p>
+    <button class="analyze" onclick={onanalyze}>Analyze BPM and key</button>
+  </section>
+{/if}
 
 {#if detail.processorJobs?.length}
   <section>
@@ -65,6 +75,23 @@
 {/if}
 
 <style>
+  .analyze {
+    padding: 6px 12px;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--radius-md);
+    background: transparent;
+    color: var(--color-text-primary);
+    font: inherit;
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+  }
+  .analyze:hover {
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+  }
+  .analyze:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
   section {
     padding: 18px 0;
     border-top: 1px solid var(--color-border-default);

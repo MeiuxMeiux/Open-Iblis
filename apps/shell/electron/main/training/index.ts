@@ -99,8 +99,9 @@ const sidecarClient = createTrainingSidecarClient({
 
 // ---- wizard step 1-2: folder pick + scan (probe only, pre-consent) ----
 
-// Opaque folder tokens: the renderer holds a token, main holds the path.
-const folderTokens = new Map<string, string>()
+// Opaque folder tokens: the renderer holds a token, main holds the path and
+// the scanned track count (the launch preflight sizes scratch space by it).
+const folderTokens = new Map<string, { path: string; trackCount: number }>()
 
 async function sha256File(path: string): Promise<{ bytes: number; sha256: string }> {
   const hash = createHash('sha256')
@@ -149,7 +150,7 @@ export async function scanTrainingFolder(
     | undefined
   const trackCount = Number(summary?.trackCount ?? 0)
   const token = randomUUID()
-  folderTokens.set(token, folderPath)
+  folderTokens.set(token, { path: folderPath, trackCount })
   const [preflight, memory] = await Promise.all([trainingPreflight(trackCount), gpuMemory()])
   return {
     folderToken: token,
@@ -315,15 +316,17 @@ function pipelineActive(): boolean {
 // ---- wizard step 5: launch ----
 
 export async function startTraining(input: TrainingStartInput): Promise<TrainingJobView> {
-  const folderPath = folderTokens.get(input.folderToken)
-  if (!folderPath) throw new Error('Pick the song folder again — the selection expired.')
+  const folder = folderTokens.get(input.folderToken)
+  if (!folder) throw new Error('Pick the song folder again — the selection expired.')
   const reservation = pendingReservations.get(input.trainingId)
   if (!reservation) throw new Error('Reserve the training name again — the claim expired.')
   const community = reservation.visibility === 'community'
   if (!input.rightsAttested || (community && !input.publicUploadAcknowledged)) {
     throw new Error('The training acknowledgements are required before anything runs.')
   }
-  const preflight = await trainingPreflight()
+  // Same facts the wizard showed: without the scanned count the disk row falls
+  // back to a 10-track estimate and refuses a small folder the wizard passed.
+  const preflight = await trainingPreflight(folder.trackCount)
   if (!preflight.ok) throw new Error('The hardware preflight is failing; fix its rows first.')
 
   const target = await pipeline()
@@ -340,7 +343,7 @@ export async function startTraining(input: TrainingStartInput): Promise<Training
     claimToken: reservation.claimToken,
     categories: input.categories,
     visibility: reservation.visibility,
-    folderPath,
+    folderPath: folder.path,
     scratchDir,
     folder: { trackCount: 0, totalDurationSec: 0 },
     consent: {

@@ -90,7 +90,7 @@
           }
         ],
         "relationship": "acestep.cpp checkpoints.sh maps acestep-v15-xl-turbo to this repository; the GGUF is Serveurperso's Q4_K_M quantization of it",
-        "packRole": "pack 0.1.5 8 GB bakeoff candidate; exposed by the shell as the xl-turbo-experiment profile, never as a quality tier"
+        "packRole": "pack 0.1.6 8 GB bakeoff candidate; exposed by the shell as the xl-turbo-experiment profile, never as a quality tier"
       }
     }
   ],

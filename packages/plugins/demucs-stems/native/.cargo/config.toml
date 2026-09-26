@@ -1,0 +1,4 @@
+# Static MSVC runtime: the Windows build must not depend on vcruntime140.dll
+# being installed next to it or system-wide.
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]

@@ -15,7 +15,7 @@ import type { AddressInfo } from 'node:net'
 import { tmpdir } from 'node:os'
 import { delimiter, join } from 'node:path'
 import { _electron, type ElectronApplication, type Page } from 'playwright-core'
-import { afterAll, beforeAll } from 'vitest'
+import { afterAll, afterEach, beforeAll } from 'vitest'
 import { createRequire } from 'node:module'
 import { makeWav } from '../tests/fixtures/wav'
 
@@ -116,11 +116,11 @@ function seedPlugin(pluginsDir: string, id: string, sourceDir: string): void {
 // Catalog plugins a spec can pre-install, by source directory.
 const SEEDABLE = { 'fixture-engine': 'mx.iblis.engine.fixture' } as const
 
-// The training pack stand-in (fixtures/training-pack): a Node sidecar that
-// speaks the Python trainer's loopback wire. It is not a catalog plugin, so
-// its manifest is local and its one asset is hashed as seeded.
-function seedTrainingPack(pluginsDir: string): void {
-  const source = join(FIXTURES, 'training-pack')
+// Local fixture packs (not catalog plugins): a Node sidecar whose manifest is
+// local and whose one asset is hashed as seeded. training-pack speaks the
+// Python trainer's loopback wire; stem-processor speaks processor protocol v2.
+function seedTrainingPack(pluginsDir: string, fixture = 'training-pack'): void {
+  const source = join(FIXTURES, fixture)
   const manifest = JSON.parse(readFileSync(join(source, 'manifest.json'), 'utf8')) as Omit<
     SeedManifest,
     'manifestSource'
@@ -152,6 +152,8 @@ export interface ShellSeed {
   wavs?: Record<string, Buffer>
   plugins?: (keyof typeof SEEDABLE)[]
   trainingPack?: boolean
+  // The stem-split stand-in (fixtures/stem-processor).
+  stemProcessor?: boolean
   // Total VRAM the fake nvidia-smi reports; omitted means no GPU at all.
   gpuVramMb?: number
   // Main-side training job records, written as the durable jobs.json. Paths
@@ -170,6 +172,7 @@ export function createShellEnv(seed: ShellSeed = {}): ShellEnv {
   }
   for (const dir of seed.plugins ?? []) seedPlugin(join(root, 'plugins'), SEEDABLE[dir], dir)
   if (seed.trainingPack) seedTrainingPack(join(root, 'plugins'))
+  if (seed.stemProcessor) seedTrainingPack(join(root, 'plugins'), 'stem-processor')
   const env: Record<string, string> = {}
   if (seed.gpuVramMb !== undefined) {
     fakeNvidiaSmi(join(root, 'bin'), seed.gpuVramMb)
@@ -188,6 +191,8 @@ export interface Shell {
   win: Page
   // Console errors and uncaught page exceptions, in arrival order.
   errors: string[]
+  // The main process's stdout and stderr, printed when a test fails.
+  mainLog: string[]
   close(): Promise<void>
 }
 
@@ -235,6 +240,10 @@ export async function launchShell(env: ShellEnv, fixture: FixtureServer): Promis
       ...env.env
     }
   })
+  const mainLog: string[] = []
+  const child = app.process()
+  child.stdout?.on('data', (chunk: Buffer) => mainLog.push(chunk.toString()))
+  child.stderr?.on('data', (chunk: Buffer) => mainLog.push(chunk.toString()))
   const win = await app.firstWindow()
   const errors: string[] = []
   win.on('console', (message) => {
@@ -248,7 +257,7 @@ export async function launchShell(env: ShellEnv, fixture: FixtureServer): Promis
     await takeCoverage?.()
     await app.close()
   }
-  return { app, win, errors, close }
+  return { app, win, errors, mainLog, close }
 }
 
 export interface Session {
@@ -265,6 +274,12 @@ export function useShell(seed: ShellSeed = {}): Session {
     session.fixture = await startFixtureServer()
     session.env = createShellEnv(seed)
     session.shell = await launchShell(session.env, session.fixture)
+  })
+  // A failure on CI is otherwise only a locator timeout: show what main said.
+  afterEach(({ task }) => {
+    if (task.result?.state !== 'fail') return
+    const log = session.shell.mainLog.join('').split('\n').slice(-80).join('\n')
+    console.error(`--- main process output (last 80 lines) for "${task.name}" ---\n${log}`)
   })
   afterAll(async () => {
     await session.shell.close()

@@ -1,6 +1,6 @@
 {
   "name": "@iblis/plugin-echo-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Phase 2 stub sidecar plugin — proves the plugin host (install/spawn/health/hot-swap/rollback/remove). Not a real engine.",
   "license": "MIT"

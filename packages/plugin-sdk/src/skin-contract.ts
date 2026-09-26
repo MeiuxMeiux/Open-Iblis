@@ -62,7 +62,16 @@ export const SKIN_TOKENS = [
   'wave.fg',
   'wave.bg',
   'wave.peak',
-  'wave.playhead'
+  'wave.playhead',
+  // Stem lanes (vocals, drums, bass, other, guitar, piano). Defaults derive
+  // from the palette, so a skin that never names them still gets distinct,
+  // on-theme colors.
+  'stem.vocals',
+  'stem.drums',
+  'stem.bass',
+  'stem.other',
+  'stem.guitar',
+  'stem.piano'
 ] as const
 
 export type SkinToken = (typeof SKIN_TOKENS)[number]

@@ -8,6 +8,9 @@
   import Icon from '../ui/Icon.svelte'
   import ProcessorDetailSections from './ProcessorDetailSections.svelte'
   import EngineTargetRows from './EngineTargetRows.svelte'
+  import StemsSection from '../stems/StemsSection.svelte'
+  import DetectedFacts from './DetectedFacts.svelte'
+  import { bytes, seconds } from './detail-format'
 
   let {
     detail,
@@ -16,6 +19,7 @@
     onclose,
     onremix,
     onretry,
+    onanalyze,
     retrying
   }: {
     detail: TrackDetail | null
@@ -24,6 +28,7 @@
     onclose: () => void
     onremix: () => void
     onretry: (capability: ProcessorAnalysisCapability) => void
+    onanalyze: () => void
     retrying: ProcessorAnalysisCapability | null
   } = $props()
 
@@ -58,15 +63,6 @@
     }
   }
 
-  function seconds(value?: number): string {
-    return value === undefined ? 'Unavailable' : `${value.toFixed(3)} s`
-  }
-
-  function bytes(value?: number): string {
-    if (value === undefined) return 'Unavailable'
-    return `${(value / 1024 / 1024).toFixed(2)} MiB (${value.toLocaleString()} bytes)`
-  }
-
   const recipe = $derived(detail?.generation?.resolvedRecipes[0])
   const requested = $derived(detail?.generation?.request.config ?? detail?.track.config)
   // bpm/keyscale have their own plan rows; v2 advanced controls are listed
@@ -76,6 +72,13 @@
       ([key]) => key !== 'bpm' && key !== 'keyscale' && key !== 'advanced'
     )
   )
+
+  const planRows = $derived<[string, unknown][]>([
+    ['Requested BPM', requested?.bpm],
+    ['Requested key', requested?.keyscale],
+    ['Resolved BPM', recipe?.bpm],
+    ['Resolved key', recipe?.keyscale]
+  ])
 
   function planValue(value: unknown): string {
     return typeof value === 'number' || typeof value === 'string' ? String(value) : 'Not recorded'
@@ -96,6 +99,7 @@
     <div>
       <p class="eyebrow">Track detail</p>
       <h2 id="detail-title">{detail?.track.name ?? 'Loading track'}</h2>
+      <DetectedFacts track={detail?.track ?? null} />
     </div>
     <button class="close" onclick={onclose} aria-label="Close track details" title="Close">
       <Icon name="close" size={14} />
@@ -126,26 +130,18 @@
       <h3>Generation targets and resolved plan</h3>
       <p class="notice">These are generation intent, not measurements from the final audio.</p>
       <dl>
-        <div>
-          <dt>Requested BPM</dt>
-          <dd>{planValue(requested?.bpm)}</dd>
-        </div>
-        <div>
-          <dt>Requested key</dt>
-          <dd>{planValue(requested?.keyscale)}</dd>
-        </div>
-        <div>
-          <dt>Resolved BPM</dt>
-          <dd>{planValue(recipe?.bpm)}</dd>
-        </div>
-        <div>
-          <dt>Resolved key</dt>
-          <dd>{planValue(recipe?.keyscale)}</dd>
-        </div>
+        {#each planRows as [label, value] (label)}
+          <div>
+            <dt>{label}</dt>
+            <dd>{planValue(value)}</dd>
+          </div>
+        {/each}
       </dl>
     </section>
 
-    <ProcessorDetailSections {detail} {onretry} {retrying} />
+    <StemsSection trackId={detail.track.id} format={detail.track.format} />
+
+    <ProcessorDetailSections {detail} {onretry} {onanalyze} {retrying} />
 
     <section>
       <h3>Durations</h3>

@@ -149,7 +149,19 @@ const api: IblisApi = {
     benchmark: (trackId, providerIds) =>
       ipcRenderer.invoke('processors:benchmark', trackId, providerIds),
     exportBenchmark: (id) => ipcRenderer.invoke('processors:export-benchmark', id),
-    retry: (trackId, capability) => ipcRenderer.invoke('processors:retry', trackId, capability)
+    retry: (trackId, capability) => ipcRenderer.invoke('processors:retry', trackId, capability),
+    analyze: (trackId) => ipcRenderer.invoke('processors:analyze', trackId)
+  },
+  stems: {
+    snapshot: () => ipcRenderer.invoke('stems:snapshot'),
+    setSettings: (patch) => ipcRenderer.invoke('stems:set-settings', patch),
+    track: (trackId) => ipcRenderer.invoke('stems:track', trackId),
+    split: (trackId, providerId) => ipcRenderer.invoke('stems:split', trackId, providerId),
+    cancel: (trackId) => ipcRenderer.invoke('stems:cancel', trackId),
+    remove: (trackId, setId) => ipcRenderer.invoke('stems:remove', trackId, setId),
+    reveal: (trackId, setId, role) => ipcRenderer.invoke('stems:reveal', trackId, setId, role),
+    dragOut: (trackId, setId, role) => ipcRenderer.invoke('stems:drag-out', trackId, setId, role),
+    exportSet: (trackId, setId) => ipcRenderer.invoke('stems:export', trackId, setId)
   },
   cloudProviders: {
     snapshot: () => ipcRenderer.invoke('cloud-providers:snapshot'),
@@ -164,6 +176,17 @@ const api: IblisApi = {
     setTask: (provider, task, enabled) =>
       ipcRenderer.invoke('cloud-providers:set-task', provider, task, enabled),
     setDefault: (task, modelId) => ipcRenderer.invoke('cloud-providers:set-default', task, modelId)
+  },
+  textAssist: {
+    options: (task) => ipcRenderer.invoke('text-assist:options', task),
+    generate: (request) => ipcRenderer.invoke('text-assist:generate', request),
+    cancel: (task) => ipcRenderer.invoke('text-assist:cancel', task)
+  },
+  localModel: {
+    snapshot: () => ipcRenderer.invoke('local-model:snapshot'),
+    configure: (host, port) => ipcRenderer.invoke('local-model:configure', host, port),
+    setEnabled: (enabled) => ipcRenderer.invoke('local-model:set-enabled', enabled),
+    test: () => ipcRenderer.invoke('local-model:test')
   },
   feedback: {
     lastDiagRef: () => ipcRenderer.invoke('feedback:last-diag-ref'),

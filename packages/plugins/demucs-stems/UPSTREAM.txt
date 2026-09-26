@@ -1,0 +1,35 @@
+# demucs-stems: upstream pins for the stem-split processor packs
+#
+# Three catalog packs share one native sidecar (native/, MIT, ours):
+#   mx.iblis.processor.stems-demucs     htdemucs     4 stems, default
+#   mx.iblis.processor.stems-demucs-ft  htdemucs_ft  4 stems, best, ~4x slower
+#   mx.iblis.processor.stems-demucs-6s  htdemucs_6s  6 stems (+guitar, piano)
+# Built and smoked by .github/workflows/stems-build.yml; published per pack
+# version with `just stems-build <version>` and transcribed with
+# `just stems-pack-transcribe <run> <version>`.
+
+# ---- separation implementation ---------------------------------------------
+repo    = https://github.com/nikhilunni/demucs-rs
+commit  = 97adfaae52e006be1557405bfc7b10614d805a78   # tag v0.3.4, 2026-03-10
+# Crate used: demucs-core (git dependency in native/Cargo.toml at this rev).
+# License: Apache-2.0 (LICENSE at this rev copied to
+# notices/licenses/demucs-rs-Apache-2.0.txt). Re-verify on every bump.
+# The upstream CLI downloads weights itself at run time; iblis-stems does not.
+# It reads a hash-pinned pack asset and never opens a network connection.
+
+# ---- model weights ------------------------------------------------------------
+weights = https://huggingface.co/set-soft/audio_separation
+revision = 939723568b2dca203e61cc7294317ba38549964f
+# Files (Demucs/<name>), LFS SHA-256 = catalog pin, verified by download:
+#   htdemucs.safetensors     84030696   8193504cdfb3943adaf039b8acb524a46e87ebf232c383ac7a32c80a6578423e
+#   htdemucs_ft.safetensors  336125008  255c2650d26537ce4887c9c4cf08c6d4896fad2fecc0b78dc5b875b117bcc575
+#   htdemucs_6s.safetensors  54890960   f56fe666f0bbf3a645764856ed90f8c5dd8cf4430b1d9649b94e29ec45aa9057
+# Origin: Meta's HTDemucs v4 checkpoints (facebookresearch/demucs, MIT),
+# converted to safetensors; the HF model card declares MIT. Vendor-direct
+# only (not mirrored to GCS): the hash is the protection, as for the GGUFs.
+
+# ---- local evidence (2026-09-25, Linux CPU build, 4 vCPU at nice 10) --------
+# htdemucs, 12 s real-music clip: residual -32.6 dB (sum of stems vs mix),
+# 143 s compute on CPU; 20 s synthetic mix: 290 s. Cancel returns in ~60 ms
+# with the worker reaped and staging emptied. GPU (Vulkan) timing and
+# stability are the Windows acceptance gate.

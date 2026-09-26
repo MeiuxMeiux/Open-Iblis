@@ -11,6 +11,7 @@ import {
   processorResults,
   processorSettings,
   retryProcessorAnalysis,
+  scheduleProcessorAnalysis,
   setProcessorDefault,
   queueProcessorBenchmark
 } from './processors'
@@ -52,6 +53,12 @@ export function registerProcessorIpc(): void {
     guardAsync(() =>
       exportProcessorBenchmark(stringArg(id), BrowserWindow.fromWebContents(event.sender))
     )
+  )
+  ipcMain.handle('processors:analyze', (_e, trackId: unknown) =>
+    guardAsync(async () => {
+      await scheduleProcessorAnalysis(stringArg(trackId))
+      return null
+    })
   )
   ipcMain.handle(
     'processors:retry',

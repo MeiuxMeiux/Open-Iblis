@@ -1,0 +1,285 @@
+Iblis stem-split processor: third-party notices
+================================================
+
+iblis-stems.exe is the Iblis stem-split sidecar (MIT, Meiux Meiux LLC). It
+links the components below. Full license texts for the model and the
+separation implementation are in notices/licenses/.
+
+- demucs-rs (demucs-core), a Rust implementation of HTDemucs v4.
+  Apache-2.0. https://github.com/nikhilunni/demucs-rs
+  Pinned at 97adfaae52e006be1557405bfc7b10614d805a78 (v0.3.4).
+  License: notices/licenses/demucs-rs-Apache-2.0.txt
+
+- Burn and CubeCL (tensor runtime), wgpu (GPU access): MIT OR Apache-2.0.
+
+- hound (WAV I/O): Apache-2.0. tiny_http: MIT OR Apache-2.0.
+  serde, serde_json, anyhow, pollster: MIT OR Apache-2.0.
+
+The model weights are a separate download; see MODEL_ATTRIBUTION.txt.
+
+Two small crates are MPL-2.0 (colored, option-ext). They are used
+unmodified; their source is available at https://crates.io/crates/colored
+and https://crates.io/crates/option-ext.
+
+No component is GPL or LGPL-only. Crates offered under a choice of
+licenses are used under their MIT or Apache-2.0 option.
+
+Rust crates linked into iblis-stems.exe (name version license):
+
+adler2 v2.0.1 0BSD OR MIT OR Apache-2.0
+ahash v0.8.12 MIT OR Apache-2.0
+aho-corasick v1.1.5 Unlicense OR MIT
+allocator-api2 v0.2.21 MIT OR Apache-2.0
+anyhow v1.0.104 MIT OR Apache-2.0
+arrayvec v0.7.8 MIT OR Apache-2.0
+ascii v1.1.0 Apache-2.0 OR MIT
+ash v0.38.0+1.3.281 MIT OR Apache-2.0
+async-channel v2.5.0 Apache-2.0 OR MIT
+atomic_float v1.1.0 Apache-2.0 OR MIT OR Unlicense
+backtrace v0.3.76 MIT OR Apache-2.0
+bincode v2.0.1 MIT
+bitflags v2.13.2 MIT OR Apache-2.0
+bit-set v0.8.0 Apache-2.0 OR MIT
+bit-vec v0.8.0 Apache-2.0 OR MIT
+burn-autodiff v0.20.1 MIT OR Apache-2.0
+burn-backend v0.20.1 MIT OR Apache-2.0
+burn-core v0.20.1 MIT OR Apache-2.0
+burn-cubecl-fusion v0.20.1 MIT OR Apache-2.0
+burn-cubecl v0.20.1 MIT OR Apache-2.0
+burn-derive v0.20.1 MIT OR Apache-2.0
+burn-fusion v0.20.1 MIT OR Apache-2.0
+burn-ir v0.20.1 MIT OR Apache-2.0
+burn-ndarray v0.20.1 MIT OR Apache-2.0
+burn-nn v0.20.1 MIT OR Apache-2.0
+burn-optim v0.20.1 MIT OR Apache-2.0
+burn-std v0.20.1 MIT OR Apache-2.0
+burn-tensor v0.20.1 MIT OR Apache-2.0
+burn v0.20.1 MIT OR Apache-2.0
+burn-wgpu v0.20.1 MIT OR Apache-2.0
+bytemuck_derive v1.12.1 Zlib OR Apache-2.0 OR MIT
+bytemuck v1.25.2 Zlib OR Apache-2.0 OR MIT
+bytes v1.12.1 MIT
+c2rust-bitfields-derive v0.20.0 BSD-3-Clause
+c2rust-bitfields v0.20.0 BSD-3-Clause
+cfg-if v1.0.5 MIT OR Apache-2.0
+chunked_transfer v1.5.0 MIT OR Apache-2.0
+codespan-reporting v0.12.0 Apache-2.0
+colored v3.1.1 MPL-2.0
+concurrent-queue v2.5.0 Apache-2.0 OR MIT
+const-random-macro v0.1.16 MIT OR Apache-2.0
+const-random v0.1.18 MIT OR Apache-2.0
+convert_case v0.10.0 MIT
+crc32fast v1.5.2 MIT OR Apache-2.0
+crossbeam-channel v0.5.17 MIT OR Apache-2.0
+crossbeam-deque v0.8.8 MIT OR Apache-2.0
+crossbeam-epoch v0.9.21 MIT OR Apache-2.0
+crossbeam-utils v0.8.23 MIT OR Apache-2.0
+crunchy v0.2.4 MIT
+cubecl-common v0.9.0 MIT OR Apache-2.0
+cubecl-core v0.9.0 MIT OR Apache-2.0
+cubecl-ir v0.9.0 MIT OR Apache-2.0
+cubecl-macros-internal v0.9.0 MIT OR Apache-2.0
+cubecl-macros v0.9.0 MIT OR Apache-2.0
+cubecl-opt v0.9.0 MIT OR Apache-2.0
+cubecl-runtime v0.9.0 MIT OR Apache-2.0
+cubecl-spirv v0.9.0 MIT OR Apache-2.0
+cubecl-std v0.9.0 MIT OR Apache-2.0
+cubecl v0.9.0 MIT OR Apache-2.0
+cubecl-wgpu v0.9.0 MIT OR Apache-2.0
+cubek-attention v0.1.1 MIT OR Apache-2.0
+cubek-convolution v0.1.1 MIT OR Apache-2.0
+cubek-matmul v0.1.1 MIT OR Apache-2.0
+cubek-quant v0.1.1 MIT OR Apache-2.0
+cubek-random v0.1.1 MIT OR Apache-2.0
+cubek-reduce v0.1.1 MIT OR Apache-2.0
+cubek v0.1.1 MIT OR Apache-2.0
+darling_core v0.20.11 MIT
+darling_core v0.21.3 MIT
+darling_macro v0.20.11 MIT
+darling_macro v0.21.3 MIT
+darling v0.20.11 MIT
+darling v0.21.3 MIT
+data-encoding v2.11.1 MIT
+demucs-core v0.1.0 
+derive_more-impl v2.1.1 MIT
+derive_more v2.1.1 MIT
+derive-new v0.7.0 MIT
+dirs-sys v0.4.1 MIT OR Apache-2.0
+dirs-sys v0.5.0 MIT OR Apache-2.0
+dirs v5.0.1 MIT OR Apache-2.0
+dirs v6.0.0 MIT OR Apache-2.0
+document-features v0.2.12 MIT OR Apache-2.0
+either v1.18.0 MIT OR Apache-2.0
+embassy-futures v0.1.2 MIT OR Apache-2.0
+enumset_derive v0.15.0 MIT/Apache-2.0
+enumset v1.1.14 MIT/Apache-2.0
+equivalent v1.0.2 Apache-2.0 OR MIT
+event-listener-strategy v0.5.4 Apache-2.0 OR MIT
+event-listener v5.4.2 Apache-2.0 OR MIT
+fastrand v2.5.0 Apache-2.0 OR MIT
+fixedbitset v0.4.2 MIT/Apache-2.0
+flate2 v1.1.10 MIT OR Apache-2.0
+float4 v0.1.0 MIT
+float8 v0.4.2 MIT
+float-ord v0.3.2 MIT / Apache-2.0
+fnv v1.0.7 Apache-2.0 / MIT
+foldhash v0.1.5 Zlib
+foldhash v0.2.0 Zlib
+futures-core v0.3.34 MIT OR Apache-2.0
+futures-io v0.3.34 MIT OR Apache-2.0
+futures-lite v2.6.1 Apache-2.0 OR MIT
+getrandom v0.2.17 MIT OR Apache-2.0
+getrandom v0.3.4 MIT OR Apache-2.0
+glow v0.16.0 MIT OR Apache-2.0 OR Zlib
+glutin_wgl_sys v0.6.1 Apache-2.0
+gpu-allocator v0.27.0 MIT OR Apache-2.0
+gpu-alloc-types v0.3.1 MIT OR Apache-2.0
+gpu-alloc v0.6.2 MIT OR Apache-2.0
+gpu-descriptor-types v0.2.0 MIT OR Apache-2.0
+gpu-descriptor v0.3.2 MIT OR Apache-2.0
+half v2.7.1 MIT OR Apache-2.0
+hashbrown v0.13.2 MIT OR Apache-2.0
+hashbrown v0.15.5 MIT OR Apache-2.0
+hashbrown v0.16.1 MIT OR Apache-2.0
+hashbrown v0.17.1 MIT OR Apache-2.0
+hexf-parse v0.2.1 CC0-1.0
+hound v3.5.1 Apache-2.0
+httpdate v1.0.3 MIT OR Apache-2.0
+iblis-stems v0.1.0 MIT
+ident_case v1.0.1 MIT/Apache-2.0
+indexmap v2.14.2 Apache-2.0 OR MIT
+itertools v0.14.0 MIT OR Apache-2.0
+itoa v1.0.18 MIT OR Apache-2.0
+khronos-egl v6.0.0 MIT/Apache-2.0
+libc v0.2.189 MIT OR Apache-2.0
+libloading v0.8.9 ISC
+libm v0.2.16 MIT
+litrs v1.0.0 MIT OR Apache-2.0
+lock_api v0.4.14 MIT OR Apache-2.0
+log v0.4.34 MIT OR Apache-2.0
+macerator-macros v0.1.5 MIT OR Apache-2.0
+macerator v0.2.10 MIT OR Apache-2.0
+matrixmultiply v0.3.11 MIT/Apache-2.0
+md5 v0.8.1 Apache-2.0 OR MIT
+memchr v2.8.3 Unlicense OR MIT
+miniz_oxide v0.9.1 MIT OR Zlib OR Apache-2.0
+moddef v0.3.0 MIT
+naga v26.0.0 MIT OR Apache-2.0
+ndarray v0.17.2 MIT OR Apache-2.0
+num-bigint v0.4.8 MIT OR Apache-2.0
+num-complex v0.4.6 MIT OR Apache-2.0
+num_cpus v1.17.0 MIT OR Apache-2.0
+num-integer v0.1.47 MIT OR Apache-2.0
+num-iter v0.1.46 MIT OR Apache-2.0
+num-rational v0.4.2 MIT OR Apache-2.0
+num-traits v0.2.19 MIT OR Apache-2.0
+num v0.4.3 MIT OR Apache-2.0
+once_cell v1.21.4 MIT OR Apache-2.0
+option-ext v0.2.0 MPL-2.0
+ordered-float v5.0.0 MIT
+parking_lot_core v0.9.12 MIT OR Apache-2.0
+parking_lot v0.12.5 MIT OR Apache-2.0
+parking v2.2.1 Apache-2.0 OR MIT
+paste v1.0.15 MIT OR Apache-2.0
+petgraph v0.6.5 MIT OR Apache-2.0
+pin-project-lite v0.2.17 Apache-2.0 OR MIT
+pollster v0.4.0 Apache-2.0/MIT
+portable-atomic v1.15.0 Apache-2.0 OR MIT
+ppv-lite86 v0.2.21 MIT OR Apache-2.0
+presser v0.3.1 MIT OR Apache-2.0
+prettyplease v0.2.37 MIT OR Apache-2.0
+primal-check v0.3.4 MIT OR Apache-2.0
+proc-macro2 v1.0.107 MIT OR Apache-2.0
+profiling v1.0.18 MIT OR Apache-2.0
+quote v1.0.47 MIT OR Apache-2.0
+rand_chacha v0.9.0 MIT OR Apache-2.0
+rand_core v0.9.5 MIT OR Apache-2.0
+rand_distr v0.5.1 MIT OR Apache-2.0
+rand v0.9.5 MIT OR Apache-2.0
+range-alloc v0.1.5 MIT OR Apache-2.0
+rawpointer v0.2.1 MIT/Apache-2.0
+raw-window-handle v0.6.2 MIT OR Apache-2.0 OR Zlib
+rayon-core v1.13.0 MIT OR Apache-2.0
+rayon v1.12.0 MIT OR Apache-2.0
+realfft v3.5.0 MIT
+regex-automata v0.4.18 MIT OR Apache-2.0
+regex-syntax v0.8.11 MIT OR Apache-2.0
+regex v1.13.1 MIT OR Apache-2.0
+renderdoc-sys v1.1.0 MIT OR Apache-2.0
+rmp-serde v1.3.1 MIT
+rmp v0.8.15 MIT
+rustc-demangle v0.1.28 MIT/Apache-2.0
+rustc-hash v1.1.0 Apache-2.0/MIT
+rustc-hash v2.1.3 Apache-2.0 OR MIT
+rustfft v6.4.1 MIT OR Apache-2.0
+safetensors v0.5.3 Apache-2.0
+sanitize-filename v0.6.0 MIT
+scopeguard v1.2.0 MIT OR Apache-2.0
+seq-macro v0.3.6 MIT OR Apache-2.0
+serde_bytes v0.11.19 MIT OR Apache-2.0
+serde_core v1.0.229 MIT OR Apache-2.0
+serde_derive v1.0.229 MIT OR Apache-2.0
+serde_json v1.0.151 MIT OR Apache-2.0
+serde_spanned v1.1.1 MIT OR Apache-2.0
+serde v1.0.229 MIT OR Apache-2.0
+simd-adler32 v0.3.10 MIT
+smallvec v1.16.2 MIT OR Apache-2.0
+spin v0.10.1 MIT
+spirv v0.3.0+sdk-1.3.268.0 Apache-2.0
+stable-vec v0.4.3 MIT/Apache-2.0
+static_assertions v1.1.0 MIT OR Apache-2.0
+strength_reduce v0.2.4 MIT OR Apache-2.0
+strsim v0.11.1 MIT
+syn v1.0.109 MIT OR Apache-2.0
+syn v2.0.119 MIT OR Apache-2.0
+syn v3.0.6 MIT OR Apache-2.0
+text_placeholder v0.5.1 MIT
+thiserror-impl v1.0.69 MIT OR Apache-2.0
+thiserror-impl v2.0.21 MIT OR Apache-2.0
+thiserror v1.0.69 MIT OR Apache-2.0
+thiserror v2.0.21 MIT OR Apache-2.0
+thread-tree v0.3.3 MIT OR Apache-2.0
+tiny_http v0.12.0 MIT OR Apache-2.0
+tiny-keccak v2.0.2 CC0-1.0
+toml_datetime v0.7.5+spec-1.1.0 MIT OR Apache-2.0
+toml_parser v1.1.3+spec-1.1.0 MIT OR Apache-2.0
+toml v0.9.12+spec-1.1.0 MIT OR Apache-2.0
+toml_writer v1.1.2+spec-1.1.0 MIT OR Apache-2.0
+tracel-ash v0.38.0+1.3.296 MIT OR Apache-2.0
+tracel-rspirv v0.12.1+sdk-1.4.341.0 Apache-2.0
+tracing-attributes v0.1.31 MIT
+tracing-core v0.1.36 MIT
+tracing v0.1.44 MIT
+transpose v0.2.3 MIT OR Apache-2.0
+type-map v0.5.1 MIT/Apache-2.0
+unicode-ident v1.0.26 (MIT OR Apache-2.0) AND Unicode-3.0
+unicode-segmentation v1.13.3 MIT OR Apache-2.0
+unicode-width v0.2.0 MIT OR Apache-2.0
+unicode-xid v0.2.6 MIT OR Apache-2.0
+unty v0.0.4 MIT OR Apache-2.0
+uuid v1.26.1 Apache-2.0 OR MIT
+variadics_please v1.1.0 MIT OR Apache-2.0
+web-time v1.1.0 MIT OR Apache-2.0
+wgpu-core-deps-windows-linux-android v26.0.0 MIT OR Apache-2.0
+wgpu-core v26.0.1 MIT OR Apache-2.0
+wgpu-hal v26.0.6 MIT OR Apache-2.0
+wgpu-types v26.0.0 MIT OR Apache-2.0
+wgpu v26.0.1 MIT OR Apache-2.0
+windows-core v0.58.0 MIT OR Apache-2.0
+windows-implement v0.58.0 MIT OR Apache-2.0
+windows-interface v0.58.0 MIT OR Apache-2.0
+windows-link v0.2.1 MIT OR Apache-2.0
+windows-result v0.2.0 MIT OR Apache-2.0
+windows-strings v0.1.0 MIT OR Apache-2.0
+windows-sys v0.48.0 MIT OR Apache-2.0
+windows-sys v0.61.2 MIT OR Apache-2.0
+windows-targets v0.48.5 MIT OR Apache-2.0
+windows-targets v0.52.6 MIT OR Apache-2.0
+windows v0.58.0 MIT OR Apache-2.0
+windows_x86_64_msvc v0.48.5 MIT OR Apache-2.0
+windows_x86_64_msvc v0.52.6 MIT OR Apache-2.0
+winnow v0.7.15 MIT
+winnow v1.0.4 MIT
+zerocopy-derive v0.8.59 BSD-2-Clause OR Apache-2.0 OR MIT
+zerocopy v0.8.59 BSD-2-Clause OR Apache-2.0 OR MIT
+zmij v1.0.23 MIT

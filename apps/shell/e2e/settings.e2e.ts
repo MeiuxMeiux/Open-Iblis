@@ -28,8 +28,8 @@ it('opens each settings card and returns to the hub', async () => {
   const shell = await launchShell(env, fixture)
   const { win } = shell
   await openView(win, 'Settings')
-  const cards = ['Appearance', 'Engine', 'Audio analysis', 'Cloud providers', 'Data location']
-  for (const title of [...cards, 'Diagnostics', 'Feedback', 'Updates']) {
+  const cards = ['Appearance', 'Engine', 'Audio analysis', 'Cloud providers', 'Local model']
+  for (const title of [...cards, 'Data location', 'Diagnostics', 'Feedback', 'Updates']) {
     await win.getByRole('button', { name: new RegExp(`^${title}\\b`) }).click()
     const crumb = win.getByRole('navigation', { name: 'Settings section' })
     await expect.poll(() => crumb.innerText()).toContain(title)

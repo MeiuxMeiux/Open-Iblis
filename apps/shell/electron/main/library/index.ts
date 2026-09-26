@@ -46,6 +46,7 @@ import {
   scheduleProcessorAnalysis
 } from '../processors'
 import { heavyDataRoot } from '../storage'
+import { cancelTrackStemWork } from '../stems'
 import { ignoreFailure } from '../ignore-failure'
 
 // Generated tracks land under here (IBLIS_TRACKS_DIR overrides for tests).
@@ -291,12 +292,21 @@ export async function getProcessorInput(id: string): Promise<{
   id: string
   audioPath: string
   format: string
+  audio?: { sampleRateHz: number; durationSec: number }
 } | null> {
   const track = await (await library()).get(id)
   if (!track) return null
   try {
     const stored = await authorizedTrack(track)
-    return { id: stored.id, audioPath: stored.filePath, format: stored.format }
+    const audio = stored.audio
+      ? { sampleRateHz: stored.audio.sampleRateHz, durationSec: stored.audio.durationSec }
+      : undefined
+    return {
+      id: stored.id,
+      audioPath: stored.filePath,
+      format: stored.format,
+      ...(audio ? { audio } : {})
+    }
   } catch {
     return null
   }
@@ -311,6 +321,7 @@ export async function deleteTrack(id: string): Promise<void> {
   const directory = await trackDirectory(tracksRoot(), track.id)
   await blockTrackAnalysis(id)
   await cancelProcessorTrack(id).catch(ignoreFailure)
+  await cancelTrackStemWork(id).catch(ignoreFailure)
   try {
     try {
       await commitTrackDeletion({
@@ -338,7 +349,7 @@ export async function revealTrack(id: string): Promise<void> {
 
 // 16x16 accent-purple dot, inlined: webContents.startDrag requires a non-empty
 // icon on Windows, and the renderer can't hand us one (no fs access).
-const DRAG_ICON = nativeImage.createFromDataURL(
+export const DRAG_ICON = nativeImage.createFromDataURL(
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAO0lEQVR4nGNgoAWoifn/Hxum' +
     'SDNRhhDSjNcQYjVjNYRUzRiGjBpABQMojkaqJCRiDcGrmZAhRGkmFQAAMoa6eB6uLr4AAAAASUVORK5CYII='
 )

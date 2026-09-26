@@ -43,7 +43,7 @@ describe('SkinContract coverage', () => {
   it('no component reads a token outside the contract namespaces', () => {
     // Guard against the old ad-hoc vocab (--bg/--surface/--text/...) creeping
     // back. Allowed prefixes are the contract + the documented shell chrome.
-    const allowed = /^--(color-|radius-|shadow-|space-|font-|motion-|wave-|app-|titlebar-h)/
+    const allowed = /^--(color-|radius-|shadow-|space-|font-|motion-|wave-|stem-|app-|titlebar-h)/
     const files = [
       'src/lib/Nav.svelte',
       'src/lib/Titlebar.svelte',

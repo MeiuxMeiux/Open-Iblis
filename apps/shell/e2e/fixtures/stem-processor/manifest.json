@@ -1,0 +1,17 @@
+{
+  "id": "mx.iblis.processor.stems-fixture",
+  "name": "Stems Fixture",
+  "version": "0.0.1",
+  "kind": "processor",
+  "hostMinVersion": "0.0.0",
+  "capabilities": ["stem-split"],
+  "executable": {
+    "bin": "fixture-stems.cjs",
+    "portArg": "--port",
+    "healthPath": "/health",
+    "healthTimeoutMs": 5000
+  },
+  "license": "GPL-3.0-or-later",
+  "author": { "name": "Meiux Meiux LLC" },
+  "assets": [{ "path": "fixture-stems.cjs", "sha256": "", "bytes": 0, "sources": [] }]
+}

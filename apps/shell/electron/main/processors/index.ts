@@ -16,6 +16,7 @@ import { listInstalled } from '../plugins/registry'
 import { requestSidecar } from '../sidecar/supervisor'
 import { loadLabCatalog } from '../catalog/lab-client'
 import { currentLeaseForFeature } from '../licensing'
+import { acquireStemMutation } from '../stems'
 import type {
   ProcessorAcknowledgement,
   ProcessorBenchmarkView,
@@ -241,8 +242,20 @@ export async function cancelProcessorTrack(trackId: string): Promise<void> {
   await host().cancelTrack(trackId)
 }
 
+// Install, rollback, and removal of any processor stop both analysis and stem
+// work for that plugin before its sidecar or version can change.
 export async function acquireProcessorMutation(id: string): Promise<() => Promise<void>> {
-  return host().acquirePluginMutation(id)
+  const releaseStems = await acquireStemMutation(id)
+  try {
+    const releaseAnalysis = await host().acquirePluginMutation(id)
+    return async () => {
+      await releaseAnalysis()
+      await releaseStems()
+    }
+  } catch (error) {
+    await releaseStems()
+    throw error
+  }
 }
 
 export function processorResults(trackId: string): ProcessorResultRecord[] {

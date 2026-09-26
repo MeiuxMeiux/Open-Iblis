@@ -21,9 +21,11 @@ import type {
 import type { AudioAnalysis, MediaObservation } from './media'
 import type { LicensingState } from './licensing'
 import type { CloudProvidersApi } from './cloud-providers'
+import type { TextAssistApi } from './text-assist'
 import type { FeedbackApi } from './feedback'
 import type { EngineActionsApi } from './engine-actions'
 import type { ProcessorsApi } from './processors-api'
+import type { StemsApi } from './stems'
 import type { PluginInstallQueueSnapshot } from './plugin-install-queue'
 import type { StorageLocation } from './storage-location'
 import type {
@@ -149,7 +151,8 @@ export type UpdateStatus =
   | { state: 'ready'; version: string }
   | { state: 'error'; error: string }
 
-export interface IblisApi extends CloudProvidersApi, EngineActionsApi, FeedbackApi, ProcessorsApi {
+export interface IblisApi
+  extends CloudProvidersApi, EngineActionsApi, FeedbackApi, ProcessorsApi, StemsApi, TextAssistApi {
   app: {
     getInfo: () => Promise<IpcResult<AppInfo>>
   }

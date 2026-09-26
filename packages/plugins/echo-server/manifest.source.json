@@ -1,7 +1,7 @@
 {
   "id": "mx.iblis.processor.echo",
   "name": "Echo Server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "kind": "processor",
   "hostMinVersion": "0.0.0",
   "capabilities": ["echo"],

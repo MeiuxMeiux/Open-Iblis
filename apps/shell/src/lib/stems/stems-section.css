@@ -1,0 +1,110 @@
+/* SPDX-FileCopyrightText: 2026 Meiux Meiux LLC */
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
+.stems {
+  padding: 18px 0;
+  border-top: 1px solid var(--color-border-default);
+}
+header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 auto 0 0;
+  font-size: 14px;
+}
+h3 :global(svg) {
+  color: var(--color-accent);
+}
+.fact {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: color-mix(in srgb, var(--color-accent) 80%, var(--color-text-primary));
+}
+.empty,
+.split {
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--stem-vocals) 8%, transparent),
+      transparent 40%
+    ),
+    linear-gradient(315deg, color-mix(in srgb, var(--stem-bass) 8%, transparent), transparent 40%),
+    var(--color-bg-inset);
+}
+.split.again {
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-style: solid;
+  border-color: var(--color-border-subtle);
+  background: transparent;
+}
+.empty p,
+.split p {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+.empty strong,
+.split strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--color-text-primary);
+}
+.go {
+  display: flex;
+  gap: var(--space-2);
+}
+.go select,
+.picker select {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-md);
+  background: var(--color-bg-subtle);
+  color: var(--color-text-primary);
+  font: inherit;
+  font-size: var(--font-size-sm);
+}
+.empty > :global(button) {
+  justify-self: start;
+}
+.hint {
+  font-size: var(--font-size-xs) !important;
+  color: var(--color-text-muted) !important;
+}
+.picker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+.notice,
+.error {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+}
+.error {
+  color: var(--color-state-danger);
+}

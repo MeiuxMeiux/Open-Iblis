@@ -8,6 +8,7 @@
   "diag": "diag-1a2b3c",
   "email": "reporter@example.com",
   "consent": "yes",
+  "notify": "yes",
   "website": "",
   "ts": "1799999940.c318d852cf6b8abd6a0d85faa958c7db12c70a9b44ce543864d13b7344e3a7d2"
 }

@@ -7,8 +7,8 @@ Immutable artifact revision
 
 The signed Iblis catalog independently pins every installed model file by
 SHA-256 and byte count. The mappings below describe the two shipped
-Qwen-derived components (engine packs 0.1.4 and 0.1.5) and the XL turbo DiT
-candidate added in pack 0.1.5.
+Qwen-derived components (engine packs 0.1.4 and 0.1.6) and the XL turbo DiT
+candidate added in pack 0.1.6.
 
 acestep-5Hz-lm-1.7B-Q8_0.gguf
   Artifact LFS OID
@@ -34,7 +34,7 @@ Qwen3-Embedding-0.6B-Q8_0.gguf
     Qwen3-Embedding-0.6B by Alibaba Cloud, distributed under Apache License
     2.0 and based on Qwen3-0.6B-Base.
 
-acestep-v15-xl-turbo-Q4_K_M.gguf (pack 0.1.5 bakeoff candidate)
+acestep-v15-xl-turbo-Q4_K_M.gguf (pack 0.1.6 bakeoff candidate)
   Artifact LFS OID
     sha256:475e60e8644b1f91eebc0cd25f24c060bed06e64a862b4e60ffafe634c740478
   Artifact size

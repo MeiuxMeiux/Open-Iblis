@@ -32,31 +32,47 @@
     }
   })
 
-  async function load(): Promise<void> {
+  // A refresh keeps the drawer mounted: resetting `detail` would remount every
+  // section (and stop stem playback) on each poll.
+  async function load(refresh = false): Promise<void> {
     const current = ++request
-    detail = null
+    if (!refresh) {
+      detail = null
+      loading = true
+    }
     error = null
-    loading = true
     let result
     try {
       result = await window.iblis.library.detail(id)
     } catch (cause) {
       if (current !== request) return
-      error = cause instanceof Error ? cause.message : String(cause)
+      // A failed background refresh keeps the last good view on screen.
+      if (!refresh || !detail) error = cause instanceof Error ? cause.message : String(cause)
       loading = false
       return
     }
     if (current !== request) return
     if (result.ok) detail = result.data
-    else error = result.error
+    else if (!refresh || !detail) error = result.error
     loading = false
     if (
       result.ok &&
       result.data.processorJobs?.some((job) => ['queued', 'running'].includes(job.status))
     ) {
       if (refreshTimer) clearTimeout(refreshTimer)
-      refreshTimer = setTimeout(() => void load(), 1_000)
+      refreshTimer = setTimeout(() => void load(true), 1_000)
     }
+  }
+
+  // Manual analysis for a track with no detection yet (made before the
+  // detectors shipped, or while detection was off). Consent is the click.
+  async function analyze(): Promise<void> {
+    const result = await window.iblis.processors.analyze(id).catch((cause: unknown) => ({
+      ok: false as const,
+      error: cause instanceof Error ? cause.message : String(cause)
+    }))
+    if (!result.ok) error = result.error
+    await load(true)
   }
 
   async function retry(capability: ProcessorAnalysisCapability): Promise<void> {
@@ -68,7 +84,7 @@
     }))
     if (!result.ok) error = result.error
     retrying = null
-    await load()
+    await load(true)
   }
 </script>
 
@@ -79,5 +95,6 @@
   {onclose}
   {onremix}
   onretry={(capability: ProcessorAnalysisCapability) => void retry(capability)}
+  onanalyze={() => void analyze()}
   {retrying}
 />

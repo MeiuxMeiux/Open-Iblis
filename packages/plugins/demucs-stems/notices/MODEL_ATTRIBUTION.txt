@@ -1,0 +1,24 @@
+Model attribution: Hybrid Transformer Demucs (HTDemucs v4)
+=========================================================
+
+The separation models are Hybrid Transformer Demucs by Simon Rouard,
+Francisco Massa, and Alexandre Defossez (Meta AI), "Hybrid Transformers for
+Music Source Separation", ICASSP 2023. https://arxiv.org/abs/2211.08553
+
+Weights and code: https://github.com/facebookresearch/demucs
+License: MIT, Copyright (c) Meta Platforms, Inc. and affiliates.
+See notices/licenses/demucs-MIT.txt.
+
+Iblis downloads the safetensors conversion published at
+https://huggingface.co/set-soft/audio_separation (model card: MIT), pinned
+to revision 939723568b2dca203e61cc7294317ba38549964f, and checks each file
+against a SHA-256 in the signed catalog:
+
+  htdemucs.safetensors     84030696 bytes   8193504cdfb3943adaf039b8acb524a46e87ebf232c383ac7a32c80a6578423e
+  htdemucs_ft.safetensors  336125008 bytes  255c2650d26537ce4887c9c4cf08c6d4896fad2fecc0b78dc5b875b117bcc575
+  htdemucs_6s.safetensors  54890960 bytes   f56fe666f0bbf3a645764856ed90f8c5dd8cf4430b1d9649b94e29ec45aa9057
+
+The guitar and piano stems of htdemucs_6s are documented upstream as less
+reliable than the four core stems; Iblis says so in the app.
+
+Separation runs locally. No audio leaves the computer.

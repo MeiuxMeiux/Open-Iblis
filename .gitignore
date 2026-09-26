@@ -52,6 +52,11 @@ apps/site/composer.phar
 
 # logs / temp
 .catalog-stage/
+# catalog-publish ledger of (url, sha256, bytes) already round-trip verified
+.catalog-verified.tsv
+# dl_sync.py ledger of objects already mirrored into R2
+.dl-synced.tsv
+.catalog-dl-stage/
 # training-pack build cache + stage (multi-GB downloads; see tools/training-pack)
 .training-pack-cache/
 *.log
@@ -98,3 +103,7 @@ Thumbs.db
 tools/imagegen/out/
 tools/imagegen/ledger.jsonl
 apps/shell/shots/
+
+# rust sidecars
+packages/plugins/*/native/target/
+.catalog-add-stage/

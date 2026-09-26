@@ -7,6 +7,7 @@
   import ToggleSwitch from '../ui/ToggleSwitch.svelte'
   import EngineControls from './EngineControls.svelte'
   import DescriptorControls from './DescriptorControls.svelte'
+  import AssistButton from '../assist/AssistButton.svelte'
 
   type EngineRuntime = NonNullable<EngineInfo['runtime']>
 
@@ -49,11 +50,22 @@
 {/if}
 
 {#if steering.vocals === 'lyrics' && capabilities?.lyrics !== 'none'}
-  <label class="field">
-    <span>Lyrics</span>
-    <textarea bind:value={steering.lyricsText} rows="5" placeholder="[verse]&#10;..." {disabled}
-    ></textarea>
-  </label>
+  <div class="field">
+    <div class="labelrow">
+      <span>Lyrics</span>
+      <AssistButton
+        task="lyrics-assistance"
+        current={steering.lyricsText}
+        oninsert={(text: string) => (steering.lyricsText = text)}
+      />
+    </div>
+    <textarea
+      bind:value={steering.lyricsText}
+      rows="5"
+      aria-label="Lyrics"
+      placeholder="[verse]&#10;..."
+      {disabled}></textarea>
+  </div>
 {/if}
 
 {#if hasAdvanced}
@@ -117,6 +129,11 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+  }
+  .labelrow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
   .field span {
     font-size: 12px;

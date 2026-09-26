@@ -29,5 +29,7 @@ export interface ProcessorsApi {
     ) => Promise<IpcResult<ProcessorBenchmarkView>>
     exportBenchmark: (id: string) => Promise<IpcResult<boolean>>
     retry: (trackId: string, capability: ProcessorAnalysisCapability) => Promise<IpcResult<null>>
+    // Queue BPM/key detection with the current defaults for one track.
+    analyze: (trackId: string) => Promise<IpcResult<null>>
   }
 }

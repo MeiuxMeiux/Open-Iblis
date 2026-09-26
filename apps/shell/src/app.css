@@ -96,6 +96,15 @@
   --wave-peak: var(--color-text-secondary);
   --wave-playhead: var(--color-accent);
 
+  /* ---- stem lanes: derived from the palette so every skin gets six
+         distinct, on-theme colors without restating them ---- */
+  --stem-vocals: var(--color-accent);
+  --stem-drums: var(--color-state-warning);
+  --stem-bass: var(--color-state-info);
+  --stem-other: var(--color-state-success);
+  --stem-guitar: color-mix(in srgb, var(--color-state-danger) 55%, var(--color-state-warning));
+  --stem-piano: color-mix(in srgb, var(--color-state-info) 50%, var(--color-text-primary));
+
   /* ---- shell chrome (NOT skin tokens) ---- */
   --titlebar-h: 36px;
   /* Translucent surfaces so the Win11 Mica backdrop shows through; derived

@@ -1,0 +1,36 @@
+[package]
+name = "iblis-stems"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "Iblis stem-split processor sidecar (HTDemucs via demucs-core)"
+publish = false
+
+[[bin]]
+name = "iblis-stems"
+path = "src/main.rs"
+
+[features]
+# `gpu` is the shipping Windows build (Vulkan through wgpu, CPU fallback in the
+# same binary). CI and the Linux dev box build `--no-default-features` for a
+# CPU-only smoke, because they have no Vulkan device.
+default = ["gpu"]
+gpu = ["demucs-core/wgpu", "demucs-core/autotune", "demucs-core/fusion", "burn/wgpu", "burn/vulkan", "burn/autotune", "burn/fusion", "dep:cubecl"]
+
+[dependencies]
+# Pinned to demucs-rs v0.3.4 (Apache-2.0). Bump together with UPSTREAM.txt.
+demucs-core = { git = "https://github.com/nikhilunni/demucs-rs", rev = "97adfaae52e006be1557405bfc7b10614d805a78", features = ["ndarray"] }
+burn = { version = "0.20.1", default-features = false, features = ["std", "ndarray"] }
+burn-ndarray = { version = "0.20.1", default-features = false, features = ["std", "simd", "multi-threads"] }
+cubecl = { version = "0.9", default-features = false, optional = true }
+hound = "3"
+tiny_http = "0.12"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+anyhow = "1"
+pollster = "0.4"
+
+[profile.release]
+lto = "thin"
+opt-level = 3
+codegen-units = 4
