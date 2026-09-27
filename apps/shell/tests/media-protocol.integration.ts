@@ -10,8 +10,15 @@ import { makeWav } from './fixtures/wav'
 
 const SCHEME = 'iblis-media-test'
 const URL = `${SCHEME}://fixture/audio.wav`
+const LONG_URL = `${SCHEME}://fixture/long.wav`
 
-protocol.registerSchemesAsPrivileged([{ scheme: SCHEME, privileges: { stream: true } }])
+// Must match registerMediaSchemes (electron/main/media/schemes.ts): standard
+// is what keeps Chromium's media loader handling partial ranges correctly;
+// without it the buffered range can freeze after a pause and a seek past it
+// errors the pipeline (FB-QP78D7N1).
+protocol.registerSchemesAsPrivileged([
+  { scheme: SCHEME, privileges: { standard: true, stream: true } }
+])
 
 function assert(condition: unknown, message: string): asserts condition {
   if (!condition) throw new Error(message)
@@ -114,6 +121,82 @@ async function browserObservation(): Promise<{
   }
 }
 
+// Regression probe for FB-QP78D7N1 on a file far larger than Chromium's
+// buffer-ahead window: pause, resume, then seek into the unbuffered tail.
+// Without standard scheme privileges the seek kills the media pipeline
+// (MEDIA_ERR_NETWORK, "FFmpegDemuxer: data source error") and playback near
+// the frozen buffer edge stalls on "Buffering" forever.
+async function pauseResumeSeekProbe(): Promise<{
+  resumed: boolean
+  seekTargetSec: number
+  afterSeekPlays: boolean
+  mediaErrorCode: number | null
+}> {
+  const window = new BrowserWindow({ show: false, webPreferences: { backgroundThrottling: false } })
+  try {
+    const html = `<audio id="player" muted preload="auto" src="${LONG_URL}"></audio>`
+    await window.loadURL(`data:text/html;charset=utf-8,${encodeURIComponent(html)}`)
+    return (await window.webContents.executeJavaScript(`
+      new Promise((resolve, reject) => {
+        const audio = document.getElementById('player')
+        const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
+        const waitUntil = async (predicate, ms) => {
+          const startedAt = performance.now()
+          while (performance.now() - startedAt < ms) {
+            if (predicate()) return true
+            await sleep(50)
+          }
+          return predicate()
+        }
+        ;(async () => {
+          await audio.play()
+          if (!(await waitUntil(() => audio.currentTime >= 1.5, 10000)))
+            throw new Error('long fixture never started playing')
+          const pausedAt = audio.currentTime
+          audio.pause()
+          // Long enough for Chromium's download to go idle (stalled fires ~3s).
+          await sleep(8000)
+          await audio.play()
+          const resumed = await waitUntil(() => audio.currentTime >= pausedAt + 1, 15000)
+          // Play beyond the initially buffered window before seeking; the
+          // pipeline error needs the loader to have cycled through suspends.
+          audio.playbackRate = 2
+          const playsPastBuffer = await waitUntil(() => audio.currentTime >= 25, 40000)
+          audio.playbackRate = 1
+          if (!playsPastBuffer) {
+            resolve({
+              resumed,
+              seekTargetSec: -1,
+              afterSeekPlays: false,
+              mediaErrorCode: audio.error ? audio.error.code : null
+            })
+            return
+          }
+          const seekTargetSec = Math.floor(audio.duration * 0.5)
+          audio.currentTime = seekTargetSec
+          const afterSeekPlays = await waitUntil(
+            () => audio.currentTime >= seekTargetSec + 0.5,
+            15000
+          )
+          resolve({
+            resumed,
+            seekTargetSec,
+            afterSeekPlays,
+            mediaErrorCode: audio.error ? audio.error.code : null
+          })
+        })().catch(reject)
+      })
+    `)) as {
+      resumed: boolean
+      seekTargetSec: number
+      afterSeekPlays: boolean
+      mediaErrorCode: number | null
+    }
+  } finally {
+    window.destroy()
+  }
+}
+
 async function run(): Promise<void> {
   const root = await mkdtemp(join(tmpdir(), 'iblis-electron-media-'))
   const file = join(root, 'audio.wav')
@@ -124,7 +207,23 @@ async function run(): Promise<void> {
     frames: 48000
   })
   await writeFile(file, wav)
-  protocol.handle(SCHEME, (request) => respondWithLocalFile(request, file))
+  // Ten minutes of 44.1k stereo 16-bit PCM (~101 MB): big enough that the
+  // half-way seek lands well outside anything Chromium buffered ahead.
+  const longFile = join(root, 'long.wav')
+  await writeFile(
+    longFile,
+    makeWav({
+      codec: 'pcm',
+      sampleRateHz: 44100,
+      channels: 2,
+      bitsPerSample: 16,
+      frames: 44100 * 600
+    })
+  )
+  protocol.handle(SCHEME, (request) => {
+    const target = new globalThis.URL(request.url).pathname === '/long.wav' ? longFile : file
+    return respondWithLocalFile(request, target)
+  })
 
   try {
     const full = await net.fetch(URL)
@@ -168,11 +267,20 @@ async function run(): Promise<void> {
       observed.navigationEndSec >= observed.navigationStartSec + 0.08,
       'playback time did not continue across view replacement'
     )
+
+    const probe = await pauseResumeSeekProbe()
+    assert(probe.mediaErrorCode === null, `media error ${probe.mediaErrorCode} during pause/seek`)
+    assert(probe.resumed, 'playback did not resume after pause')
+    assert(probe.afterSeekPlays, `playback stalled after seeking to ${probe.seekTargetSec}s`)
   } finally {
     protocol.unhandle(SCHEME)
     await rm(root, { recursive: true, force: true })
   }
 }
+
+// Probe windows come and go; without this Electron's default quit on
+// window-all-closed exits 0 mid-run and the harness reads it as a pass.
+app.on('window-all-closed', () => {})
 
 void app
   .whenReady()

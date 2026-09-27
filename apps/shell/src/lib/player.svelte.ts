@@ -336,7 +336,11 @@ export function createPlayerStore(): PlayerStore {
     },
 
     mediaWaiting() {
-      if (track) phase = 'waiting'
+      // Chromium fires stalled/waiting on a paused element too (the download
+      // going idle after pause); "Buffering" is only true while play is meant.
+      if (!track || !playIntent) return
+      if (phase === 'seeking') return
+      phase = 'waiting'
     },
 
     mediaSeeked(timeSec, paused) {

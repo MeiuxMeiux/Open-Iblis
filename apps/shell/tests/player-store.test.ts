@@ -139,6 +139,24 @@ describe('persistent player store', () => {
     expect(player.playIntent).toBe(false)
   })
 
+  it('ignores stray waiting events while paused (Chromium fires stalled after pause)', () => {
+    const player = createPlayerStore()
+    player.attachHost(host([]))
+    player.select(track('one'))
+    player.mediaPlaying()
+
+    player.pause()
+    player.mediaPaused()
+    expect(player.phase).toBe('paused')
+
+    player.mediaWaiting()
+    expect(player.phase).toBe('paused')
+
+    player.play()
+    player.mediaWaiting()
+    expect(player.phase).toBe('waiting')
+  })
+
   it('navigates the newest-first Library sequence with autoplay and no wrapping', () => {
     const events: string[] = []
     const player = createPlayerStore()
