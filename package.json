@@ -19,8 +19,8 @@
     }
   },
   "devDependencies": {
-    "dependency-cruiser": "^18.4.0",
-    "jscpd": "^5.3.1",
-    "knip": "^6.37.0"
+    "dependency-cruiser": "^18.5.0",
+    "jscpd": "^5.4.0",
+    "knip": "^6.39.0"
   }
 }
