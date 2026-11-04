@@ -8,7 +8,11 @@
 
 import { createHash } from 'node:crypto'
 import { join } from 'node:path'
-import type { TrainingCategory, TrainingStageName } from '../../../shared/training'
+import {
+  MAX_TRACKS_HARD_STOP,
+  type TrainingCategory,
+  type TrainingStageName
+} from '../../../shared/training'
 import type { SidecarScalar } from './sidecar-client'
 import type { TrainingJobRecord } from './store'
 
@@ -25,6 +29,13 @@ function consentSha256(record: TrainingJobRecord): string {
       })
     )
     .digest('hex')
+}
+
+// The folder-picker probe runs before any job exists. Training packs up to
+// 0.1.1 still demand a scratch directory on every scan (Open-Iblis #9), so the
+// host hands the probe a throwaway one; ingest stays off, nothing is copied.
+export function probeScanParams(source: string, scratch: string): Record<string, unknown> {
+  return { scratch, source, ingest: false, maxTracks: MAX_TRACKS_HARD_STOP }
 }
 
 export function stageParams(

@@ -57,22 +57,51 @@ Real captures of the current alpha in the default Dark 3D skin, taken by
   Four built-in skins, an in-app token editor, and skins as plugins. See
   [docs/skins.md](docs/skins.md).
 
+## What model does it use?
+
+ACE-Step 1.5, run on your GPU by [acestep.cpp](https://github.com/ServeurpersoCom/acestep.cpp).
+Both are MIT-licensed. Other engines may come later as optional plugins; each
+one shows its own license before you download it.
+
+| What | Model files | File size | Graphics memory (VRAM) |
+| --- | --- | --- | --- |
+| Generation, Turbo / 8 (default) | ACE-Step 1.5 turbo DiT (Q8_0), 5 Hz LM 1.7B (Q8_0), Qwen3 embedding 0.6B (Q8_0), VAE (BF16) | 2.55 + 1.98 + 0.78 + 0.34 GB | Declared minimum 4 GB; 8 GB recommended. Not measured. |
+| Generation, XL Turbo / 8 experiment | ACE-Step 1.5 XL turbo DiT 4B (Q4_K_M) | 2.99 GB | Not measured. |
+| Training a Style (LoRA) | Embedded trainer + ACE-Step base checkpoints | 8.6 GB pack | Refuses below 6 GB; 8 GB works with a long-runtime warning; settings scale up at 12, 16, and 24 GB. Peak use not measured yet. |
+
+"Declared" figures come from the signed pack manifests; none of this table is
+a measured benchmark yet.
+
 ## Requirements
 
 | | Minimum |
 | --- | --- |
 | OS | Windows 11, 64-bit |
 | GPU (generation and training) | NVIDIA with 8 GB VRAM and a current driver |
-| Disk | About 8 GB for the engine pack; the optional training pack is several GB more |
+| Disk | About 9.5 GB for the engine pack; the optional training pack is 8.6 GB more |
 | Network | Only to download the app and plugin packs; generation and training run offline |
 
-## Install
+## Install and first run
 
-Download the official installer from
-<https://iblis.meiuxmeiux.com/download>. Official builds are produced by the
-maintainers' release pipeline and update themselves: the app checks for a new
-version at launch and from Settings, Updates. On first run, Create offers to
-install the engine pack from the signed catalog.
+1. Download the official installer from
+   <https://iblis.meiuxmeiux.com/download> and run it. The installer is not
+   code-signed yet, so Windows SmartScreen may say "unknown publisher":
+   choose **More info**, then **Run anyway**.
+2. The app asks one setup question: configure everything yourself, or take
+   the defaults. Both lead to the same Generate screen.
+3. Create offers to install the engine pack (about 9.5 GB) from the signed
+   catalog. Every file is checked against its SHA-256 before use; after that,
+   generation runs offline.
+4. Describe a song, add lyrics if you like, and press Generate. Finished
+   tracks land in your Library on your own disk.
+
+Official builds update themselves: the app checks for a new version at launch
+and from Settings, Updates.
+
+## Samples
+
+Coming soon: real, unedited renders from the current build, each listed with
+its prompt and settings.
 
 ## Build from source
 

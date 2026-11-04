@@ -67,6 +67,21 @@ class ScanTest(unittest.TestCase):
         )
         self.assertTrue(seen and seen[-1][0] <= 100)
 
+    def test_folder_picker_probe_needs_no_scratch(self):
+        # The shell's folder-picker probe sends only source/ingest/maxTracks: no job, no scratch
+        # (Open-Iblis #9: "stage params are missing the scratch directory" on every folder pick).
+        write_wav(self.source / "a.wav")
+        _seen, progress = collect_progress()
+        result = scan.run({"source": str(self.source), "ingest": False, "maxTracks": 50}, progress)
+        self.assertEqual(result["trackCount"], 1)
+        self.assertFalse(self.scratch.exists())
+
+    def test_ingest_still_requires_scratch(self):
+        write_wav(self.source / "a.wav")
+        _seen, progress = collect_progress()
+        with self.assertRaises(StageError):
+            scan.run({"source": str(self.source), "ingest": True}, progress)
+
     def test_scan_recurses_subfolders(self):
         nested = self.source / "album1"
         nested.mkdir()

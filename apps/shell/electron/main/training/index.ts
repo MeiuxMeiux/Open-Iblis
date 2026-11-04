@@ -21,8 +21,7 @@ import {
   type TrainingScanResult,
   type TrainingStartInput,
   type TrainingVisibility,
-  TRAINING_NAME_PATTERN,
-  MAX_TRACKS_HARD_STOP
+  TRAINING_NAME_PATTERN
 } from '../../../shared/training'
 import { freeDiskBytes, gpuMemory } from '../hardware'
 import { evaluateTrainingPreflight } from '../hardware/preflight'
@@ -38,6 +37,7 @@ import { serviceEndpoint } from '../official-endpoints'
 import { log } from '../logger'
 import { createTrainingPipeline, type TrainingPipeline } from './pipeline'
 import { createTrainingSidecarClient, type SidecarScalar } from './sidecar-client'
+import { probeScanParams } from './stage-io'
 import { createTrainingStore } from './store'
 import { createUploadFlow, type UploadFlow } from './upload-flow'
 import { reserveTrainingName, trainingsConfigured, trainingsRequest } from './remote'
@@ -128,14 +128,14 @@ export async function scanTrainingFolder(
   if (picked.canceled || picked.filePaths.length !== 1 || folderPath === undefined) return null
 
   await ensureSidecarRunning()
+  await mkdir(trainingScratchRoot(), { recursive: true })
+  const scratch = await mkdtemp(join(trainingScratchRoot(), 'probe-'))
   let result: unknown
   try {
-    result = await sidecarClient.runStage('scan', `probe-${randomUUID()}`, {
-      source: folderPath,
-      ingest: false,
-      maxTracks: MAX_TRACKS_HARD_STOP
-    })
+    const params = probeScanParams(folderPath, scratch)
+    result = await sidecarClient.runStage('scan', `probe-${randomUUID()}`, params)
   } finally {
+    await rm(scratch, { recursive: true, force: true }).catch(ignoreFailure)
     // A probe must not keep a multi-GB Python runtime resident.
     if (!pipelineSingleton || !pipelineActive()) await stopSidecar().catch(ignoreFailure)
   }

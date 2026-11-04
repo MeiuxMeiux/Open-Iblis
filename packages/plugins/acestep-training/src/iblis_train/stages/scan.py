@@ -83,9 +83,11 @@ def run(params: dict, progress) -> dict:
     source = Path(str(params.get("source") or ""))
     if not source.is_dir():
         raise StageError(f"the source folder does not exist: {source}")
-    scratch = scratch_dir(params)
     max_tracks = int(params.get("maxTracks") or DEFAULT_MAX_TRACKS)
     ingest = bool(params.get("ingest"))
+    # The folder-picker probe (ingest=False) runs before a job exists, so it has
+    # no scratch directory and needs none; only ingest copies tracks into one.
+    scratch = scratch_dir(params) if ingest else None
 
     candidates = _collect(source)
     if len(candidates) > max_tracks:
@@ -96,8 +98,8 @@ def run(params: dict, progress) -> dict:
         )
 
     ffmpeg = ffmpeg_path() if ingest else None
-    originals = scratch / "originals"
-    if ingest:
+    originals = scratch / "originals" if scratch is not None else None
+    if originals is not None:
         originals.mkdir(parents=True, exist_ok=True)
 
     accepted, skipped, total_duration = 0, [], 0.0
