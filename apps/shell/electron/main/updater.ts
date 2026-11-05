@@ -197,13 +197,32 @@ let foregroundTimer: ReturnType<typeof setInterval> | undefined
 // and in source builds: electron-builder writes the official feed into every
 // package, so without this check a self-built app would update itself onto
 // an official installer. official-endpoints.ts decides which build this is.
-export function autoUpdateEnabled(packaged: boolean, feed: string): boolean {
-  return packaged && feed !== ''
+export function autoUpdateEnabled(
+  packaged: boolean,
+  feed: string,
+  platform: NodeJS.Platform = process.platform
+): boolean {
+  return packaged && feed !== '' && selfUpdates(platform)
 }
+
+// Only the Windows NSIS build updates itself. Squirrel.Mac refuses to apply
+// an update to an app without a Developer ID signature, and the Mac build is
+// ad-hoc sealed by decision (charter Q12), so a Mac user installs a new dmg
+// from the download page instead (docs/feature/macos.md).
+function selfUpdates(platform: NodeJS.Platform = process.platform): boolean {
+  return platform === 'win32'
+}
+
+const MAC_UPDATE_NOTE =
+  'This Mac build does not update itself yet. Download the new version from the Iblis website and replace the app.'
 
 export function initAutoUpdate(notify: Notify): void {
   if (!app.isPackaged) {
     log('info', 'auto-update disabled (not packaged)')
+    return
+  }
+  if (!selfUpdates()) {
+    log('info', 'auto-update disabled (unsigned macOS build; updates come from the download page)')
     return
   }
   if (!autoUpdateEnabled(app.isPackaged, updateFeedUrl())) {
@@ -237,9 +256,11 @@ export function checkForUpdatesNow(): Promise<void> {
   if (!controller) {
     return Promise.reject(
       new Error(
-        updateFeedUrl() === ''
-          ? 'This source build does not update itself. Rebuild from source to update.'
-          : 'Updates are unavailable in this build'
+        !selfUpdates()
+          ? MAC_UPDATE_NOTE
+          : updateFeedUrl() === ''
+            ? 'This source build does not update itself. Rebuild from source to update.'
+            : 'Updates are unavailable in this build'
       )
     )
   }

@@ -3,7 +3,7 @@
 
 <script lang="ts">
   import type { TrainingPackState } from '../../../shared/training'
-  import { TRAINING_LOCKS_GENERATION } from '../../../shared/training'
+  import { TRAINING_LOCKS_GENERATION, TRAINING_PLATFORM_NOTE } from '../../../shared/training'
   import { resource } from '../resource.svelte'
   import { training } from '../training.svelte'
   import LockBanner from '../ui/LockBanner.svelte'
@@ -43,7 +43,9 @@
     <LockBanner text={TRAINING_LOCKS_GENERATION} />
   {/if}
 
-  {#if loaded && !pack?.installed}
+  {#if loaded && pack?.platformSupported === false}
+    <p class="platform" role="status">{TRAINING_PLATFORM_NOTE}</p>
+  {:else if loaded && !pack?.installed}
     <PackGate onInstalled={loadPack} />
   {:else if loaded}
     {#if training.active}
@@ -71,6 +73,15 @@
     margin: 0;
     font-size: 22px;
     font-weight: 600;
+  }
+  .platform {
+    margin: 0;
+    padding: 14px 16px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    border: 1px solid var(--color-border-default);
+    border-radius: 8px;
   }
   .lead {
     margin: 6px 0 0;

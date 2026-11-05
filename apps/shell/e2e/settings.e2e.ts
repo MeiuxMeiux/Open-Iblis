@@ -56,6 +56,14 @@ it('labels a source build and offers feedback forms without a diagnostics ref', 
   }
   const attach = win.getByRole('switch', { name: /Attach my latest diagnostics reference/ })
   expect(await attach.isDisabled()).toBe(true)
+
+  // The titlebar Feedback button offers the same three forms from any view.
+  await win.getByRole('button', { name: 'Send feedback' }).click()
+  for (const name of ['Report a bug', 'Request a feature', 'Ask a question']) {
+    expect(await win.getByRole('menuitem', { name }).count()).toBe(1)
+  }
+  await win.keyboard.press('Escape')
+  expect(await win.getByRole('menu').count()).toBe(0)
   expect(shell.errors).toEqual([])
   await shell.close()
 })

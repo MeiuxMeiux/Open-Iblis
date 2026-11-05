@@ -1,7 +1,8 @@
 // SPDX-FileCopyrightText: 2026 Meiux Meiux LLC
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-// Shared hardware probes: GPU memory via nvidia-smi and free disk space.
+// Shared hardware probes: NVIDIA GPU memory via nvidia-smi and free disk
+// space. Non-NVIDIA GPUs (Apple, AMD, Vulkan devices) are in probe.ts.
 // Used by both the adapter compatibility proof (VRAM delta evidence) and the
 // Training preflight (D4 floor). Probes are best-effort — a missing tool or
 // odd output yields null, never a throw; callers surface honest copy instead.
@@ -24,6 +25,9 @@ export function nvidiaSmiCommand(
   env: Record<string, string | undefined> = process.env,
   exists: (path: string) => boolean = existsSync
 ): string | null {
+  // No Mac Iblis supports has an NVIDIA GPU (Apple dropped the drivers after
+  // macOS 10.13); the platform probe (probe.ts) covers Apple and AMD GPUs.
+  if (platform === 'darwin') return null
   if (platform !== 'win32') return 'nvidia-smi'
   const candidates = [
     join(env.SystemRoot ?? 'C:\\Windows', 'System32', 'nvidia-smi.exe'),

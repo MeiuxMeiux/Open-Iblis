@@ -12,6 +12,7 @@
   import StemJobCard from './StemJobCard.svelte'
   import StemSetPanel from './StemSetPanel.svelte'
   import { setSummary } from './presentation'
+  import ReportThis from '../ui/ReportThis.svelte'
 
   let { trackId, format }: { trackId: string; format: string } = $props()
 
@@ -130,7 +131,7 @@
     {/if}
   </header>
 
-  {#if error}<p class="error" role="alert">{error}</p>{/if}
+  {#if error}<p class="error" role="alert">{error}<ReportThis /></p>{/if}
 
   {#if view.job}
     <StemJobCard job={view.job} {now} oncancel={cancel} onretry={split} />

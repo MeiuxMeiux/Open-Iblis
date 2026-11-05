@@ -33,6 +33,27 @@ win:
         - x64
   icon: ../../packages/brand/installer/iblis.ico
 
+# macOS (docs/feature/macos.md): unsigned by decision (charter Q12), so the
+# afterPack hook seals the app ad hoc. One arch per invocation (--arm64 or
+# --x64) so each dmg is single-arch and small. Setting CSC_LINK (+ APPLE_ID,
+# APPLE_APP_SPECIFIC_PASSWORD, APPLE_TEAM_ID for notarization) later turns on
+# real signing with the hardened runtime and these entitlements; no other
+# change. Mac builds do not self-update (updater.ts): the dmg is downloaded.
+mac:
+  target:
+    - dmg
+  category: public.app-category.music
+  icon: ../../packages/brand/installer/iblis-1024.png
+  minimumSystemVersion: '12.0'
+  hardenedRuntime: true
+  gatekeeperAssess: false
+  entitlements: scripts/mac/entitlements.plist
+  entitlementsInherit: scripts/mac/entitlements.plist
+  artifactName: Iblis-${version}-mac-${arch}.${ext}
+
+dmg:
+  title: Iblis ${version}
+
 nsis:
   oneClick: false
   perMachine: false

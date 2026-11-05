@@ -12,6 +12,7 @@ import { healthAll } from '../sidecar/supervisor'
 import { licensingDiagSummary } from '../licensing'
 import { redactValue, type DiagLevel } from './redact'
 import { nvidiaSmiCommand } from '../hardware'
+import { probeHardware, summarizeHardware } from '../hardware/probe'
 
 export const DIAG_SCHEMA = 1
 
@@ -59,9 +60,21 @@ function logs(maxLinesEach: number): Record<string, string> {
   return out
 }
 
-// Best-effort GPU/driver line via nvidia-smi (the engine is CUDA-only, so this
-// is the single most useful system fact). Resolves to '' if unavailable.
-function gpuInfo(): Promise<string> {
+// Best-effort GPU/driver line: nvidia-smi's own line on a CUDA box (the
+// Windows engine is CUDA-only, so this is the single most useful fact there),
+// otherwise the platform probe's summary (Apple GPU + unified memory, Vulkan
+// devices). Resolves to '' if nothing answers.
+async function gpuInfo(): Promise<string> {
+  const smi = await nvidiaSmiLine()
+  if (smi !== '') return smi
+  try {
+    return summarizeHardware(await probeHardware())
+  } catch {
+    return ''
+  }
+}
+
+function nvidiaSmiLine(): Promise<string> {
   const command = nvidiaSmiCommand()
   if (command === null) return Promise.resolve('')
   return new Promise((resolve) => {

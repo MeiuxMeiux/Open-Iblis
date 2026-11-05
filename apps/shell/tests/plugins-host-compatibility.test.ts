@@ -36,7 +36,8 @@ function manifest(version: string, hostMinVersion: string): PluginManifest {
     kind: 'engine',
     hostMinVersion,
     capabilities: ['text-to-music'],
-    executable: { bin: 'engine.exe', args: [] },
+    // A Node-script bin runs on every OS, so these cases test only versions.
+    executable: { bin: 'engine.cjs', args: [] },
     assets: [],
     license: 'MIT',
     author: { name: 'Meiux Meiux LLC' }
@@ -105,5 +106,44 @@ describe('host minimum lifecycle enforcement', () => {
     expect(readInstalledManifest('mx.iblis.engine.test', '1.0.0')).toBeNull()
     await startInstalledSidecars()
     expect(mocks.start).not.toHaveBeenCalled()
+  })
+})
+
+describe('platform enforcement', () => {
+  const MAC = { os: 'darwin', arch: 'arm64' }
+  // A target that is never the machine running this suite.
+  const elsewhere =
+    process.platform === 'linux' && process.arch === 'arm64' ? 'win32-x64' : 'linux-arm64'
+
+  it('presumes a bare native bin is a Windows x64 pack and refuses it on a Mac', () => {
+    const legacy = { ...manifest('1.0.0', '0.2.0-alpha.1'), executable: { bin: 'engine.exe' } }
+    expect(() =>
+      assertHostCompatible(legacy, { version: '0.2.0-alpha.61', enforce: true, platform: MAC })
+    ).toThrow(
+      'Test engine 1.0.0 is available for Windows x64 only; this computer is macOS (Apple Silicon).'
+    )
+    expect(() =>
+      assertHostCompatible(legacy, {
+        version: '0.2.0-alpha.61',
+        enforce: true,
+        platform: { os: 'win32', arch: 'x64' }
+      })
+    ).not.toThrow()
+  })
+
+  it('leaves development builds alone, like the version gate', () => {
+    const legacy = { ...manifest('1.0.0', '0.2.0-alpha.1'), executable: { bin: 'engine.exe' } }
+    expect(() =>
+      assertHostCompatible(legacy, { version: '0.0.0', enforce: false, platform: MAC })
+    ).not.toThrow()
+  })
+
+  it('refuses install for another platform before writing any bytes', async () => {
+    const other = {
+      ...manifest('1.0.0', '0.2.0-alpha.1'),
+      platforms: [elsewhere as 'linux-arm64']
+    }
+    await expect(install(other)).rejects.toThrow('is available for')
+    expect(existsSync(join(root, 'mx.iblis.engine.test'))).toBe(false)
   })
 })

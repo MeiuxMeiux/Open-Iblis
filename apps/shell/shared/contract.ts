@@ -80,6 +80,11 @@ export interface AppInfo {
   chrome: string
   node: string
   platform: string
+  // process.arch of this build: an x64 build under Rosetta reports x64.
+  arch: string
+  // Packaged builds enforce plugin host and platform requirements; `just dev`
+  // does not (plugins/host-compatibility.ts).
+  packaged: boolean
   // True for the signed installers the release workflow builds; false for a
   // source build (no auto-update, no hosted services unless configured).
   officialBuild: boolean

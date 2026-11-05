@@ -98,6 +98,27 @@ a measured benchmark yet.
 Official builds update themselves: the app checks for a new version at launch
 and from Settings, Updates.
 
+### Hear it
+
+AI-generated samples (ACE-Step 1.5 on an NVIDIA GPU and on the CPU, with
+generation times, plus a stem-separation demo) are on the
+[models page](https://iblis.meiuxmeiux.com/models#hear-it).
+
+### Mac preview
+
+An unsigned macOS build (14 or later, Apple Silicon and Intel) is on the same
+[download page](https://iblis.meiuxmeiux.com/download#mac), with its SHA-256
+sums and the one-time Open Anyway steps. It is a preview: it has only been
+tested on a virtual Mac, training needs Windows with NVIDIA, Intel Macs have no
+local generation engine yet, and the Mac app does not update itself (download
+each new dmg). Please report what breaks.
+
+### Found a bug? Want a feature?
+
+Use the Feedback button at the top of the app window (or Help in the menu
+bar), the [feedback form](https://iblis.meiuxmeiux.com/feedback) (no account
+needed), or [GitHub issues](https://github.com/MeiuxMeiux/Open-Iblis/issues).
+
 ## Samples
 
 Coming soon: real, unedited renders from the current build, each listed with

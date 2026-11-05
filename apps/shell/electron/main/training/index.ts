@@ -14,7 +14,6 @@ import type { PluginManifest } from '@iblis/plugin-sdk'
 import {
   type TrainingCategory,
   type TrainingJobView,
-  type TrainingPackState,
   type TrainingPreflightReport,
   type TrainingProgressEvent,
   type TrainingReserveResult,
@@ -28,7 +27,6 @@ import { evaluateTrainingPreflight } from '../hardware/preflight'
 import { queueSnapshot } from '../generation-queue'
 import { perfInfo } from '../perf'
 import { readInstalledManifest } from '../plugins/installed-manifest'
-import { listInstalled } from '../plugins/registry'
 import { healthAll, requestSidecar, start, stop } from '../sidecar/supervisor'
 import { resourceCoordinator } from '../resource-state'
 import { downloadAdapterFile, importAdapterFile, listAdapters } from '../adapters'
@@ -44,16 +42,9 @@ import { reserveTrainingName, trainingsConfigured, trainingsRequest } from './re
 import { checkPrivateName, NAME_RULES, privateImports, trainingVisibility } from './private'
 import { heavyDataRoot } from '../storage'
 import { ignoreFailure } from '../ignore-failure'
+import { TRAINING_PACK_ID, trainingPackState } from './pack-state'
 
-const TRAINING_PACK_ID = 'mx.iblis.training.acestep'
-
-export function trainingPackState(): TrainingPackState {
-  const installed = listInstalled().find((plugin) => plugin.id === TRAINING_PACK_ID)
-  return {
-    installed: Boolean(installed?.activeVersion),
-    version: installed?.activeVersion ?? null
-  }
-}
+export { trainingPackState }
 
 function packManifest(): PluginManifest {
   const state = trainingPackState()

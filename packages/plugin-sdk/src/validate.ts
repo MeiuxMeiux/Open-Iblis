@@ -11,6 +11,7 @@ import {
   type PluginManifest
 } from './manifest.js'
 import { trimmedByWindows } from './internal.js'
+import { isPlatformTarget, platformConsistencyErrors } from './platform.js'
 import { isSlotId } from './slots.js'
 import { CATALOG_SCHEMA_VERSION, type Catalog, type CatalogEntry } from './catalog.js'
 import { isSkinToken, type SkinDescriptor, type SkinTokens } from './skin-contract.js'
@@ -89,6 +90,20 @@ function checkOptionalString(
   if (key in o && !isString(o[key])) e.add(`${path}.${key}`, 'expected a string')
 }
 
+// An optional, non-empty list of distinct platform targets (platform.ts).
+function checkPlatforms(e: Errors, o: Record<string, unknown>, path: string): void {
+  if (!('platforms' in o)) return
+  const v = o.platforms
+  if (!Array.isArray(v) || v.length === 0 || !v.every(isPlatformTarget)) {
+    e.add(
+      `${path}.platforms`,
+      'expected a non-empty array of targets like "darwin-arm64" or "win32"'
+    )
+  } else if (new Set(v).size !== v.length) {
+    e.add(`${path}.platforms`, 'expected distinct targets')
+  }
+}
+
 function validateAssetSource(e: Errors, v: unknown, path: string): void {
   if (!isObject(v)) {
     e.add(path, 'expected an object')
@@ -128,6 +143,7 @@ function validateAsset(e: Errors, v: unknown, path: string): void {
   if ('unpack' in v && v.unpack !== 'zip') {
     e.add(`${path}.unpack`, "expected 'zip'")
   }
+  checkPlatforms(e, v, path)
 }
 
 function validateSlot(e: Errors, v: unknown, path: string): void {
@@ -156,6 +172,31 @@ function validateExecutable(e: Errors, v: unknown, path: string): void {
   for (const k of ['healthTimeoutMs', 'idleUnloadMinutes'] as const) {
     if (k in v && !isFiniteNumber(v[k])) e.add(`${path}.${k}`, 'expected a number')
   }
+  if ('platforms' in v) validateExecutableOverrides(e, v.platforms, `${path}.platforms`)
+}
+
+function validateExecutableOverrides(e: Errors, v: unknown, path: string): void {
+  if (!Array.isArray(v) || v.length === 0) {
+    e.add(path, 'expected a non-empty array')
+    return
+  }
+  v.forEach((o, i) => {
+    const p = `${path}[${i}]`
+    if (!isObject(o)) {
+      e.add(p, 'expected an object')
+      return
+    }
+    for (const key of Object.keys(o)) {
+      if (key !== 'platforms' && key !== 'bin' && key !== 'args')
+        e.add(`${p}.${key}`, 'unknown field')
+    }
+    if (!('platforms' in o)) e.add(`${p}.platforms`, 'required')
+    checkPlatforms(e, o, p)
+    if ('bin' in o) checkRelPath(e, o, 'bin', p)
+    if ('args' in o && !(Array.isArray(o.args) && o.args.every(isString))) {
+      e.add(`${p}.args`, 'expected an array of strings')
+    }
+  })
 }
 
 function validatePreset(e: Errors, v: unknown, path: string): void {
@@ -264,6 +305,7 @@ export function parseManifest(input: unknown, path = 'manifest'): ParseResult<Pl
   if (!isPluginKind(m.kind)) e.add(`${path}.kind`, 'unknown plugin kind')
   checkSemver(e, m, 'hostMinVersion', path)
   checkString(e, m, 'license', path)
+  checkPlatforms(e, m, path)
 
   if (!(Array.isArray(m.capabilities) && m.capabilities.every(isString))) {
     e.add(`${path}.capabilities`, 'expected an array of strings')
@@ -329,6 +371,8 @@ export function parseManifest(input: unknown, path = 'manifest'): ParseResult<Pl
   checkOptionalString(e, m, 'bugUrl', path)
 
   if (!e.ok) return { ok: false, errors: e.list }
+  const platformErrors = platformConsistencyErrors(input as unknown as PluginManifest, path)
+  if (platformErrors.length > 0) return { ok: false, errors: platformErrors }
   return { ok: true, value: input as unknown as PluginManifest }
 }
 

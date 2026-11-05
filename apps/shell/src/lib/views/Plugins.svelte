@@ -13,6 +13,7 @@
   import ProcessorProviderCard from '../processors/ProcessorProviderCard.svelte'
   import Icon from '../ui/Icon.svelte'
   import { buildRows, type PluginRow } from '../plugins/version'
+  import ReportThis from '../ui/ReportThis.svelte'
 
   let rows = $state<PluginRow[]>([])
   let processorSettings = $state<ProcessorSettings>({
@@ -50,7 +51,8 @@
   async function refresh(): Promise<void> {
     loading = true
     error = null
-    const [cat, inst, hp, processors, queue] = await Promise.all([
+    const [info, cat, inst, hp, processors, queue] = await Promise.all([
+      window.iblis.app.getInfo(),
       window.iblis.catalog.list(),
       window.iblis.plugins.listInstalled(),
       window.iblis.plugins.health(),
@@ -63,7 +65,11 @@
     if (queue.ok) installQueue = queue.data
     if (!cat.ok) return void (error = cat.error)
     if (!inst.ok) return void (error = inst.error)
-    rows = buildRows(cat.data, inst.data)
+    // A packaged build refuses packs made for another OS/CPU; say so on the
+    // card instead of offering an Install that main would reject.
+    const host =
+      info.ok && info.data.packaged ? { os: info.data.platform, arch: info.data.arch } : null
+    rows = buildRows(cat.data, inst.data, host)
   }
 
   $effect(() => void refresh())
@@ -127,7 +133,7 @@
   </div>
 
   {#if error}
-    <p class="error">{error}</p>
+    <p class="error">{error}<ReportThis /></p>
   {/if}
 
   <PluginInstallManager

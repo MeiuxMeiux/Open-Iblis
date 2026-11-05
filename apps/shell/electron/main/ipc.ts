@@ -44,6 +44,8 @@ function appInfo(): AppInfo {
     chrome: versions.chrome ?? 'unknown',
     node: versions.node ?? 'unknown',
     platform: process.platform,
+    arch: process.arch,
+    packaged: app.isPackaged,
     officialBuild: isOfficialBuild()
   }
 }

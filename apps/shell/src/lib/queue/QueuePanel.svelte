@@ -13,6 +13,7 @@
   import { queueDescription, queueLabel, queueTitle } from './presentation'
   import './queue-panel.css'
   import './comparison.css'
+  import ReportThis from '../ui/ReportThis.svelte'
 
   let editingId = $state<string | null>(null)
   let panel = $state<HTMLElement | null>(null)
@@ -69,7 +70,7 @@
     <p class="queue-message" role="status">Loading queue…</p>
   {:else}
     {#if queue.error}
-      <p class="queue-message error" role="alert">{queue.error}</p>
+      <p class="queue-message error" role="alert">{queue.error}<ReportThis /></p>
     {/if}
 
     {#if queue.paused && queue.pauseReason}

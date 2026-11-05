@@ -27,6 +27,7 @@ import { prepareStorage } from './storage'
 import { registerMediaSchemes } from './media/schemes'
 import { registerActionsProbeProtocol } from './engine/actions-probe-media'
 import { ignoreFailure } from './ignore-failure'
+import { installAppMenu } from './app-menu'
 
 // A requested data-root migration runs before any store or sidecar reads its
 // path. The small Electron profile stays put, so this is safe before ready.
@@ -55,6 +56,7 @@ if (!app.requestSingleInstanceLock()) {
     .whenReady()
     .then(() => {
       hardenSessions()
+      installAppMenu()
       registerTrackProtocol()
       registerStemProtocol()
       registerActionsProbeProtocol()

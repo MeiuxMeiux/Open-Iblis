@@ -27,7 +27,17 @@ export const ENGINE_CHANGE_IN_PROGRESS = 'An engine change is in progress.'
 export interface TrainingPackState {
   installed: boolean
   version: string | null
+  // False where the training toolchain cannot run (today: anything but
+  // Windows x64, which needs CUDA). The Training view then explains instead
+  // of offering the pack.
+  platformSupported: boolean
 }
+
+// Training runs the PyTorch trainer on CUDA: Windows x64 with an NVIDIA GPU
+// only, until the Mac track's MPS trainer exists (docs/feature/macos.md).
+export const TRAINING_PLATFORMS: readonly string[] = ['win32-x64']
+export const TRAINING_PLATFORM_NOTE =
+  'Training needs Windows with an NVIDIA GPU (8 GB of VRAM or more). On this computer you can still create music, split stems, and use Styles.'
 
 export type PreflightStatus = 'pass' | 'warn' | 'fail'
 

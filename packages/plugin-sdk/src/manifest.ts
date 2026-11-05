@@ -4,6 +4,7 @@
 import type { Capability } from './capabilities.js'
 import type { SlotId } from './slots.js'
 import type { EnginePreset } from './engine.js'
+import type { ExecutableOverride, PlatformTarget } from './platform.js'
 
 // The canonical PluginManifest. A plugin is a versioned directory + this
 // manifest + (optionally) a native sidecar. See docs/feature/plugins.md.
@@ -53,6 +54,8 @@ export interface PluginAsset {
   // remove the archive. For packs whose payload is a many-thousand-file tree
   // (e.g. an embedded Python runtime) where per-file assets are impractical.
   unpack?: 'zip'
+  // Hosts that download this asset (platform.ts). Absent = every host.
+  platforms?: PlatformTarget[]
 }
 
 // Sidecar configuration — only for kinds that run a native process.
@@ -71,6 +74,9 @@ export interface ExecutableSpec {
   healthTimeoutMs?: number
   // Idle minutes before the shell offers to unload (engines keep weights hot).
   idleUnloadMinutes?: number
+  // Per-host bin/args overrides, first match wins (platform.ts). Lets one
+  // manifest ship ace-server.exe for Windows and ace-server for macOS.
+  platforms?: ExecutableOverride[]
 }
 
 export interface SlotRegistration {
@@ -146,6 +152,9 @@ export interface PluginManifest {
   version: string // SemVer of THIS manifest
   kind: PluginKind
   hostMinVersion: string // shell refuses to load if older
+  // Hosts this plugin supports (platform.ts). Absent = every host, except
+  // that a bare native executable is presumed Windows x64 (legacy packs).
+  platforms?: PlatformTarget[]
   capabilities: Capability[]
   slots?: SlotRegistration[]
   assets: PluginAsset[] // SHA-256 verified on install

@@ -8,7 +8,12 @@
 // driver, contract-v2 engines each get a generic v2 driver instance — so
 // adding an engine never grows an engine-id conditional in shared code.
 
-import type { GenerateRequest, GenerateResponse, PluginManifest } from '@iblis/plugin-sdk'
+import {
+  assetsForPlatform,
+  type GenerateRequest,
+  type GenerateResponse,
+  type PluginManifest
+} from '@iblis/plugin-sdk'
 import {
   err,
   type EngineInfo,
@@ -18,6 +23,7 @@ import {
 import type { QueueComparisonVariant, QueueTarget } from '../../../shared/generation-queue'
 import { listInstalled } from '../plugins/registry'
 import { readInstalledManifest } from '../plugins/installed-manifest'
+import { hostPlatform } from '../plugins/host-compatibility'
 import { healthAll } from '../sidecar/supervisor'
 import { createAceCompatProvider } from './drivers/ace-compat/driver'
 import { createEngineV2Provider } from './drivers/v2/driver'
@@ -265,7 +271,10 @@ function createRegistry(): EngineRegistry {
               : engine.protocol === 2
                 ? 'ready'
                 : 'stopped',
-          installBytes: engine.manifest.assets.reduce((sum, asset) => sum + asset.bytes, 0),
+          installBytes: assetsForPlatform(engine.manifest, hostPlatform()).reduce(
+            (sum, asset) => sum + asset.bytes,
+            0
+          ),
           ...createSurface(engine)
         }
       })

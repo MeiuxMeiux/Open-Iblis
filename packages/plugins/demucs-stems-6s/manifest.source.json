@@ -2,9 +2,9 @@
   "$comment": "Authoring source for the htdemucs_6s stem-split processor. The native sidecar (iblis-stems.exe, packages/plugins/demucs-stems/native, MIT) is built and published to GCS by .github/workflows/stems-build.yml and transcribed with `just stems-pack-transcribe`; the Demucs weights are fetched vendor-direct from a revision-pinned Hugging Face URL (never mirrored to GCS). All three Demucs packs share the same binary; only --model and the weights differ. See demucs-stems/UPSTREAM.txt.",
   "id": "mx.iblis.processor.stems-demucs-6s",
   "name": "Stem Splitter: Demucs Six Stems",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "kind": "processor",
-  "hostMinVersion": "0.2.0-alpha.57",
+  "hostMinVersion": "0.2.0-alpha.61",
   "capabilities": [
     "stem-split"
   ],
@@ -19,19 +19,46 @@
     "portArg": "--port",
     "sessionEnv": "IBLIS_SESSION",
     "healthPath": "/health",
-    "healthTimeoutMs": 15000
+    "healthTimeoutMs": 15000,
+    "platforms": [
+      {
+        "platforms": [
+          "darwin"
+        ],
+        "bin": "iblis-stems"
+      }
+    ]
   },
   "assets": [
     {
       "path": "iblis-stems.exe",
-      "sha256": "0507d50553f1861a861b50c1f6febced4ba627a6d327f3f5c14414e5dcb38650",
-      "bytes": 40283136,
+      "sha256": "f07d6622825361b9536574a98b703ea435190d2c44bfc6c8033d359afdea8c11",
+      "bytes": 40945664,
       "published": true,
       "executable": true,
       "sources": [
         {
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.processor.stems-demucs-6s/{version}/iblis-stems.exe"
+        }
+      ],
+      "platforms": [
+        "win32-x64"
+      ]
+    },
+    {
+      "path": "iblis-stems",
+      "bytes": 34606432,
+      "sha256": "e5cfc20a9c3b6fc9860563475ab0cf94555b6fdedf35fc1324d612b0936e6d75",
+      "published": true,
+      "executable": true,
+      "platforms": [
+        "darwin-arm64"
+      ],
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.processor.stems-demucs-6s/{version}/iblis-stems"
         }
       ]
     },
@@ -92,5 +119,9 @@
     "name": "Meiux Meiux LLC",
     "url": "https://iblis.meiuxmeiux.com"
   },
-  "bugUrl": "https://iblis.meiuxmeiux.com/contact"
+  "bugUrl": "https://iblis.meiuxmeiux.com/contact",
+  "platforms": [
+    "win32-x64",
+    "darwin-arm64"
+  ]
 }

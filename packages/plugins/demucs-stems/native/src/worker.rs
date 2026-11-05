@@ -103,6 +103,13 @@ fn separate<B: burn::prelude::Backend>(
     ))
     .context("separation failed")?;
 
+    if backend == "gpu" && gpu_output_unusable(source, &stems) {
+        // Seen on a macOS VM's paravirtual GPU (2026-11-05): wgpu/Metal ran
+        // without an error and returned silence. The server treats this like
+        // a GPU that never started, so `auto` retries on the CPU.
+        emit(json!({ "event": "gpu-unusable" }));
+        anyhow::bail!("the GPU returned silent or invalid stems");
+    }
     emit(json!({ "event": "stage", "stage": "writing" }));
     let residual = residual_db(source, &stems);
     for stem in &stems {
@@ -122,6 +129,20 @@ fn separate<B: burn::prelude::Backend>(
         "computeMs": started.elapsed().as_millis() as u64,
     }));
     Ok(())
+}
+
+/// True when every stem is silent or non-finite although the mix is not.
+#[allow(clippy::neg_cmp_op_on_partial_ord)] // NaN must count as unusable
+fn gpu_output_unusable(source: &audio::Stereo, stems: &[demucs_core::Stem]) -> bool {
+    let (mix_peak, _) = audio::levels(&source.left, &source.right);
+    if !(mix_peak > -60.0) {
+        return false;
+    }
+    stems.iter().all(|stem| {
+        let finite = stem.left.iter().chain(stem.right.iter()).all(|s| s.is_finite());
+        let (peak, _) = audio::levels(&stem.left, &stem.right);
+        !finite || !(peak > -100.0)
+    })
 }
 
 /// Re-sum error relative to the mix, in dB. A quality signal for the UI, not

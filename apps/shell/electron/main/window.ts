@@ -9,6 +9,7 @@ const PRELOAD = join(__dirname, '../preload/index.js')
 
 export function createMainWindow(): BrowserWindow {
   const isWin = process.platform === 'win32'
+  const isMac = process.platform === 'darwin'
 
   const win = new BrowserWindow({
     width: 1180,
@@ -16,7 +17,12 @@ export function createMainWindow(): BrowserWindow {
     minWidth: 880,
     minHeight: 560,
     show: false,
-    frame: false,
+    // macOS keeps its own traffic-light buttons inset in the custom titlebar
+    // (Titlebar.svelte drops its Windows-style controls there); elsewhere the
+    // window is frameless and the titlebar draws all controls.
+    ...(isMac
+      ? { titleBarStyle: 'hiddenInset' as const, trafficLightPosition: { x: 12, y: 11 } }
+      : { frame: false }),
     title: 'Iblis — Soulless Music',
     backgroundColor: isWin ? '#00000000' : '#0c0b10',
     // Windows 11 Mica backdrop. No-op on other platforms.

@@ -8,6 +8,7 @@ import {
   isAllowedFeedbackUrl,
   isFeedbackKind,
   osLabel,
+  systemLine,
   type FeedbackContext
 } from '../electron/main/feedback-url'
 import type { FeedbackKind } from '../shared/feedback'
@@ -16,7 +17,8 @@ const CTX: FeedbackContext = {
   version: '0.2.0-alpha.52',
   build: 'official',
   os: 'windows-11',
-  diagRef: null
+  diagRef: null,
+  system: null
 }
 
 function params(url: string): Record<string, string> {
@@ -61,6 +63,50 @@ describe('feedbackUrl', () => {
     expect(() => feedbackUrl('spam' as FeedbackKind, CTX)).toThrow(/kind/)
     expect(() => feedbackUrl('bug', CTX, 'https://evil.example')).toThrow(/official site/)
     expect(() => feedbackUrl('bug', CTX, 'http://iblis.meiuxmeiux.com')).toThrow(/official site/)
+  })
+})
+
+describe('system line', () => {
+  const mac = {
+    platform: 'darwin',
+    osVersion: '14.5.0',
+    arch: 'arm64',
+    cpu: 'Apple M2',
+    memoryMb: 16384,
+    gpu: 'Apple M2 (10-core GPU), 16 GB unified memory, ~10.7 GB for models'
+  }
+
+  it('prefaces Mac reports with Mac preview and lists OS, arch, CPU, RAM, GPU', () => {
+    expect(systemLine(mac)).toBe(
+      'Mac preview; macOS 14.5.0; arm64; Apple M2; 16 GB RAM; GPU: Apple M2 (10-core GPU), 16 GB unified memory, ~10.7 GB for models'
+    )
+  })
+
+  it('describes Windows without the preview tag and says when no GPU was found', () => {
+    const line = systemLine({
+      platform: 'win32',
+      osVersion: '10.0.26100',
+      arch: 'x64',
+      cpu: 'AMD Ryzen 7 5800X 8-Core Processor   ',
+      memoryMb: 32768,
+      gpu: ''
+    })
+    expect(line).toBe(
+      'Windows 10.0.26100; x64; AMD Ryzen 7 5800X 8-Core Processor; 32 GB RAM; GPU: none detected'
+    )
+  })
+
+  it('drops characters the site refuses and caps the length', () => {
+    const line = systemLine({ ...mac, cpu: 'Weird <b>"CPU"</b>' + 'x'.repeat(300) })
+    expect(line).not.toMatch(/[<>"]/)
+    expect(line.length).toBeLessThanOrEqual(200)
+  })
+
+  it('is sent as sys only when it passes the rule', () => {
+    expect(params(feedbackUrl('bug', { ...CTX, system: systemLine(mac) })).sys).toMatch(
+      /^Mac preview; macOS/
+    )
+    expect(params(feedbackUrl('bug', { ...CTX, system: '<script>' }))).not.toHaveProperty('sys')
   })
 })
 

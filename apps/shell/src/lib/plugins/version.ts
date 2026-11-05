@@ -1,7 +1,13 @@
 // SPDX-FileCopyrightText: 2026 Meiux Meiux LLC
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import type { Catalog, ProcessorAnalysisCapability } from '@iblis/plugin-sdk'
+import {
+  platformSupportError,
+  type Catalog,
+  type HostPlatform,
+  type PluginManifest,
+  type ProcessorAnalysisCapability
+} from '@iblis/plugin-sdk'
 import type { InstalledPlugin } from '../../../shared/contract'
 
 // Pure helpers that merge the signed catalog with on-disk install state into
@@ -16,6 +22,9 @@ export interface PluginRow {
   activeVersion: string | null
   installedVersions: string[]
   analysisCapabilities: ProcessorAnalysisCapability[]
+  // Why the latest version cannot be installed on this computer (built for
+  // another OS or CPU), or null. Only computed for a packaged host.
+  unavailable: string | null
 }
 
 // Minimal x.y.z(-pre) compare; mirrors the host-side ordering.
@@ -32,7 +41,11 @@ export function compareSemver(a: string, b: string): number {
   return a < b ? -1 : a > b ? 1 : 0
 }
 
-export function buildRows(catalog: Catalog, installed: InstalledPlugin[]): PluginRow[] {
+export function buildRows(
+  catalog: Catalog,
+  installed: InstalledPlugin[],
+  host: HostPlatform | null = null
+): PluginRow[] {
   const byId = new Map(installed.map((p) => [p.id, p]))
   const latest = new Map<
     string,
@@ -41,6 +54,7 @@ export function buildRows(catalog: Catalog, installed: InstalledPlugin[]): Plugi
       kind: string
       version: string
       analysisCapabilities: ProcessorAnalysisCapability[]
+      manifest: PluginManifest
     }
   >()
   for (const { manifest: m } of catalog.plugins) {
@@ -50,6 +64,7 @@ export function buildRows(catalog: Catalog, installed: InstalledPlugin[]): Plugi
         name: m.name,
         kind: m.kind,
         version: m.version,
+        manifest: m,
         analysisCapabilities: m.capabilities.filter(
           (capability): capability is ProcessorAnalysisCapability =>
             capability === 'bpm-detect' || capability === 'key-detect'
@@ -70,7 +85,8 @@ export function buildRows(catalog: Catalog, installed: InstalledPlugin[]): Plugi
       latest: l?.version ?? inst?.activeVersion ?? '',
       activeVersion: inst?.activeVersion ?? null,
       installedVersions: inst?.versions ?? [],
-      analysisCapabilities: l?.analysisCapabilities ?? []
+      analysisCapabilities: l?.analysisCapabilities ?? [],
+      unavailable: l && host ? platformSupportError(l.manifest, host) : null
     })
   }
   return rows.sort((a, b) => a.name.localeCompare(b.name))

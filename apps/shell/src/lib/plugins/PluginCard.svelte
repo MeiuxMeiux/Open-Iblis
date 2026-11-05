@@ -119,6 +119,8 @@
   <div class="actions">
     {#if queue ?? progress}
       <button class="danger" onclick={onCancel}>Cancel</button>
+    {:else if !installed && row.unavailable}
+      <p class="unavailable" role="note">{row.unavailable}</p>
     {:else if !installed}
       <button class="primary" disabled={busy} onclick={onInstall}>Install</button>
     {:else}
@@ -238,6 +240,13 @@
     display: flex;
     gap: 8px;
     flex: 0 0 auto;
+  }
+  .unavailable {
+    margin: 0;
+    max-width: 260px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-text-secondary);
   }
   button {
     border: 1px solid var(--color-border-default);

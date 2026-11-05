@@ -36,7 +36,9 @@
     ])
     availability = {
       generate: engine.ok && engine.data.id !== null,
-      training: training.ok && training.data.installed
+      // Where training cannot run the view stays reachable: it explains why.
+      training:
+        training.ok && (training.data.installed || training.data.platformSupported === false)
     }
   }
 

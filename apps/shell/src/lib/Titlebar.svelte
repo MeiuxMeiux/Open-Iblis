@@ -6,10 +6,16 @@
   // demonstrating the contextBridge IPC path end to end.
   import Sigil from './Sigil.svelte'
   import Icon from './ui/Icon.svelte'
+  import FeedbackButton from './FeedbackButton.svelte'
 
   let maximized = $state(false)
+  // macOS draws its own traffic lights at the left (window.ts hiddenInset).
+  let mac = $state(false)
 
   $effect(() => {
+    void window.iblis.app.getInfo().then((r) => {
+      if (r.ok) mac = r.data.platform === 'darwin'
+    })
     void window.iblis.window.isMaximized().then((r) => {
       if (r.ok) maximized = r.data.maximized
     })
@@ -21,7 +27,7 @@
   const close = (): void => void window.iblis.window.close()
 </script>
 
-<header class="titlebar">
+<header class="titlebar" class:mac>
   <div class="brand">
     <span class="mark" aria-hidden="true"><Sigil size={15} /></span>
     <span class="name">Iblis</span>
@@ -29,22 +35,24 @@
 
   <div class="drag"></div>
 
-  <div class="controls">
-    <button class="ctl" aria-label="Minimize" title="Minimize" onclick={minimize}>
-      <Icon name="minimize" size={14} />
-    </button>
-    <button
-      class="ctl"
-      aria-label={maximized ? 'Restore' : 'Maximize'}
-      title={maximized ? 'Restore' : 'Maximize'}
-      onclick={toggle}
-    >
-      <Icon name={maximized ? 'restore' : 'maximize'} size={14} />
-    </button>
-    <button class="ctl close" aria-label="Close" title="Close" onclick={close}>
-      <Icon name="close" size={14} />
-    </button>
-  </div>
+  <FeedbackButton />
+
+  {#if !mac}<div class="controls">
+      <button class="ctl" aria-label="Minimize" title="Minimize" onclick={minimize}>
+        <Icon name="minimize" size={14} />
+      </button>
+      <button
+        class="ctl"
+        aria-label={maximized ? 'Restore' : 'Maximize'}
+        title={maximized ? 'Restore' : 'Maximize'}
+        onclick={toggle}
+      >
+        <Icon name={maximized ? 'restore' : 'maximize'} size={14} />
+      </button>
+      <button class="ctl close" aria-label="Close" title="Close" onclick={close}>
+        <Icon name="close" size={14} />
+      </button>
+    </div>{/if}
 </header>
 
 <style>
@@ -59,6 +67,9 @@
     -webkit-app-region: drag;
   }
 
+  .mac .brand {
+    padding-left: 78px;
+  }
   .brand {
     display: flex;
     align-items: center;

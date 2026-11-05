@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!-- Iblis on macOS. V8 needs JIT and writable-executable memory; library
+     validation is off because an ad-hoc sealed app has no Team ID to match
+     (charter Q12: unsigned by decision). No camera, microphone or network
+     server entitlements: Iblis plays audio and talks to loopback sidecars. -->
+<plist version="1.0">
+<dict>
+  <key>com.apple.security.cs.allow-jit</key><true/>
+  <key>com.apple.security.cs.allow-unsigned-executable-memory</key><true/>
+  <key>com.apple.security.cs.disable-library-validation</key><true/>
+</dict>
+</plist>

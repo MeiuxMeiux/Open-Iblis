@@ -32,8 +32,10 @@
 <section class="group" aria-labelledby="feedback-heading">
   <h2 id="feedback-heading">Feedback</h2>
   <p class="hint">
-    Reports go to a short form on the Iblis website. Your app version, build, and operating system
-    are filled in for you. Nothing is sent until you submit the form.
+    Reports go to a short form on the Iblis website. Your app version, build, operating system,
+    processor, memory, and graphics card are filled in for you, and you can see and edit all of it
+    there. Nothing is sent until you submit the form. The same choices are on the Feedback button at
+    the top of the window and in the Help menu.
   </p>
 
   <div class="row">

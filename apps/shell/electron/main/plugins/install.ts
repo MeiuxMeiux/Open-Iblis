@@ -16,13 +16,14 @@ import {
 import { createHash } from 'node:crypto'
 import { join, normalize, isAbsolute, sep } from 'node:path'
 import extractZip from 'extract-zip'
-import type { PluginAsset, PluginManifest } from '@iblis/plugin-sdk'
+import { assetsForPlatform, type PluginAsset, type PluginManifest } from '@iblis/plugin-sdk'
 import type { InstallProgress } from '../../../shared/contract'
 import { versionDir, pluginDir } from './paths'
 import { downloadAsset } from './download'
 import { writePointer } from './pointer'
 import { assertSafeZipEntry } from './zip-guard'
 import { log } from '../logger'
+import { hostPlatform } from './host-compatibility'
 
 // Resolve `rel` under `dir` and refuse anything that escapes the folder.
 // The SDK validator already rejects a traversing `asset.path`, but the
@@ -140,7 +141,9 @@ async function writeAssets(
   dir: string,
   { onProgress, signal }: InstallOptions = {}
 ): Promise<void> {
-  const assets = manifest.assets
+  // Only this host's assets: a multi-platform pack never puts the Windows
+  // CUDA closure on a Mac or the Mac binary on Windows (SDK platform.ts).
+  const assets = assetsForPlatform(manifest, hostPlatform())
   // Sum of declared bytes — 0 if ANY asset omits a count, so the UI knows the
   // overall percent isn't trustworthy and shows an indeterminate bar instead.
   const overallTotal = assets.every((a) => a.bytes) ? assets.reduce((s, a) => s + a.bytes, 0) : 0

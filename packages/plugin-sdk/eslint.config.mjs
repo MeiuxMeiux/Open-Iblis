@@ -19,7 +19,10 @@ export default tseslint.config(
       globals: { ...globals.node },
       parserOptions: {
         // tsconfig.json builds src/ only; tests and config get the default project.
-        projectService: { allowDefaultProject: ['tests/*.ts', 'vitest.config.ts'] },
+        projectService: {
+          allowDefaultProject: ['tests/*.ts', 'vitest.config.ts'],
+          maximumDefaultProjectFileMatchCount_THIS_WILL_SLOW_DOWN_LINTING: 16
+        },
         tsconfigRootDir: import.meta.dirname
       }
     }

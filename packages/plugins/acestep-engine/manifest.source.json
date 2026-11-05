@@ -2,9 +2,9 @@
   "$comment": "Authoring source for the ACE-Step 1.5 engine pack. `just catalog-build` reads this, hashes the first-party assets that declare a local `file`, and copies the inline sha256/bytes for vendor-direct assets (the GGUFs, fetched straight from HuggingFace — never mirrored to GCS for the alpha). Since 0.1.5 the native closure is published to GCS by engine-build.yml's publish job and transcribed with `just engine-pack-transcribe` (no local dist/ staging); the notices ship as installed assets (EULA staged by `just engine-notices-stage`). Historic note: the exe + its full DLL closure (ggml{,-base,-cpu,-cuda}.dll, the CUDA runtime cudart/cublas/cublasLt, and the MSVC runtime vcruntime140{,_1}/msvcp140/concrt140) MUST be staged at packages/plugins/acestep-engine/dist/ before building (they are gitignored; see UPSTREAM.txt 'Staging'). vcomp140.dll dropped in 0.1.3: the engine builds with GGML_OPENMP=OFF and no longer links MSVC OpenMP. The exe + ggml DLLs are ABI-matched — stage them from the SAME engine-build run; the CUDA/MSVC DLLs come from the toolkit and vcrt-stage.yml. GPU/CUDA-only for the alpha: the binary is the CUDA build and CPU is unusably slow.",
   "id": "mx.iblis.engine.acestep",
   "name": "ACE-Step 1.5",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "kind": "engine",
-  "hostMinVersion": "0.2.0-alpha.1",
+  "hostMinVersion": "0.2.0-alpha.61",
   "capabilities": [
     "text-to-music"
   ],
@@ -20,7 +20,15 @@
     ],
     "healthPath": "/health",
     "healthTimeoutMs": 300000,
-    "idleUnloadMinutes": 30
+    "idleUnloadMinutes": 30,
+    "platforms": [
+      {
+        "platforms": [
+          "darwin"
+        ],
+        "bin": "ace-server"
+      }
+    ]
   },
   "presets": [
     {
@@ -57,6 +65,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ace-server.exe"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -69,6 +80,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/cudart64_12.dll"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -81,6 +95,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/cublas64_12.dll"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -93,6 +110,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/cublasLt64_12.dll"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -105,6 +125,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/vcruntime140.dll"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -117,6 +140,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/vcruntime140_1.dll"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -129,6 +155,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/msvcp140.dll"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -141,6 +170,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/concrt140.dll"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -153,6 +185,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ggml.dll"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -165,6 +200,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ggml-base.dll"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -177,6 +215,9 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ggml-cpu.dll"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     },
     {
@@ -188,6 +229,25 @@
         {
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ggml-cuda.dll"
+        }
+      ],
+      "platforms": [
+        "win32-x64"
+      ]
+    },
+    {
+      "path": "ace-server",
+      "bytes": 4755952,
+      "sha256": "d1f71acc9924753a577d1975b0ab9ac07595d0371368a027c96499000d000ae4",
+      "published": true,
+      "executable": true,
+      "platforms": [
+        "darwin-arm64"
+      ],
+      "sources": [
+        {
+          "kind": "gcs",
+          "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/ace-server"
         }
       ]
     },
@@ -434,7 +494,14 @@
           "kind": "gcs",
           "url": "https://storage.googleapis.com/iblis-dist/plugins/mx.iblis.engine.acestep/{version}/notices/licenses/NVIDIA-CUDA-12.9.1-EULA.pdf"
         }
+      ],
+      "platforms": [
+        "win32-x64"
       ]
     }
+  ],
+  "platforms": [
+    "win32-x64",
+    "darwin-arm64"
   ]
 }

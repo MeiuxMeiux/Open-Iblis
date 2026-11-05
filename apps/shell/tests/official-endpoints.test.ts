@@ -55,7 +55,10 @@ describe('official build', () => {
     expect(serviceEndpoint('diag')).toBe(`${OFFICIAL_SITE_ORIGIN}/api/v1/diag.php`)
     expect(serviceEndpoint('labs')).toBe(`${OFFICIAL_SITE_ORIGIN}/api/labs`)
     expect(updateFeedUrl()).toBe(OFFICIAL_UPDATE_FEED)
-    expect(autoUpdateEnabled(true, updateFeedUrl())).toBe(true)
+    expect(autoUpdateEnabled(true, updateFeedUrl(), 'win32')).toBe(true)
+    // The unsigned Mac app cannot apply its own updates (Squirrel.Mac needs a
+    // Developer ID signature): it points users at the download page instead.
+    expect(autoUpdateEnabled(true, updateFeedUrl(), 'darwin')).toBe(false)
   })
 
   it('keeps the update feed in step with electron-builder.yml', () => {

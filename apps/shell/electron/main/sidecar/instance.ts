@@ -2,11 +2,12 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import type { ChildProcess } from 'node:child_process'
-import type { PluginManifest } from '@iblis/plugin-sdk'
+import { executableForPlatform, type PluginManifest } from '@iblis/plugin-sdk'
 import { spawnSidecar } from './spawn'
 import { waitForHealth } from './health'
 import { freePort } from './port'
 import { sessionSecret } from './secret'
+import { hostPlatform } from '../plugins/host-compatibility'
 
 const DEFAULT_HEALTH_PATH = '/health'
 const DEFAULT_HEALTH_TIMEOUT_MS = 5000
@@ -22,8 +23,9 @@ export interface Instance {
 // Spawn a sidecar on a fresh port and resolve only once it reports healthy.
 // If it never comes up, the child is killed so we never leak a zombie.
 export async function launch(manifest: PluginManifest): Promise<Instance> {
-  const exec = manifest.executable
-  if (!exec) throw new Error(`${manifest.id} has no executable to launch`)
+  if (!manifest.executable) throw new Error(`${manifest.id} has no executable to launch`)
+  // This host's bin/args (ace-server on macOS, ace-server.exe on Windows).
+  const exec = executableForPlatform(manifest.executable, hostPlatform())
 
   const port = await freePort()
   const secret = sessionSecret()

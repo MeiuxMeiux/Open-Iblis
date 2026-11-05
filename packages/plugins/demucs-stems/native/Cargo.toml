@@ -11,11 +11,15 @@ name = "iblis-stems"
 path = "src/main.rs"
 
 [features]
-# `gpu` is the shipping Windows build (Vulkan through wgpu, CPU fallback in the
-# same binary). CI and the Linux dev box build `--no-default-features` for a
-# CPU-only smoke, because they have no Vulkan device.
-default = ["gpu"]
-gpu = ["demucs-core/wgpu", "demucs-core/autotune", "demucs-core/fusion", "burn/wgpu", "burn/vulkan", "burn/autotune", "burn/fusion", "dep:cubecl"]
+# `vulkan` is the shipping Windows build (Vulkan through wgpu, CPU fallback in
+# the same binary); `metal` is the macOS build (Metal through wgpu, same CPU
+# fallback): `--no-default-features --features metal`. Both turn on `gpu`,
+# the backend-neutral code path. CI's Windows/Linux smokes may still build
+# `--no-default-features` for CPU only.
+default = ["vulkan"]
+gpu = ["demucs-core/wgpu", "demucs-core/autotune", "demucs-core/fusion", "burn/wgpu", "burn/autotune", "burn/fusion", "dep:cubecl"]
+vulkan = ["gpu", "burn/vulkan"]
+metal = ["gpu", "burn/metal"]
 
 [dependencies]
 # Pinned to demucs-rs v0.3.4 (Apache-2.0). Bump together with UPSTREAM.txt.

@@ -11,6 +11,8 @@
   // Source builds have no update feed (official-endpoints.ts); say so instead
   // of offering a check that cannot succeed.
   const sourceBuild = $derived(info !== null && !info.officialBuild)
+  // Only Windows updates itself; an unsigned Mac app cannot (updater.ts).
+  const manualUpdates = $derived(info !== null && info.officialBuild && info.platform !== 'win32')
 
   onMount(() => {
     void window.iblis.app.getInfo().then((result) => {
@@ -44,10 +46,12 @@
     <p class="hint">
       {sourceBuild
         ? 'This build was made from source and does not update itself. Rebuild it to update, or install an official build from the Iblis website.'
-        : 'Iblis checks when it opens and while you are using it.'}
+        : manualUpdates
+          ? 'This Mac build does not update itself yet. Download the new version from the Iblis website and replace the app in Applications.'
+          : 'Iblis checks when it opens and while you are using it.'}
     </p>
   </div>
-  {#if !sourceBuild}<div class="row">
+  {#if !sourceBuild && !manualUpdates}<div class="row">
       <div class="state" aria-live="polite">
         {#if status?.state === 'checking'}
           Checking for updates…

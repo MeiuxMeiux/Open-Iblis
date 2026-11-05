@@ -286,6 +286,7 @@ fn run_worker(id: &str, cfg: &Config, state: &Shared, input: &Path, staging: &Pa
         j.backend = Some(backend.to_string());
     });
     let (mut separating, mut done, mut last_error) = (false, false, None);
+    let mut gpu_unusable = false;
     for line in BufReader::new(stdout).lines().map_while(Result::ok) {
         let Ok(ev) = serde_json::from_str::<Value>(&line) else { continue };
         match ev["event"].as_str().unwrap_or("") {
@@ -304,6 +305,7 @@ fn run_worker(id: &str, cfg: &Config, state: &Shared, input: &Path, staging: &Pa
                 update(id, state, |j| j.metrics = Some(metrics(&ev)));
             }
             "error" => last_error = ev["message"].as_str().map(str::to_string),
+            "gpu-unusable" => gpu_unusable = true,
             _ => {}
         }
     }
@@ -313,7 +315,7 @@ fn run_worker(id: &str, cfg: &Config, state: &Shared, input: &Path, staging: &Pa
     };
     let ok = matches!(status, Some(Ok(s)) if s.success());
     let msg = last_error.unwrap_or_else(|| "the separation worker stopped unexpectedly".into());
-    match (ok && done, separating) {
+    match (ok && done, separating && !gpu_unusable) {
         (true, _) => WorkerOutcome::Done,
         (false, false) => WorkerOutcome::FailedBeforeSeparation(msg),
         (false, true) => WorkerOutcome::Failed(msg),
